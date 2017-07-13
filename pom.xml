@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.pivvit.phillyzoo</groupId>
+    <artifactId>phillyzoo-test</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <src.dir>${project.basedir}</src.dir>
+        <build.dir>${project.basedir}${file.separator}build</build.dir>
+        <config.dir>${project.basedir}${file.separator}config</config.dir>
+        <drivers.dir>${project.basedir}${file.separator}drivers</drivers.dir>
+        <testng.dir>${config.dir}${file.separator}testNG</testng.dir>
+        <report.dir>${project.basedir}${file.separator}report</report.dir>
+        <exportedReports.dir>${project.basedir}${file.separator}exportedReports</exportedReports.dir>
+        <image.dir>${project.basedir}${file.separator}target${file.separator}surefire-reports</image.dir>
+        <suite.dir>${config.dir}${file.separator}testNG${file.separator}</suite.dir>
+        <buildDirectory>${project.basedir}/target</buildDirectory>
+
+        <threads>1</threads>
+        <suitethreads>1</suitethreads>
+        <browser>chrome</browser>
+        <base.url>https://phillyzoo.pivvit.com/</base.url>
+
+        <suite.file.defaults>
+            ${suite.dir}${file.separator}suite.xml
+        </suite.file.defaults>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.9.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.uncommons</groupId>
+            <artifactId>reportng</artifactId>
+            <version>1.1.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.javatuples</groupId>
+            <artifactId>javatuples</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.yandex.qatools.htmlelements</groupId>
+            <artifactId>htmlelements-all</artifactId>
+            <version>1.17</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.detro.ghostdriver</groupId>
+                    <artifactId>phantomjsdriver</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <directory>${buildDirectory}</directory>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <systemPropertyVariables>
+                        <image.dir>${image.dir}</image.dir>
+                        <threads>${threads}</threads>
+                        <org.uncommons.reportng.escape-output>false</org.uncommons.reportng.escape-output>
+                        <build.dir>${build.dir}</build.dir>
+                        <exportedReports.dir>${exportedReports.dir}</exportedReports.dir>
+                    </systemPropertyVariables>
+                    <properties>
+                        <property>
+                            <name>surefire.testng.verbose</name>
+                            <value>4</value>
+                        </property>
+                        <property>
+                            <name>failureproperty</name>
+                            <value>testngfail</value>
+                        </property>
+                        <property>
+                            <name>haltOnfailure</name>
+                            <value>false</value>
+                        </property>
+                        <property>
+                            <name>delegateCommandSystemProperties</name>
+                            <value>true</value>
+                        </property>
+                        <property>
+                            <name>usedefaultlisteners</name>
+                            <value>true</value>
+                        </property>
+                        <property>
+                            <name>listener</name>
+                            <value>pivvit.reporting.TestListener,pivvit.base.ClassListener,org.uncommons.reportng.HTMLReporter,org.uncommons.reportng.JUnitXMLReporter,org.testng.reporters.XMLReporter</value>
+                        </property>
+                        <property>
+                            <name>suitethreadpoolsize</name> 
+                            <value>${suitethreads}</value> 
+                        </property>
+                    </properties>
+                    <suiteXmlFiles>
+                        <!-- Suite file injection parameter from command line -->
+                        <suiteXmlFile>${suite.file.defaults}</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>createBuildDir</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <tasks>
+                                <mkdir dir="${build.dir}"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${report.dir}</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>${exportedReports.dir}</directory>
+                        </fileset>
+                        <!--<fileset>
+                            <directory>${build.dir}</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>-->
+                    </filesets>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>
