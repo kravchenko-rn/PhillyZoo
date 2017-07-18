@@ -20,11 +20,19 @@ public class HomePage extends BaseFEPage {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
 
+    /**
+     * Opens home page
+     * @return {@link HomePage} page
+     */
     public HomePage open() {
         BaseActions.frontendInstance().openPage(Properties.getFrontendUrl());
         return new HomePage().waitForPageLoad();
     }
 
+    /**
+     * Waits till the page is loaded.
+     * @return {@link HomePage} page
+     */
     public HomePage waitForPageLoad() {
         waitForLoad(this);
         waitForVisibility(tabPadder, "Waiting for tabPadder to load");

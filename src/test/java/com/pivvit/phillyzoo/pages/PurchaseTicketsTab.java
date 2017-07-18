@@ -15,6 +15,10 @@ public class PurchaseTicketsTab extends BaseFEPage {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
 
+    /**
+     * Opens members popup by clicking members button
+     * @return {@link MembersPopup} page
+     */
     public MembersPopup openMembersPopup() {
         click(membersButton, "Opening members popup");
 

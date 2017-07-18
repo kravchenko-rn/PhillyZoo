@@ -23,6 +23,10 @@ public class MembersPopup extends BaseFEPage {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
 
+    /**
+     * Waits till the page is loaded.
+     * @return {@link MembersPopup} page
+     */
     public MembersPopup waitForPageLoad() {
         waitForLoad(this);
         driver().switchTo().frame(contentIframe);
