@@ -3,11 +3,15 @@ package com.pivvit.phillyzoo.tests;
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
 import com.pivvit.phillyzoo.pages.MembersPopup;
-import org.testng.annotations.AfterTest;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pivvit.base.BaseTest;
 import pivvit.utils.SoftAssert;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class WEMT_001 extends BaseTest {
     SoftAssert softAssert;
@@ -20,10 +24,21 @@ public class WEMT_001 extends BaseTest {
 
     @Test
     public void checkMembersPopup() {
+        // WEMT-001
         MembersPopup membersPopup = Actions.navigationActions()
                 .openMembersPopup();
-        softAssert.assertTrue(membersPopup.isLoaded(), "Members popup was not loaded");
+        Assert.assertTrue(membersPopup.isLoaded(), "Members popup is not opened");
+
+        // WEMT-003, WEMT-004, WEMT-005
+        List<String> params = new LinkedList<>(Arrays.asList("123456", "12345678", "qwert"));
+        params.forEach(param -> verifyIncorrectId(membersPopup, param));
 
         softAssert.assertAll();
+    }
+
+    private void verifyIncorrectId(MembersPopup membersPopup, String customerId) {
+        membersPopup.inputCustomerId(customerId)
+                .clickSearchButton();
+        softAssert.assertTrue(membersPopup.isErrorMessageDisplayed(), "Error message is not displayed.");
     }
 }
