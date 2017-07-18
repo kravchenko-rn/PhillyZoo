@@ -2,6 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Phillyzoo tests" verbose="4" parallel="tests">
     <test name="WEMT-001 - Verify that Member Lookup popup appear when clicking on Member button">
+        <parameter name="invalidCustomerIds" value="123456 12345678 qwert"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_001"/>
         </classes>

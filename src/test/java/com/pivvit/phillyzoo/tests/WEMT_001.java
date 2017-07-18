@@ -5,6 +5,7 @@ import com.pivvit.phillyzoo.pages.HomePage;
 import com.pivvit.phillyzoo.pages.MembersPopup;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pivvit.base.BaseTest;
 import pivvit.utils.SoftAssert;
@@ -23,14 +24,15 @@ public class WEMT_001 extends BaseTest {
     }
 
     @Test
-    public void checkMembersPopup() {
+    @Parameters("invalidCustomerIds")
+    public void checkMembersPopup(String invalidCustomerIds) {
         // WEMT-001
         MembersPopup membersPopup = Actions.navigationActions()
                 .openMembersPopup();
         Assert.assertTrue(membersPopup.isLoaded(), "Members popup is not opened");
 
         // WEMT-003, WEMT-004, WEMT-005
-        List<String> params = new LinkedList<>(Arrays.asList("123456", "12345678", "qwert"));
+        List<String> params = new LinkedList<>(Arrays.asList(invalidCustomerIds.split(" ")));
         params.forEach(param -> verifyIncorrectId(membersPopup, param));
 
         softAssert.assertAll();
