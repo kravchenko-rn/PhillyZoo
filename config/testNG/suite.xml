@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Phillyzoo tests" verbose="4" parallel="tests">
-    <test name="first test">
+    <test name="WEMT-001 - Verify that Member Lookup popup appear when clicking on Member button">
         <classes>
-            <class name="com.pivvit.phillyzoo.tests.OpenBasePageTest"/>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_001"/>
         </classes>
     </test>
 </suite>
