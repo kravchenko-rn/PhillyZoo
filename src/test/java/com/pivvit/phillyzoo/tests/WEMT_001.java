@@ -49,6 +49,13 @@ public class WEMT_001 extends BaseTest {
         softAssert.assertEquals(membersPopup.getErrorMessageText(), expectedErrorText,
                 "Error text is incorrect for non existing member.");
 
+        // WEMT-008
+        membersPopup.clearCustomerId()
+                .inputCustomerEmail(incorrectEmail)
+                .clickSearchButton();
+        softAssert.assertTrue(membersPopup.isEmailValidationErrorMessageDisplayed(),
+                "Email validation error is not displayed.");
+
         softAssert.assertAll();
     }
 
