@@ -25,6 +25,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "input[ng-model$='customerID']")
     WebElement customerIdInput;
 
+    @FindBy(css = "input[ng-model$='purchaseStep.data.email']")
+    WebElement customerEmailInput;
+
     @FindBy(css = "form .fa-question-circle")
     WebElement questionMark;
 
@@ -36,6 +39,9 @@ public class MembersPopup extends BaseFEPage {
 
     @FindBy(css = ".form-field .error")
     WebElement errorMessage;
+
+    @FindBy(css = "div[ng-class$='purchaseStep.errors.email }'] span")
+    WebElement emailValidationError;
 
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
@@ -96,15 +102,43 @@ public class MembersPopup extends BaseFEPage {
      * @return {@link MembersPopup} page
      */
     public MembersPopup inputCustomerId(String customerId) {
+        inputText(customerIdInput, customerId);
+        return this;
+    }
+
+    public MembersPopup clearCustomerId() {
         driver().switchTo().frame(contentIframe);
 
-        Reporter.log("Clearing customer id input.");
         customerIdInput.clear();
-        Reporter.log("Typing customer id: " + customerId);
-        customerIdInput.sendKeys(customerId);
 
         driver().switchTo().defaultContent();
         return this;
+    }
+
+    /**
+     * Sets text to customer email input field.
+     * @param customerEmail string with customer email
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputCustomerEmail(String customerEmail) {
+        inputText(customerEmailInput, customerEmail);
+        return this;
+    }
+
+    /**
+     * Sets text into an input field
+     * @param inputElement an element to set text to
+     * @param text string with text to set
+     */
+    private void inputText(WebElement inputElement, String text) {
+        driver().switchTo().frame(contentIframe);
+
+        Reporter.log("Clearing customer input field.");
+        inputElement.clear();
+        Reporter.log("Typing text into input field: " + text);
+        inputElement.sendKeys(text);
+
+        driver().switchTo().defaultContent();
     }
 
     /**
@@ -121,8 +155,32 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves email validation error text in the top left corner of the email input field
+     * @return string which contains error text
+     */
+    public String getEmailValidationErrorText() {
+        driver().switchTo().frame(contentIframe);
+
+        String result = emailValidationError.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the email validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isEmailValidationErrorMessageDisplayed() {
+        return !getEmailValidationErrorText().isEmpty();
+    }
+
+    /**
      * Retrieves error message text
-     * @return String which contains error text
+     * @return string which contains error text
      */
     public String getErrorMessageText() {
         driver().switchTo().frame(contentIframe);
@@ -135,7 +193,7 @@ public class MembersPopup extends BaseFEPage {
 
     /**
      * Checks whether the error message is displayed.
-     * The thing is that the element is always present and visible on the page but
+     * The element is always present and visible on the page but
      * if there's no error, it just has no text.
      * So the check is performed by verifying if the error text is empty or not.
      * @return {@code true} in case when the error text is not empty
