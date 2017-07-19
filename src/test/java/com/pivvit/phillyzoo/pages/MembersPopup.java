@@ -16,6 +16,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(id = "pivvitContent")
     WebElement contentIframe;
 
+    @FindBy(css = ".pv-loading")
+    WebElement loadingIndicator;
+
     @FindBy(css = ".campaign-offering-details-container")
     WebElement container;
 
@@ -53,6 +56,20 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Waits till loading indicator goes away after the search button was clicked
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup waitTillLoadingIndicatorDisappears() {
+        driver().switchTo().frame(contentIframe);
+
+        waitForInvisibility(loadingIndicator, "Waiting for loading indicator to go away.");
+        sleep(1);
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Hovers mouse over the question mark in the customer id input field.
      * WORKAROUND: In Firefox browser it performs click instead of hovering because geckodriver
      * is not capable of hovering yet.
@@ -67,6 +84,7 @@ public class MembersPopup extends BaseFEPage {
         } else {
             hover(questionMark, "Hovering question mark.");
         }
+        sleep(1);
 
         driver().switchTo().defaultContent();
         return this;
@@ -128,6 +146,7 @@ public class MembersPopup extends BaseFEPage {
 
     public boolean isTooltipVisible() {
         driver().switchTo().frame(contentIframe);
+
         boolean result =  isElementVisible(tooltip, "Checking whether the tooltip is displayed.");
 
         driver().switchTo().defaultContent();
