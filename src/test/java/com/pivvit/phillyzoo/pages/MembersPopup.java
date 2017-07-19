@@ -106,6 +106,10 @@ public class MembersPopup extends BaseFEPage {
         return this;
     }
 
+    /**
+     * Clears customer id input field
+     * @return {@link MembersPopup} page
+     */
     public MembersPopup clearCustomerId() {
         driver().switchTo().frame(contentIframe);
 
