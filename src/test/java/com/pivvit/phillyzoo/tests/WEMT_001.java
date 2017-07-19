@@ -31,6 +31,10 @@ public class WEMT_001 extends BaseTest {
                 .openMembersPopup();
         Assert.assertTrue(membersPopup.isLoaded(), "Members popup is not opened");
 
+        // WEMT-006
+        membersPopup.hoverQuestionMark();
+        Assert.assertTrue(membersPopup.isTooltipVisible(), "Tooltip is not displayed");
+
         // WEMT-003, WEMT-004, WEMT-005
         List<String> params = new LinkedList<>(Arrays.asList(invalidCustomerIds.split(" ")));
         params.forEach(param -> verifyIncorrectId(membersPopup, param));
