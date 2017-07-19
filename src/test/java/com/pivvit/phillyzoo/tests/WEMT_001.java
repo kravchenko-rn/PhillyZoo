@@ -29,15 +29,24 @@ public class WEMT_001 extends BaseTest {
         // WEMT-001
         MembersPopup membersPopup = Actions.navigationActions()
                 .openMembersPopup();
-        Assert.assertTrue(membersPopup.isLoaded(), "Members popup is not opened");
+        Assert.assertTrue(membersPopup.isLoaded(), "Members popup is not opened.");
 
         // WEMT-006
         membersPopup.hoverQuestionMark();
-        Assert.assertTrue(membersPopup.isTooltipVisible(), "Tooltip is not displayed");
+        softAssert.assertTrue(membersPopup.isTooltipVisible(), "Tooltip is not displayed.");
 
         // WEMT-003, WEMT-004, WEMT-005
         List<String> params = new LinkedList<>(Arrays.asList(invalidCustomerIds.split(" ")));
         params.forEach(param -> verifyIncorrectId(membersPopup, param));
+
+        // WEMT-007
+        membersPopup.inputCustomerId(nonExistingCustomerId)
+                .clickSearchButton()
+                .waitTillLoadingIndicatorDisappears();
+        softAssert.assertTrue(membersPopup.isErrorMessageDisplayed(),
+                "Error message is not displayed for non existing member.");
+        softAssert.assertEquals(membersPopup.getErrorMessageText(), expectedErrorText,
+                "Error text is incorrect for non existing member.");
 
         softAssert.assertAll();
     }
