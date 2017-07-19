@@ -24,8 +24,9 @@ public class WEMT_001 extends BaseTest {
     }
 
     @Test
-    @Parameters({"invalidCustomerIds", "nonExistingCustomerId", "expectedErrorText"})
-    public void checkMembersPopup(String invalidCustomerIds, String nonExistingCustomerId, String expectedErrorText) {
+    @Parameters({"invalidCustomerIds", "nonExistingCustomerId", "expectedErrorText", "incorrectEmail"})
+    public void checkMembersPopup(String invalidCustomerIds, String nonExistingCustomerId, String expectedErrorText,
+                                  String incorrectEmail) {
         // WEMT-001
         MembersPopup membersPopup = Actions.navigationActions()
                 .openMembersPopup();

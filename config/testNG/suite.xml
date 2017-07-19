@@ -6,6 +6,7 @@
         <parameter name="nonExistingCustomerId" value="9999999"/>
         <parameter name="expectedErrorText"
                    value="no memberships were found for the information above - please modify your search"/>
+        <parameter name="incorrectEmail" value="an.incorrect.email"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_001"/>
         </classes>
