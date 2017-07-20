@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Phillyzoo tests" verbose="4" parallel="tests">
+<suite name="Phillyzoo tests" verbose="4">
     <test name="WEMT-001..009 - Verify Member Lookup popup behavior">
         <parameter name="invalidCustomerIds" value="123456 12345678 qwert"/>
         <parameter name="nonExistingCustomerId" value="9999999"/>
