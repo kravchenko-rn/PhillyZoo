@@ -11,6 +11,8 @@ import pivvit.utils.Reporter;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementDecorator;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementLocatorFactory;
 
+import java.util.List;
+
 @FindBy(css = "#mainContainer>section")
 public class MembersPopup extends BaseFEPage {
     @FindBy(id = "pivvitContent")
@@ -42,6 +44,9 @@ public class MembersPopup extends BaseFEPage {
 
     @FindBy(css = "div[ng-class$='purchaseStep.errors.email }'] span")
     WebElement emailValidationError;
+
+    @FindBy(css = "div[ng-repeat$='lookupResults']")
+    List<WebElement> lookupResults;
 
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
