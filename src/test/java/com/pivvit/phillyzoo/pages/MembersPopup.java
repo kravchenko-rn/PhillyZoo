@@ -95,7 +95,7 @@ public class MembersPopup extends BaseFEPage {
         } else {
             hover(questionMark, "Hovering question mark.");
         }
-        sleep(1);
+        waitForVisibilityNotStrict(tooltip, 5);
 
         driver().switchTo().defaultContent();
         return this;
