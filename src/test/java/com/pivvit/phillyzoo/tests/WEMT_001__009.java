@@ -5,10 +5,7 @@ import com.pivvit.phillyzoo.pages.HomePage;
 import com.pivvit.phillyzoo.pages.MembersPopup;
 import jnr.x86asm.Mem;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pivvit.base.BaseTest;
 import pivvit.utils.SoftAssert;
 
@@ -17,12 +14,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class WEMT_001__009 extends BaseTest {
-    SoftAssert softAssert;
-
     @BeforeTest
     public void init() {
         new HomePage().open();
-        softAssert = new SoftAssert();
     }
 
     @Test(testName = "WEMT-001", description = "Verify that Member Lookup popup appear when clicking on Member button")
@@ -37,13 +31,14 @@ public class WEMT_001__009 extends BaseTest {
     public void checkTooltipOpens() {
         MembersPopup membersPopup = new MembersPopup()
                 .hoverQuestionMark();
-        softAssert.assertTrue(membersPopup.isTooltipVisible(), "Tooltip is not displayed.");
+        Assert.assertTrue(membersPopup.isTooltipVisible(), "Tooltip is not displayed.");
     }
 
-    @Test(testName = "WEMT-003, WEMT-004, WEMT-005, WEMT-009", dependsOnMethods = "checkTooltipOpens",
+    @Test(testName = "WEMT-003, WEMT-004, WEMT-005, WEMT-009", dependsOnMethods = "checkTooltipOpens", alwaysRun = true,
             description = "Verify that error message appears when incorrect customer id is entered")
     @Parameters("invalidCustomerIds")
     public void checkIncorrectCustomerId(String invalidCustomerIds) {
+        SoftAssert softAssert = new SoftAssert();
         MembersPopup membersPopup = new MembersPopup();
         List<String> params = new LinkedList<>(Arrays.asList(invalidCustomerIds.split(" ")));
         params.add("");
@@ -53,12 +48,14 @@ public class WEMT_001__009 extends BaseTest {
                     .clickSearchButton();
             softAssert.assertTrue(membersPopup.isErrorMessageDisplayed(), "Error message is not displayed.");
         });
+        softAssert.assertAll();
     }
 
     @Test(testName = "WEMT-007", dependsOnMethods = "checkIncorrectCustomerId", alwaysRun = true,
             description = "Verify that message appears when there should no results matching with Member Number")
     @Parameters({"nonExistingCustomerId", "expectedErrorText"})
     public void checkNonExistingCustomerId(String nonExistingCustomerId, String expectedErrorText) {
+        SoftAssert softAssert = new SoftAssert();
         MembersPopup membersPopup = new MembersPopup()
                 .inputCustomerId(nonExistingCustomerId)
                 .clickSearchButton()
@@ -67,9 +64,10 @@ public class WEMT_001__009 extends BaseTest {
                 "Error message is not displayed for non existing member.");
         softAssert.assertEquals(membersPopup.getErrorMessageText(), expectedErrorText,
                 "Error text is incorrect for non existing member.");
+        softAssert.assertAll();
     }
 
-    @Test(testName = "WEMT-008", dependsOnMethods = "checkNonExistingCustomerId",
+    @Test(testName = "WEMT-008", dependsOnMethods = "checkNonExistingCustomerId", alwaysRun = true,
             description = "Verify that error textbox validation appear on email address textbox when clicking on search button with a wrong email address format")
     @Parameters("incorrectEmail")
     public void checkIncorrectEmail(String incorrectEmail) {
@@ -77,12 +75,20 @@ public class WEMT_001__009 extends BaseTest {
                 .clearCustomerId()
                 .inputCustomerEmail(incorrectEmail)
                 .clickSearchButton();
-        softAssert.assertTrue(membersPopup.isEmailValidationErrorMessageDisplayed(),
+        Assert.assertTrue(membersPopup.isEmailValidationErrorMessageDisplayed(),
                 "Email validation error is not displayed.");
     }
 
-    @AfterTest
-    public void summarize() {
-        softAssert.assertAll();
+    @Test(testName = "WEMT-002", dependsOnMethods = "checkIncorrectEmail", alwaysRun = true,
+            description = "Verify that options for disguised information is returned when searching with valid member number")
+    @Parameters("existingCustomerId")
+    public void checkExistingCustomerId(String existingCustomerId) {
+        checkMembersPopupOpens();
+        MembersPopup membersPopup = new MembersPopup()
+                .clearCustomerEmail()
+                .inputCustomerId(existingCustomerId)
+                .clickSearchButton()
+                .waitTillLoadingIndicatorDisappears();
+        Assert.assertTrue(membersPopup.isOptionsResultListReturned(), "Options for disguised information are not returned.");
     }
 }

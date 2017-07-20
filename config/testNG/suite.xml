@@ -4,6 +4,7 @@
     <test name="WEMT-001..009 - Verify Member Lookup popup behavior">
         <parameter name="invalidCustomerIds" value="123456 12345678 qwert"/>
         <parameter name="nonExistingCustomerId" value="9999999"/>
+        <parameter name="existingCustomerId" value="1832713"/>
         <parameter name="expectedErrorText"
                    value="no memberships were found for the information above - please modify your search"/>
         <parameter name="incorrectEmail" value="an.incorrect.email"/>
