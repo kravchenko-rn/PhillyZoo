@@ -12,4 +12,12 @@
             <class name="com.pivvit.phillyzoo.tests.WEMT_001__009"/>
         </classes>
     </test>
+
+    <test name="WEMT-010..013 - Verify customer search by zip code and name">
+        <parameter name="cutomerName" value="solis"/>
+        <parameter name="zipCode" value="73025"/>
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_010__013"/>
+        </classes>
+    </test>
 </suite>
