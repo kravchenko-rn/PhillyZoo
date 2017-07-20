@@ -105,6 +105,7 @@ public class BaseTest {
         capabilities.setPlatform(platform);
         capabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
         FirefoxProfile profile = new FirefoxProfile();
+        System.setProperty("webdriver.gecko.driver", System.getProperty("drivers.dir") + "/geckodriver.exe");
         profile.setAcceptUntrustedCertificates(true);
         profile.setPreference("network.http.phishy-userpass-length", 255);
         WebDriver driver = new FirefoxDriver(capabilities);

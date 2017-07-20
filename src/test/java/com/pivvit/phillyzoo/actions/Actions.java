@@ -8,4 +8,6 @@ public class Actions {
     public static void clear() {
         actions.get().clear();
     }
+
+    public static NavigationActions navigationActions(){return actions.get().getInstance(NavigationActions.class);}
 }
