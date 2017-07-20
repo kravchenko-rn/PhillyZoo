@@ -135,6 +135,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clears customer email input field
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clearCustomerEmail() {
+        driver().switchTo().frame(contentIframe);
+
+        customerEmailInput.clear();
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Sets text into an input field
      * @param inputElement an element to set text to
      * @param text string with text to set
@@ -228,6 +241,19 @@ public class MembersPopup extends BaseFEPage {
         driver().switchTo().frame(contentIframe);
 
         boolean result = isElementPresent(container);
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the options for disguised information are returned
+     * @return {@code true} in case when there's at least one option
+     */
+    public boolean isOptionsResultListReturned() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = !lookupResults.isEmpty();
 
         driver().switchTo().defaultContent();
         return result;
