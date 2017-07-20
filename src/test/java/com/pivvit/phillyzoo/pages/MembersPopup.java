@@ -30,6 +30,12 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "input[ng-model$='purchaseStep.data.email']")
     WebElement customerEmailInput;
 
+    @FindBy(css = "input[ng-model='purchaseStep.data.lastName']")
+    WebElement customerLastNameInput;
+
+    @FindBy(css = "input[ng-model$='zip']")
+    WebElement customerZipCodeInput;
+
     @FindBy(css = "form .fa-question-circle")
     WebElement questionMark;
 
@@ -42,8 +48,14 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = ".form-field .error")
     WebElement errorMessage;
 
-    @FindBy(css = "div[ng-class$='purchaseStep.errors.email }'] span")
+    @FindBy(css = "div[ng-class$='purchaseStep.errors.email }'] > span")
     WebElement emailValidationError;
+
+    @FindBy(css = "div[ng-class$='purchaseStep.errors.lastName }'] > span")
+    WebElement lastNameValidationError;
+
+    @FindBy(css = "[ng-if$='showAlternateFields'] > a")
+    WebElement alternateFieldsLink;
 
     @FindBy(css = "div[ng-repeat$='lookupResults']")
     List<WebElement> lookupResults;
@@ -177,6 +189,20 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks alternate fields link. Works for both:
+     * switch to search by name and zip code; switch back to search by id and email.
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickAlternateFieldsLink() {
+        driver().switchTo().frame(contentIframe);
+
+        click(alternateFieldsLink, "Clicking alternate fields link.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Retrieves email validation error text in the top left corner of the email input field
      * @return string which contains error text
      */
@@ -198,6 +224,30 @@ public class MembersPopup extends BaseFEPage {
      */
     public boolean isEmailValidationErrorMessageDisplayed() {
         return !getEmailValidationErrorText().isEmpty();
+    }
+
+    /**
+     * Retrieves last name validation error text in the top left corner of the last name input field
+     * @return string which contains error text
+     */
+    public String getLastNameValidationErrorText() {
+        driver().switchTo().frame(contentIframe);
+
+        String result = lastNameValidationError.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the last name validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isLastNameValidationErrorMessageDisplayed() {
+        return !getLastNameValidationErrorText().isEmpty();
     }
 
     /**
@@ -254,6 +304,34 @@ public class MembersPopup extends BaseFEPage {
         driver().switchTo().frame(contentIframe);
 
         boolean result = !lookupResults.isEmpty();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the customer last name input field is displayed
+     * @return {@code true} in case when customer last name input field is displayed
+     */
+    public boolean isLastNameInputDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(customerLastNameInput,
+                "Checking whether the customer last name input field is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the customer zip code input field is displayed
+     * @return {@code true} in case when customer zip code input field is displayed
+     */
+    public boolean isZipCodeInputDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(customerZipCodeInput,
+                "Checking whether the customer zip code input field is displayed.");
 
         driver().switchTo().defaultContent();
         return result;
