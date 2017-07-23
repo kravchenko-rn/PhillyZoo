@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Phillyzoo tests" verbose="4">
+    <parameter name="customerLastName" value="solis"/>
+
     <test name="WEMT-001..009 - Verify Member Lookup popup behavior">
         <parameter name="invalidCustomerIds" value="123456 12345678 qwert"/>
         <parameter name="nonExistingCustomerId" value="9999999"/>
@@ -14,11 +16,17 @@
     </test>
 
     <test name="WEMT-010..013 - Verify customer search by zip code and name">
-        <parameter name="cutomerLastName" value="solis"/>
         <parameter name="customerZipCode" value="73025"/>
         <parameter name="lastNameValidationError" value="required"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_010__013"/>
+        </classes>
+    </test>
+
+    <test name="WEMT-014..018 - Verify that search filters work fine">
+        <parameter name="zipCode" value="19104"/>
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_014__018"/>
         </classes>
     </test>
 </suite>
