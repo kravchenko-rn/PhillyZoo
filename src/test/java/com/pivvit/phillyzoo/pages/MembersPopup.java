@@ -160,6 +160,29 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Sets text to customer zip code input field.
+     * @param customerZipCode string with customer zip code
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputCustomerZipCode(String customerZipCode) {
+        inputText(customerZipCodeInput, customerZipCode);
+        return this;
+    }
+
+    /**
+     * Clears customer zip code input field
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clearCustomerZipCode() {
+        driver().switchTo().frame(contentIframe);
+
+        customerZipCodeInput.clear();
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Sets text into an input field
      * @param inputElement an element to set text to
      * @param text string with text to set
