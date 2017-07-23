@@ -45,7 +45,7 @@ public class WEMT_010__013 extends BaseTest {
 
     @Test(testName = "WEMT-013", dependsOnMethods = "checkEmptyLastNameValidationError",
     description = "Verify that filter by zipcode or phone number appear when multiple memberships match the entered last name")
-    @Parameters("cutomerLastName")
+    @Parameters("customerLastName")
     public void checkFiltersAppear(String customerLastName) {
         SoftAssert softAssert = new SoftAssert();
 
