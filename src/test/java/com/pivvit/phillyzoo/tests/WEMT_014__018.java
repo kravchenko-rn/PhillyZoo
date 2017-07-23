@@ -46,7 +46,7 @@ public class WEMT_014__018 extends BaseTest {
     @Test(testName = "WEMT-016", dependsOnMethods = "checkDisguisedInformationOnZipCodeSelect",
             description = "Verify that user cannot enter letters on the phone number textbox")
     @Parameters("letters")
-    public void checkPhoneFilterUnacceptableCharacters(String letters) {
+    public void checkPhoneFilterLiteralCharacters(String letters) {
         MembersPopup membersPopup = new MembersPopup()
                 .clearPhoneFilterInput()
                 .inputCustomerPhoneNumber(letters);
