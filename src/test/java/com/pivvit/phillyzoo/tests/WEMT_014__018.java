@@ -18,7 +18,7 @@ public class WEMT_014__018 extends BaseTest {
 
     @Test(testName = "WEMT-014", description = "Verify that disguised information is displayed after choosing a zip code on the dropdown list")
     @Parameters({"customerLastName", "zipCode"})
-    public void checkDisguisedInformationIsDisplayed(String customerLastName, String zipCode) {
+    public void checkDisguisedInformationOnZipCodeSelect(String customerLastName, String zipCode) {
         MembersPopup membersPopup = new MembersPopup()
                 .clickAlternateFieldsLink()
                 .inputCustomerLastName(customerLastName)
