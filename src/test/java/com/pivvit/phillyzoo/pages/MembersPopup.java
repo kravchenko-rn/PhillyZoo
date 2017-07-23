@@ -1,5 +1,6 @@
 package com.pivvit.phillyzoo.pages;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.FindBy;
@@ -194,6 +195,34 @@ public class MembersPopup extends BaseFEPage {
         driver().switchTo().frame(contentIframe);
 
         customerZipCodeInput.clear();
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
+     * Sets text into phone filter input field.
+     * @param phoneNumer string which contains phone number
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputCustomerPhoneNumber(String phoneNumer) {
+        inputText(phoneFilterInput, phoneNumer);
+        driver().switchTo().frame(contentIframe);
+
+        phoneFilterInput.sendKeys(Keys.ENTER);
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
+     * Clears customer phone filter input field
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clearPhoneFilterInput() {
+        driver().switchTo().frame(contentIframe);
+
+        phoneFilterInput.clear();
 
         driver().switchTo().defaultContent();
         return this;
