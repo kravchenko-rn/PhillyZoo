@@ -37,7 +37,8 @@ public class WEMT_014__018 extends BaseTest {
     public void checkDisguisedInformationOnPhoneEnter(String customerPhoneNumber) {
         MembersPopup membersPopup = new MembersPopup()
                 .deselectZipCodeFilter()
-                .inputCustomerPhoneNumber(customerPhoneNumber);
+                .inputCustomerPhoneNumber(customerPhoneNumber)
+                .submitPhoneNumber();
         Assert.assertTrue(membersPopup.isOptionsResultListDisplayed(),
                 "Disguised information is not displayed after inputting phone number into phone filter.");
     }

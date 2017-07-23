@@ -207,6 +207,14 @@ public class MembersPopup extends BaseFEPage {
      */
     public MembersPopup inputCustomerPhoneNumber(String phoneNumer) {
         inputText(phoneFilterInput, phoneNumer);
+        return this;
+    }
+
+    /**
+     * Submits phone number entered into the phone filter input field by pressing ENTER key
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup submitPhoneNumber() {
         driver().switchTo().frame(contentIframe);
 
         phoneFilterInput.sendKeys(Keys.ENTER);
