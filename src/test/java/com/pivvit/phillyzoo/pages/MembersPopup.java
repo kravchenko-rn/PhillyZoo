@@ -8,6 +8,7 @@ import pivvit.base.BaseFEPage;
 import pivvit.properties.Properties;
 import pivvit.properties.PropertiesNames;
 import pivvit.utils.Reporter;
+import ru.yandex.qatools.htmlelements.element.Select;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementDecorator;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementLocatorFactory;
 
@@ -215,6 +216,21 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Selects zip code from drop down filter.
+     * @param zipCode string which contains zip code
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup selectZipCodeFromFilter(String zipCode) {
+        driver().switchTo().frame(contentIframe);
+
+        Select wrappedZipCodeFilter = new Select(zipCodeFilterSelect);
+        wrappedZipCodeFilter.selectByVisibleText(zipCode);
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clicks search button
      * @return {@link MembersPopup} page
      */
@@ -313,6 +329,10 @@ public class MembersPopup extends BaseFEPage {
         return !getErrorMessageText().isEmpty();
     }
 
+    /**
+     * Checks whether the tooltip is displayed.
+     * @return {@code true} in case when the tooltip is displayed
+     */
     public boolean isTooltipVisible() {
         driver().switchTo().frame(contentIframe);
 
