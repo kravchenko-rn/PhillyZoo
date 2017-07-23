@@ -166,6 +166,16 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Sets text to customer last name input field.
+     * @param customerLastName string with customer last name
+     * @return  {@link MembersPopup} page
+     */
+    public MembersPopup inputCustomerLastName(String customerLastName) {
+        inputText(customerLastNameInput, customerLastName);
+        return this;
+    }
+
+    /**
      * Sets text to customer zip code input field.
      * @param customerZipCode string with customer zip code
      * @return {@link MembersPopup} page
@@ -361,6 +371,26 @@ public class MembersPopup extends BaseFEPage {
 
         boolean result = isElementVisible(customerZipCodeInput,
                 "Checking whether the customer zip code input field is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    public boolean isZipCodeFilterDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(zipCodeFilterSelect,
+                "Checking whether the zip code filter is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    public boolean isPhoneFilterDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(phoneFilterInput,
+                "Checking whether the phone filter is displayed.");
 
         driver().switchTo().defaultContent();
         return result;
