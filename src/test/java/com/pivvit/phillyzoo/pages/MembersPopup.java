@@ -54,6 +54,12 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "div[ng-class$='purchaseStep.errors.lastName }'] > span")
     WebElement lastNameValidationError;
 
+    @FindBy(css = "[ng-model$='zipFilter']")
+    WebElement zipCodeFilterSelect;
+
+    @FindBy(css = "[ng-model$='phoneFilter']")
+    WebElement phoneFilterInput;
+
     @FindBy(css = "[ng-if$='showAlternateFields'] > a")
     WebElement alternateFieldsLink;
 
