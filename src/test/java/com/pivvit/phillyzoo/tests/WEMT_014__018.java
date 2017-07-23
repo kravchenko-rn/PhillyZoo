@@ -3,7 +3,6 @@ package com.pivvit.phillyzoo.tests;
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
 import com.pivvit.phillyzoo.pages.MembersPopup;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -41,5 +40,16 @@ public class WEMT_014__018 extends BaseTest {
                 .submitPhoneNumber();
         Assert.assertTrue(membersPopup.isOptionsResultListDisplayed(),
                 "Disguised information is not displayed after inputting phone number into phone filter.");
+    }
+
+    // TODO: dependsOnMethod parameter should be updated when the valid phone number is set for WEMT-015
+    @Test(testName = "WEMT-016", dependsOnMethods = "checkDisguisedInformationOnZipCodeSelect",
+            description = "Verify that user cannot enter letters on the phone number textbox")
+    @Parameters("letters")
+    public void checkPhoneFilterUnacceptableCharacters(String letters) {
+        MembersPopup membersPopup = new MembersPopup()
+                .clearPhoneFilterInput()
+                .inputCustomerPhoneNumber(letters);
+        Assert.assertTrue(membersPopup.getPhoneFilterInputText().isEmpty(), "Phone filter accepts literal symbols.");
     }
 }
