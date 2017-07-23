@@ -88,6 +88,6 @@ public class WEMT_001__009 extends BaseTest {
                 .inputCustomerId(existingCustomerId)
                 .clickSearchButton()
                 .waitTillLoadingIndicatorDisappears();
-        Assert.assertTrue(membersPopup.isOptionsResultListReturned(), "Options for disguised information are not returned.");
+        Assert.assertTrue(membersPopup.isOptionsResultListDisplayed(), "Options for disguised information are not returned.");
     }
 }

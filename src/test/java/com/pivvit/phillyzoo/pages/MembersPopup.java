@@ -339,7 +339,7 @@ public class MembersPopup extends BaseFEPage {
      * Checks whether the options for disguised information are returned
      * @return {@code true} in case when there's at least one option
      */
-    public boolean isOptionsResultListReturned() {
+    public boolean isOptionsResultListDisplayed() {
         driver().switchTo().frame(contentIframe);
 
         boolean result = !lookupResults.isEmpty();
