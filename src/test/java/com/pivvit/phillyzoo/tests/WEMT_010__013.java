@@ -17,7 +17,8 @@ public class WEMT_010__013 extends BaseTest {
     }
 
     @Test(testName = "WEMT-010", description = "Verify that error textbox validation appear on the last name textbox when clicking the search button with blank last name and zip code textboxes")
-    public void checkEmptyNameZipCodeSearch() {
+    @Parameters("lastNameValidationError")
+    public void checkEmptyNameZipCodeSearch(String lastNameValidationError) {
         MembersPopup membersPopup = new MembersPopup()
                 .clickAlternateFieldsLink();
         Assert.assertTrue(membersPopup.isLastNameInputDisplayed(), "Customer last name inout field is not displayed.");
@@ -26,5 +27,8 @@ public class WEMT_010__013 extends BaseTest {
         membersPopup.clickSearchButton();
         Assert.assertTrue(membersPopup.isLastNameValidationErrorMessageDisplayed(),
                 "Last name validation error is not displayed.");
+        Assert.assertEquals(membersPopup.getLastNameValidationErrorText(), lastNameValidationError,
+                "Last name error validation text is incorrect.");
+    }
     }
 }
