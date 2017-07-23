@@ -30,5 +30,15 @@ public class WEMT_010__013 extends BaseTest {
         Assert.assertEquals(membersPopup.getLastNameValidationErrorText(), lastNameValidationError,
                 "Last name error validation text is incorrect.");
     }
+
+    @Test(testName = "WEMT-011", dependsOnMethods = "checkEmptyNameZipCodeSearch",
+            description = "Verify that error textbox validation appear on the last name text box when clicking the search button with value on zip code textbox only")
+    @Parameters("customerZipCode")
+    public void checkEmptyLastNameValidationError(String customerZipCode) {
+        MembersPopup membersPopup = new MembersPopup()
+                .inputCustomerZipCode(customerZipCode)
+                .clickSearchButton();
+        Assert.assertTrue(membersPopup.isLastNameValidationErrorMessageDisplayed(),
+                "Last name validation error is not displayed.");
     }
 }
