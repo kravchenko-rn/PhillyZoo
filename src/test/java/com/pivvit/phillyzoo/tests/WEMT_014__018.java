@@ -8,6 +8,11 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pivvit.base.BaseTest;
+import pivvit.utils.SoftAssert;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class WEMT_014__018 extends BaseTest {
     @BeforeTest
@@ -51,5 +56,21 @@ public class WEMT_014__018 extends BaseTest {
                 .clearPhoneFilterInput()
                 .inputCustomerPhoneNumber(letters);
         Assert.assertTrue(membersPopup.getPhoneFilterInputText().isEmpty(), "Phone filter accepts literal symbols.");
+    }
+
+    @Test(testName = "WEMT-017", dependsOnMethods = "checkPhoneFilterLiteralCharacters",
+            description = "Verify that user cannot enter special characters on the phone number text box")
+    @Parameters("specialCharacters")
+    public void checkPhoneFilterSpecialCharacters(String specialCharacters) {
+        SoftAssert softAssert = new SoftAssert();
+        MembersPopup membersPopup = new MembersPopup();
+        List<String> characters = new LinkedList<>(Arrays.asList(specialCharacters.split(" ")));
+        characters.forEach(character -> {
+            membersPopup.clearPhoneFilterInput()
+                    .inputCustomerPhoneNumber(character);
+            softAssert.assertTrue(membersPopup.getPhoneFilterInputText().isEmpty(),
+                    "Phone filter accepts '" + character + "' character.");
+        });
+        softAssert.assertAll();
     }
 }
