@@ -28,4 +28,15 @@ public class WEMT_014__018 extends BaseTest {
         Assert.assertTrue(membersPopup.isOptionsResultListDisplayed(),
                 "Disguised information is not displayed after choosing a zip code from dropdown filter.");
     }
+
+    @Test(testName = "WEMT-015", dependsOnMethods = "checkDisguisedInformationOnZipCodeSelect", enabled = false,
+            description = "Verify that disguised information is displayed after entering a valid phone number")
+    @Parameters("customerPhoneNumber")
+    public void checkDisguisedInformationOnPhoneEnter(String customerPhoneNumber) {
+        MembersPopup membersPopup = new MembersPopup()
+                .deselectZipCodeFilter()
+                .inputCustomerPhoneNumber(customerPhoneNumber);
+        Assert.assertTrue(membersPopup.isOptionsResultListDisplayed(),
+                "Disguised information is not displayed after inputting phone number into phone filter.");
+    }
 }
