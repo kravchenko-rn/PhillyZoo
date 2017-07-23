@@ -27,7 +27,7 @@
         <parameter name="zipCode" value="19104"/>
         <parameter name="customerPhoneNumber" value="215-243"/>
         <parameter name="letters" value="abc"/>
-        <parameter name="specialCharacters" value=":#x22|\@#$%^#x26*+"/>
+        <parameter name="specialCharacters" value=": &quot; | \ @ # $ % ^ &amp; * +"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_014__018"/>
         </classes>
