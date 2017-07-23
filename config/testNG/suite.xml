@@ -25,6 +25,7 @@
 
     <test name="WEMT-014..018 - Verify that search filters work fine">
         <parameter name="zipCode" value="19104"/>
+        <parameter name="customerPhoneNumber" value="215-243"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_014__018"/>
         </classes>
