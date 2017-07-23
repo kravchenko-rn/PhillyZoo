@@ -336,6 +336,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves phone filter input text.
+     * @return string which contains phone filter input text
+     */
+    public String getPhoneFilterInputText() {
+        driver().switchTo().frame(contentIframe);
+
+        String result = phoneFilterInput.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the last name validation error message is displayed.
      * The element is always present and visible on the page but
      * if there's no error, it just has no text.
