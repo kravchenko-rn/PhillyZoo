@@ -252,8 +252,20 @@ public class MembersPopup extends BaseFEPage {
     public MembersPopup selectZipCodeFromFilter(String zipCode) {
         driver().switchTo().frame(contentIframe);
 
-        Select wrappedZipCodeFilter = new Select(zipCodeFilterSelect);
-        wrappedZipCodeFilter.selectByVisibleText(zipCode);
+        new Select(zipCodeFilterSelect).selectByVisibleText(zipCode);
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
+     * Deselects filter by zip code value.
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup deselectZipCodeFilter() {
+        driver().switchTo().frame(contentIframe);
+
+        new Select(zipCodeFilterSelect).selectByValue("");
 
         driver().switchTo().defaultContent();
         return this;
