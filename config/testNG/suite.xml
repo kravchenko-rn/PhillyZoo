@@ -14,8 +14,9 @@
     </test>
 
     <test name="WEMT-010..013 - Verify customer search by zip code and name">
-        <parameter name="cutomerName" value="solis"/>
-        <parameter name="zipCode" value="73025"/>
+        <parameter name="cutomerLastName" value="solis"/>
+        <parameter name="customerZipCode" value="73025"/>
+        <parameter name="lastNameValidationError" value="required"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_010__013"/>
         </classes>
