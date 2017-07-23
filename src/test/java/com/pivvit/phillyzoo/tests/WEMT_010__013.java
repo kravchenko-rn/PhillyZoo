@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pivvit.base.BaseTest;
+import pivvit.utils.SoftAssert;
 
 public class WEMT_010__013 extends BaseTest {
     @BeforeTest
@@ -40,5 +41,21 @@ public class WEMT_010__013 extends BaseTest {
                 .clickSearchButton();
         Assert.assertTrue(membersPopup.isLastNameValidationErrorMessageDisplayed(),
                 "Last name validation error is not displayed.");
+    }
+
+    @Test(testName = "WEMT-013", dependsOnMethods = "checkEmptyLastNameValidationError",
+    description = "Verify that filter by zipcode or phone number appear when multiple memberships match the entered last name")
+    @Parameters("cutomerLastName")
+    public void checkFiltersAppear(String customerLastName) {
+        SoftAssert softAssert = new SoftAssert();
+
+        MembersPopup membersPopup = new MembersPopup()
+                .clearCustomerZipCode()
+                .inputCustomerLastName(customerLastName)
+                .clickSearchButton()
+                .waitTillLoadingIndicatorDisappears();
+        softAssert.assertTrue(membersPopup.isZipCodeFilterDisplayed(), "Zip code filter is not displayed.");
+        softAssert.assertTrue(membersPopup.isPhoneFilterDisplayed(), "Phone filter is not displayed.");
+        softAssert.assertAll();
     }
 }
