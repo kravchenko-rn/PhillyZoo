@@ -73,4 +73,15 @@ public class WEMT_014__018 extends BaseTest {
         });
         softAssert.assertAll();
     }
+
+    @Test(testName = "WEMT-018", dependsOnMethods = "checkPhoneFilterSpecialCharacters",
+    description = "Verify that user is redirected to 'user information' form when entering an incomplete phone number")
+    @Parameters("incompletePhoneNumber")
+    public void checkIncompletePhoneNumber(String incompletePhoneNumber) {
+        MembersPopup membersPopup = new MembersPopup()
+                .inputCustomerPhoneNumber(incompletePhoneNumber)
+                .submitPhoneNumber();
+        Assert.assertTrue(membersPopup.isUserInformationFormDisplayed(),
+                "User information form is not displayed after inputting partial phone number into phone filter.");
+    }
 }
