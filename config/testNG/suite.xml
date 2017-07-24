@@ -33,4 +33,10 @@
             <class name="com.pivvit.phillyzoo.tests.WEMT_014__018"/>
         </classes>
     </test>
+    
+    <test name="WEMT-020..024 - Validate user information form">
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_020__024"/>
+        </classes>
+    </test>
 </suite>
