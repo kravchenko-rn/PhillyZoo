@@ -255,6 +255,16 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Sets text into the email input field at the user information form
+     * @param email string which contains email
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputUserFormEmail(String email) {
+        inputText(emailUserFormInput, email);
+        return this;
+    }
+
+    /**
      * Sets text into an input field
      * @param inputElement an element to set text to
      * @param text string with text to set
@@ -369,6 +379,20 @@ public class MembersPopup extends BaseFEPage {
         driver().switchTo().frame(contentIframe);
 
         String result = lastNameValidationError.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Retrieves email validation error text in the top left corner of the email input field
+     * at the user information form.
+     * @return string which contains error text
+     */
+    public String getEmailUserFormValidationErrorText() {
+        driver().switchTo().frame(contentIframe);
+
+        String result = emailUserFormValidationError.getText();
 
         driver().switchTo().defaultContent();
         return result;
