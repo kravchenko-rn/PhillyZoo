@@ -527,4 +527,46 @@ public class MembersPopup extends BaseFEPage {
         driver().switchTo().defaultContent();
         return result;
     }
+
+    /**
+     * Checks whether the user form first name validation error is displayed
+     * @return {@code true} in case when the user form first name validation error is displayed
+     */
+    public boolean isUserFormFirstNameErrorDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(firstNameUserFormValidationError,
+                "Checking whether the user form first name validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the user form last name validation error is displayed
+     * @return {@code true} in case when the user form last name validation error is displayed
+     */
+    public boolean isUserFormLastNameErrorDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(lastNameUserFormValidationError,
+                "Checking whether the user form last name validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the user form email validation error is displayed
+     * @return {@code true} in case when the user form email validation error is displayed
+     */
+    public boolean isUserFormEmailErrorDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(emailUserFormValidationError,
+                "Checking whether the user form email validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
 }
