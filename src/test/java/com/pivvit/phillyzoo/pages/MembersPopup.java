@@ -308,6 +308,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks submit purchase button
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickSubmitPurchaseButton() {
+        driver().switchTo().frame(contentIframe);
+
+        click(submitPurchaseButton, "Clicking submit purchase button.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clicks alternate fields link. Works for both:
      * switch to search by name and zip code; switch back to search by id and email.
      * @return {@link MembersPopup} page
