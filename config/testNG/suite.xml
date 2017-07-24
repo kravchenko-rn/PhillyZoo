@@ -2,6 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Phillyzoo tests" verbose="4">
     <parameter name="customerLastName" value="solis"/>
+    <parameter name="incompletePhoneNumber" value="215-243"/>
 
     <test name="WEMT-001..009 - Verify Member Lookup popup behavior">
         <parameter name="invalidCustomerIds" value="123456 12345678 qwert"/>
@@ -26,7 +27,6 @@
     <test name="WEMT-014..018 - Verify that search filters work fine">
         <parameter name="zipCode" value="19104"/>
         <parameter name="customerPhoneNumber" value="215-243"/>
-        <parameter name="incompletePhoneNumber" value="215-243"/>
         <parameter name="letters" value="abc"/>
         <parameter name="specialCharacters" value=": &quot; | \ @ # $ % ^ &amp; * +"/>
         <classes>
