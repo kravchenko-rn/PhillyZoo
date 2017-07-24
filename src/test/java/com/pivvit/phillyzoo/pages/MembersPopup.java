@@ -56,6 +56,15 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "div[ng-class$='purchaseStep.errors.lastName }'] > span")
     WebElement lastNameValidationError;
 
+    @FindBy(css = ".account-profile-form .mf__row:nth-of-type(1) .mf__field:nth-of-type(1) .error-text")
+    WebElement firstNameUserFormValidationError;
+
+    @FindBy(css = ".account-profile-form .mf__row:nth-of-type(1) .mf__field:nth-of-type(2) .error-text")
+    WebElement lastNameUserFormValidationError;
+
+    @FindBy(css = ".account-profile-form .mf__row:nth-of-type(2) .mf__field:nth-of-type(1) .error-text")
+    WebElement emailUserFormValidationError;
+
     @FindBy(css = "[ng-model$='zipFilter']")
     WebElement zipCodeFilterSelect;
 
@@ -67,6 +76,9 @@ public class MembersPopup extends BaseFEPage {
 
     @FindBy(css = "[ng-if$='showAlternateFields'] > a")
     WebElement alternateFieldsLink;
+
+    @FindBy(css = ".submit-purchase-button")
+    WebElement submitPurchaseButton;
 
     @FindBy(css = "div[ng-repeat$='lookupResults']")
     List<WebElement> lookupResults;
