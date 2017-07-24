@@ -26,6 +26,7 @@
     <test name="WEMT-014..018 - Verify that search filters work fine">
         <parameter name="zipCode" value="19104"/>
         <parameter name="customerPhoneNumber" value="215-243"/>
+        <parameter name="incompletePhoneNumber" value="215-243"/>
         <parameter name="letters" value="abc"/>
         <parameter name="specialCharacters" value=": &quot; | \ @ # $ % ^ &amp; * +"/>
         <classes>
