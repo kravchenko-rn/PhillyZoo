@@ -62,6 +62,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "[ng-model$='phoneFilter']")
     WebElement phoneFilterInput;
 
+    @FindBy(css = "[ng-show^='showAccountProfile']")
+    WebElement userInformationForm;
+
     @FindBy(css = "[ng-if$='showAlternateFields'] > a")
     WebElement alternateFieldsLink;
 
