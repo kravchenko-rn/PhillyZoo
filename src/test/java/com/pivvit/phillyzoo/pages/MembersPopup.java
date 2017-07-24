@@ -461,6 +461,10 @@ public class MembersPopup extends BaseFEPage {
         return result;
     }
 
+    /**
+     * Checks whether zip code filter is displayed
+     * @return {@code true} in case when zip code filter is displayed
+     */
     public boolean isZipCodeFilterDisplayed() {
         driver().switchTo().frame(contentIframe);
 
@@ -471,6 +475,10 @@ public class MembersPopup extends BaseFEPage {
         return result;
     }
 
+    /**
+     * Checks whether phone filter is displayed
+     * @return {@code true} in case when phone filter is displayed
+     */
     public boolean isPhoneFilterDisplayed() {
         driver().switchTo().frame(contentIframe);
 
