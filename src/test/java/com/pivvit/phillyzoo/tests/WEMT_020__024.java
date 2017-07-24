@@ -47,4 +47,19 @@ public class WEMT_020__024 extends BaseTest {
                 "User form email validation error is not displayed.");
         softAssert.assertAll();
     }
+
+    @Test(testName = "WEMT-021", dependsOnMethods = "checkUserInformationBlank")
+    @Parameters({"invalidEmail", "expectedErrorText"})
+    public void checkUserFormInvalidEmail(String invalidEmail, String expectedErrorText) {
+        SoftAssert softAssert = new SoftAssert();
+        MembersPopup membersPopup = new MembersPopup()
+                .inputUserFormEmail(invalidEmail)
+                .clickSubmitPurchaseButton();
+
+        softAssert.assertTrue(membersPopup.isUserFormEmailErrorDisplayed(),
+                "User form email validation error is not displayed.");
+        softAssert.assertEquals(membersPopup.getEmailUserFormValidationErrorText(), expectedErrorText,
+                "Email validation error text is invalid.");
+        softAssert.assertAll();
+    }
 }
