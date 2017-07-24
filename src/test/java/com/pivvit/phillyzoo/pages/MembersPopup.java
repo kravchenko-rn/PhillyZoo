@@ -488,4 +488,18 @@ public class MembersPopup extends BaseFEPage {
         driver().switchTo().defaultContent();
         return result;
     }
+
+    /**
+     * Checks whether user information form is displayed
+     * @return {@code true} in case when user information form is displayed
+     */
+    public boolean isUserInformationFormDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(userInformationForm,
+                "Checking whether the user information form is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
 }
