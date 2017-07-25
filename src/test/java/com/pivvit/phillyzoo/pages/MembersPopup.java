@@ -277,6 +277,26 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Sets text into the first name input field at the user information form
+     * @param firstName string which contains first name
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputUserFormFirstName(String firstName) {
+        inputText(firstNameUserFormInput, firstName);
+        return this;
+    }
+
+    /**
+     * Sets text into the last name input field at the user information form
+     * @param lastName string which contains first name
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputUserFormLastName(String lastName) {
+        inputText(lastNameUserFormInput, lastName);
+        return this;
+    }
+
+    /**
      * Sets text into the email input field at the user information form
      * @param email string which contains email
      * @return {@link MembersPopup} page
@@ -708,5 +728,18 @@ public class MembersPopup extends BaseFEPage {
             driver().manage().timeouts().implicitlyWait(ELEMENT_TIMEOUT_SECONDS, TimeUnit.SECONDS);
         }
         return elementVisible;
+    }
+
+    /**
+     * Checks whether the purchase summary is displayed.
+     * @return {@code true} in case when the purchase summary is displayed
+     */
+    public boolean isPurchaseSummaryDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(purchaseSummary, "Checking whether the purchase summary page is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
     }
 }
