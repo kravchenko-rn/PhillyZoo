@@ -419,6 +419,20 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves password validation error text in the top left corner of the password input field
+     * at the user information form.
+     * @return string which contains error text
+     */
+    public String getPasswordUserFormValidationErrorText() {
+        driver().switchTo().frame(contentIframe);
+
+        String result = passwordUserFormValidationError.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Retrieves phone filter input text.
      * @return string which contains phone filter input text
      */
