@@ -40,6 +40,10 @@
         <parameter name="invalidFieldErrorText" value="invalid"/>
         <parameter name="invalidPassword" value="p"/>
         <parameter name="literalCharacters" value="abc"/>
+        <parameter name="firstName" value="Bob"/>
+        <parameter name="lastName" value="Sinclair"/>
+        <parameter name="password" value="Passw0rd"/>
+        <parameter name="phoneNumber" value="000-000-0000"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_020__024"/>
         </classes>
