@@ -39,6 +39,7 @@
         <parameter name="blankFieldErrorText" value="required"/>
         <parameter name="invalidFieldErrorText" value="invalid"/>
         <parameter name="invalidPassword" value="p"/>
+        <parameter name="literalCharacters" value="abc"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_020__024"/>
         </classes>
