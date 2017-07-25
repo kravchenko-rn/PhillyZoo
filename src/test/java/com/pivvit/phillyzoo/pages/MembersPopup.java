@@ -288,6 +288,16 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Sets text into the phone input field at the user information form
+     * @param phone string which contains phone
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputUserFormPhone(String phone) {
+        inputText(phoneUserFormInput, phone);
+        return this;
+    }
+
+    /**
      * Sets text into an input field
      * @param inputElement an element to set text to
      * @param text string with text to set
@@ -443,6 +453,19 @@ public class MembersPopup extends BaseFEPage {
         driver().switchTo().frame(contentIframe);
 
         String result = phoneFilterInput.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Retrieves phone input text from the user form.
+     * @return string which contains phone input text
+     */
+    public String getPhoneUserForm() {
+        driver().switchTo().frame(contentIframe);
+
+        String result = phoneUserFormInput.getText();
 
         driver().switchTo().defaultContent();
         return result;
