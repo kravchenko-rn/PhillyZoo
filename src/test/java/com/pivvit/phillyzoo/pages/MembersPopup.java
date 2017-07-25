@@ -81,6 +81,12 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "[ng-show^='showAccountProfile']")
     WebElement userInformationForm;
 
+    @FindBy(css = "[ng-model='accountProfile.firstName']")
+    WebElement firstNameUserFormInput;
+
+    @FindBy(css = "[ng-model='accountProfile.lastName']")
+    WebElement lastNameUserFormInput;
+
     @FindBy(css = "[ng-model='accountProfile.email']")
     WebElement emailUserFormInput;
 
@@ -98,6 +104,9 @@ public class MembersPopup extends BaseFEPage {
 
     @FindBy(css = "div[ng-repeat$='lookupResults']")
     List<WebElement> lookupResults;
+
+    @FindBy(css = "[ng-show='vm.showPurchaseSummary()']")
+    WebElement purchaseSummary;
 
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
