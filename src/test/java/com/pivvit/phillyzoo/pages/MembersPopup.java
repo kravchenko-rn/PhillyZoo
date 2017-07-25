@@ -560,13 +560,15 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
-     * Checks whether the user form first name validation error is displayed
+     * Checks whether the user form first name validation error is displayed (by error text),
+     * because the element itself is always visible but has no text.
+     * @param errorText string which contains error text
      * @return {@code true} in case when the user form first name validation error is displayed
      */
-    public boolean isUserFormFirstNameErrorDisplayed() {
+    public boolean isUserFormFirstNameErrorDisplayed(String errorText) {
         driver().switchTo().frame(contentIframe);
 
-        boolean result = isElementVisible(firstNameUserFormValidationError,
+        boolean result = isElementTextVisible(firstNameUserFormValidationError, errorText,
                 "Checking whether the user form first name validation error is displayed.");
 
         driver().switchTo().defaultContent();
@@ -574,13 +576,15 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
-     * Checks whether the user form last name validation error is displayed
+     * Checks whether the user form last name validation error is displayed (by error text),
+     * because the element itself is always visible but has no text.
+     * @param errorText string which contains error text
      * @return {@code true} in case when the user form last name validation error is displayed
      */
-    public boolean isUserFormLastNameErrorDisplayed() {
+    public boolean isUserFormLastNameErrorDisplayed(String errorText) {
         driver().switchTo().frame(contentIframe);
 
-        boolean result = isElementVisible(lastNameUserFormValidationError,
+        boolean result = isElementTextVisible(lastNameUserFormValidationError, errorText,
                 "Checking whether the user form last name validation error is displayed.");
 
         driver().switchTo().defaultContent();
@@ -588,13 +592,15 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
-     * Checks whether the user form email validation error is displayed
+     * Checks whether the user form email validation error is displayed (by error text),
+     * because the element itself is always visible but has no text.
+     * @param errorText string which contains error text
      * @return {@code true} in case when the user form email validation error is displayed
      */
-    public boolean isUserFormEmailErrorDisplayed() {
+    public boolean isUserFormEmailErrorDisplayed(String errorText) {
         driver().switchTo().frame(contentIframe);
 
-        boolean result = isElementVisible(emailUserFormValidationError,
+        boolean result = isElementTextVisible(emailUserFormValidationError, errorText,
                 "Checking whether the user form email validation error is displayed.");
 
         driver().switchTo().defaultContent();
