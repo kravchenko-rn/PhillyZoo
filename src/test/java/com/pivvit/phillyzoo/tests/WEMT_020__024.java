@@ -62,4 +62,19 @@ public class WEMT_020__024 extends BaseTest {
                 "Email validation error text is invalid.");
         softAssert.assertAll();
     }
+
+    @Test(testName = "WEMT-022", dependsOnMethods = "checkUserFormInvalidEmail", alwaysRun = true,
+            description = "Verify that error text validation appear on password text box when entering invalid password format")
+    @Parameters({"invalidPassword", "invalidFieldErrorText"})
+    public void checkUserFormInvalidPassword(String invalidPassword, String expectedErrorText) {
+        SoftAssert softAssert = new SoftAssert();
+        MembersPopup membersPopup = new MembersPopup()
+                .inputUserFormPassword(invalidPassword);
+
+        softAssert.assertTrue(membersPopup.isUserFormPasswordErrorDisplayed(expectedErrorText),
+                "User form password validation error is not displayed.");
+        softAssert.assertEquals(membersPopup.getPasswordUserFormValidationErrorText(), expectedErrorText,
+                "Password validation error text is invalid.");
+        softAssert.assertAll();
+    }
 }
