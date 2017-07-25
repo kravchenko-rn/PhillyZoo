@@ -638,6 +638,22 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the user form password validation error is displayed (by error text),
+     * because the element itself is always visible but has no text.
+     * @param errorText string which contains error text
+     * @return {@code true} in case when the user form password validation error is displayed
+     */
+    public boolean isUserFormPasswordErrorDisplayed(String errorText) {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementTextVisible(passwordUserFormValidationError, errorText,
+                "Checking whether the user form password validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Validates the presence of the text in the element.
      * @param element an element which should contain the text
      * @param elementText string which contains the text which should be present
