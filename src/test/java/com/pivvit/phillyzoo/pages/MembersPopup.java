@@ -1,10 +1,13 @@
 package com.pivvit.phillyzoo.pages;
 
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pivvit.base.BaseFEPage;
 import pivvit.properties.Properties;
 import pivvit.properties.PropertiesNames;
@@ -14,6 +17,7 @@ import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementDecorator;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementLocatorFactory;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @FindBy(css = "#mainContainer>section")
 public class MembersPopup extends BaseFEPage {
@@ -595,5 +599,20 @@ public class MembersPopup extends BaseFEPage {
 
         driver().switchTo().defaultContent();
         return result;
+    }
+
+    private boolean isElementTextVisible(WebElement element, String elementText, String message) {
+        Reporter.log(message);
+        boolean elementVisible = false;
+        try {
+            driver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+            elementVisible = new WebDriverWait(driver(), 5)
+                    .until(ExpectedConditions.textToBePresentInElement(element, elementText));
+        } catch (WebDriverException e) {
+            Reporter.log(String.format("Element is not displayed after %d seconds.", 5));
+        } finally {
+            driver().manage().timeouts().implicitlyWait(ELEMENT_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        }
+        return elementVisible;
     }
 }
