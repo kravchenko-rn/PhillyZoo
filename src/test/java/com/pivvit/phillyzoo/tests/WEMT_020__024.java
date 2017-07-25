@@ -4,11 +4,9 @@ import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
 import com.pivvit.phillyzoo.pages.MembersPopup;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import pivvit.base.BaseActions;
 import pivvit.base.BaseTest;
 import pivvit.utils.SoftAssert;
 
@@ -79,5 +77,21 @@ public class WEMT_020__024 extends BaseTest {
         MembersPopup membersPopup = new MembersPopup()
                 .inputUserFormPhone(invalidPhone);
         Assert.assertTrue(membersPopup.getPhoneUserForm().isEmpty(), "Phone input field accepts literal characters.");
+    }
+
+    @Test(testName = "WEMT-020", dependsOnMethods = "checkUserFormPhoneLiteralCharacters", alwaysRun = true,
+            description = "Verify that user is able to submit user information after clicking submit button with valid name, email address, password and phone number")
+    @Parameters({"firstName", "lastName", "email", "password", "phoneNumber"})
+    public void checkUserFormSubmit(String firstName, String lastName, String email, String password, String phone) {
+        MembersPopup membersPopup = new MembersPopup()
+                .inputUserFormFirstName(firstName)
+                .inputUserFormLastName(lastName)
+                .inputUserFormEmail(email)
+                .inputUserFormPassword(password)
+                .inputUserFormPhone(phone)
+                .clickSubmitPurchaseButton()
+                .waitTillLoadingIndicatorDisappears();
+
+        Assert.assertTrue(membersPopup.isPurchaseSummaryDisplayed(), "User form is not submitted.");
     }
 }
