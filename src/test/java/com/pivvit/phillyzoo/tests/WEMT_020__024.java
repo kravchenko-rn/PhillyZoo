@@ -3,6 +3,7 @@ package com.pivvit.phillyzoo.tests;
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
 import com.pivvit.phillyzoo.pages.MembersPopup;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -69,5 +70,14 @@ public class WEMT_020__024 extends BaseTest {
         softAssert.assertEquals(membersPopup.getPasswordUserFormValidationErrorText(), expectedErrorText,
                 "Password validation error text is invalid.");
         softAssert.assertAll();
+    }
+
+    @Test(testName = "WEMT-024", dependsOnMethods = "checkUserFormInvalidPassword", alwaysRun = true,
+            description = "Verify that user cannot enter letters on the phone number text box in 'Identity validation box'")
+    @Parameters("literalCharacters")
+    public void checkUserFormPhoneLiteralCharacters(String invalidPhone) {
+        MembersPopup membersPopup = new MembersPopup()
+                .inputUserFormPhone(invalidPhone);
+        Assert.assertTrue(membersPopup.getPhoneUserForm().isEmpty(), "Phone input field accepts literal characters.");
     }
 }
