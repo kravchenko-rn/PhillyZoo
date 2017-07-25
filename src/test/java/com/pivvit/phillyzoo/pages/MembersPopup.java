@@ -275,6 +275,16 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Sets text into the password input field at the user information form
+     * @param password string which contains password
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputUserFormPassword(String password) {
+        inputText(passwordUserFormInput, password);
+        return this;
+    }
+
+    /**
      * Sets text into an input field
      * @param inputElement an element to set text to
      * @param text string with text to set
