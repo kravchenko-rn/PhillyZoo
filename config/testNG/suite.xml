@@ -37,7 +37,8 @@
     <test name="WEMT-020..024 - Validate user information form">
         <parameter name="invalidEmail" value="abc.ua"/>
         <parameter name="blankFieldErrorText" value="required"/>
-        <parameter name="invalidEmailErrorText" value="invalid"/>
+        <parameter name="invalidFieldErrorText" value="invalid"/>
+        <parameter name="invalidPassword" value="p"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_020__024"/>
         </classes>
