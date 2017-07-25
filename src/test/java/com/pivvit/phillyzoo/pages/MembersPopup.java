@@ -607,6 +607,13 @@ public class MembersPopup extends BaseFEPage {
         return result;
     }
 
+    /**
+     * Validates the presence of the text in the element.
+     * @param element an element which should contain the text
+     * @param elementText string which contains the text which should be present
+     * @param message string which contains a message for the log
+     * @return {@code true} in case when the text is present in the element
+     */
     private boolean isElementTextVisible(WebElement element, String elementText, String message) {
         Reporter.log(message);
         boolean elementVisible = false;
