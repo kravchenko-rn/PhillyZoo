@@ -69,6 +69,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = ".account-profile-form .mf__row:nth-of-type(2) .mf__field:nth-of-type(1) .error-text")
     WebElement emailUserFormValidationError;
 
+    @FindBy(css = ".account-profile-form .mf__row:nth-of-type(3) .mf__field:nth-of-type(1) .error-text")
+    WebElement passwordUserFormValidationError;
+
     @FindBy(css = "[ng-model$='zipFilter']")
     WebElement zipCodeFilterSelect;
 
@@ -80,6 +83,9 @@ public class MembersPopup extends BaseFEPage {
 
     @FindBy(css = "[ng-model='accountProfile.email']")
     WebElement emailUserFormInput;
+
+    @FindBy(css = "[ng-model='accountProfile.password']")
+    WebElement passwordUserFormInput;
 
     @FindBy(css = "[ng-if$='showAlternateFields'] > a")
     WebElement alternateFieldsLink;
