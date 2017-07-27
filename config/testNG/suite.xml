@@ -3,6 +3,8 @@
 <suite name="Phillyzoo tests" verbose="4">
     <parameter name="customerLastName" value="solis"/>
     <parameter name="incompletePhoneNumber" value="215-243"/>
+    <parameter name="literalCharacters" value="abc"/>
+    <parameter name="specialCharacters" value=": &quot; | \ @ # $ % ^ &amp; * +"/>
 
     <test name="WEMT-001..009 - Verify Member Lookup popup behavior">
         <parameter name="invalidCustomerIds" value="123456 12345678 qwert"/>
@@ -27,8 +29,6 @@
     <test name="WEMT-014..018 - Verify that search filters work fine">
         <parameter name="zipCode" value="19104"/>
         <parameter name="customerPhoneNumber" value="215-243"/>
-        <parameter name="letters" value="abc"/>
-        <parameter name="specialCharacters" value=": &quot; | \ @ # $ % ^ &amp; * +"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_014__018"/>
         </classes>
@@ -39,13 +39,12 @@
         <parameter name="blankFieldErrorText" value="required"/>
         <parameter name="invalidFieldErrorText" value="invalid"/>
         <parameter name="invalidPassword" value="p"/>
-        <parameter name="literalCharacters" value="abc"/>
         <parameter name="firstName" value="Bob"/>
         <parameter name="lastName" value="Sinclair"/>
         <parameter name="password" value="Passw0rd"/>
         <parameter name="phoneNumber" value="000-000-0000"/>
         <classes>
-            <class name="com.pivvit.phillyzoo.tests.WEMT_020__024"/>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_020__025"/>
         </classes>
     </test>
 </suite>
