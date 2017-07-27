@@ -50,11 +50,11 @@ public class WEMT_014__018 extends BaseTest {
     // TODO: dependsOnMethod parameter should be updated when the valid phone number is set for WEMT-015
     @Test(testName = "WEMT-016", dependsOnMethods = "checkDisguisedInformationOnZipCodeSelect",
             description = "Verify that user cannot enter letters on the phone number textbox")
-    @Parameters("letters")
-    public void checkPhoneFilterLiteralCharacters(String letters) {
+    @Parameters("literalCharacters")
+    public void checkPhoneFilterLiteralCharacters(String literalCharacters) {
         MembersPopup membersPopup = new MembersPopup()
                 .clearPhoneFilterInput()
-                .inputCustomerPhoneNumber(letters);
+                .inputCustomerPhoneNumber(literalCharacters);
         Assert.assertTrue(membersPopup.getPhoneFilterInputText().isEmpty(), "Phone filter accepts literal symbols.");
     }
 
