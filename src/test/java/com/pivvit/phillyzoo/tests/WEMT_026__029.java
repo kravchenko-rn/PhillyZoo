@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import pivvit.base.BaseActions;
 import pivvit.base.BaseTest;
 
 public class WEMT_026__029 extends BaseTest {
@@ -48,6 +49,19 @@ public class WEMT_026__029 extends BaseTest {
         MembersPopup membersPopup = new MembersPopup()
                 .inputCustomerLastName(lastName)
                 .inputCustomerZipCode(zipCode)
+                .clickSearchButton()
+                .waitTillLoadingIndicatorDisappears();
+        Assert.assertTrue(membersPopup.isOptionsResultListDisplayed(), "Search results are not displayed or empty.");
+    }
+
+    @Test(testName = "WEMT-029", dependsOnMethods = "checkExistingLastNameZipCode", alwaysRun = true,
+    description = "Verify that search result list named 'Past Membership' appear after searching with valid member last name/email address")
+    @Parameters("email")
+    public void checkExistingEmail(String email) {
+        BaseActions.frontendInstance().refresh();
+        MembersPopup membersPopup = new MembersPopup()
+                .waitForPageLoad()
+                .inputCustomerEmail(email)
                 .clickSearchButton()
                 .waitTillLoadingIndicatorDisappears();
         Assert.assertTrue(membersPopup.isOptionsResultListDisplayed(), "Search results are not displayed or empty.");
