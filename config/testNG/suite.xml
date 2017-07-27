@@ -56,4 +56,10 @@
             <class name="com.pivvit.phillyzoo.tests.WEMT_026__029"/>
         </classes>
     </test>
+
+    <test name="WEMT-030..032 - Validate search results and change search link">
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_030__032"/>
+        </classes>
+    </test>
 </suite>
