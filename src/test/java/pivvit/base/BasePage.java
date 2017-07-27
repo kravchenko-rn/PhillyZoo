@@ -421,7 +421,7 @@ public abstract class BasePage extends CustomHtmlElement {
     protected void hover(WebElement element, String message) {
         Reporter.log(message);
         Actions actions = new Actions(driver());
-        actions.moveToElement(element).perform();
+        actions.moveToElement(element).build().perform();
     }
 
     protected void hoverAndClick(WebElement element, String message) {
