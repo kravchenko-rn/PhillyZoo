@@ -35,8 +35,8 @@ public class WEMT_001__009 extends BaseTest {
 
     @Test(testName = "WEMT-003, WEMT-004, WEMT-005, WEMT-009", dependsOnMethods = "checkTooltipOpens", alwaysRun = true,
             description = "Verify that error message appears when incorrect customer id is entered")
-    @Parameters("invalidCustomerIds")
-    public void checkIncorrectCustomerId(String invalidCustomerIds) {
+    @Parameters({"invalidCustomerIds", "expectedErrorText"})
+    public void checkIncorrectCustomerId(String invalidCustomerIds, String errorText) {
         SoftAssert softAssert = new SoftAssert();
         MembersPopup membersPopup = new MembersPopup();
         List<String> params = new LinkedList<>(Arrays.asList(invalidCustomerIds.split(" ")));
@@ -45,7 +45,7 @@ public class WEMT_001__009 extends BaseTest {
 
             membersPopup.inputCustomerId(param)
                     .clickSearchButton();
-            softAssert.assertTrue(membersPopup.isErrorMessageDisplayed(), "Error message is not displayed.");
+            softAssert.assertTrue(membersPopup.isErrorMessageDisplayed(errorText), "Error message is not displayed.");
         });
         softAssert.assertAll();
     }
@@ -59,7 +59,7 @@ public class WEMT_001__009 extends BaseTest {
                 .inputCustomerId(nonExistingCustomerId)
                 .clickSearchButton()
                 .waitTillLoadingIndicatorDisappears();
-        softAssert.assertTrue(membersPopup.isErrorMessageDisplayed(),
+        softAssert.assertTrue(membersPopup.isErrorMessageDisplayed(expectedErrorText),
                 "Error message is not displayed for non existing member.");
         softAssert.assertEquals(membersPopup.getErrorMessageText(), expectedErrorText,
                 "Error text is incorrect for non existing member.");
