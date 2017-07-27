@@ -529,10 +529,16 @@ public class MembersPopup extends BaseFEPage {
      * The element is always present and visible on the page but
      * if there's no error, it just has no text.
      * So the check is performed by verifying if the error text is empty or not.
+     * @param text string which contains text to be visible
      * @return {@code true} in case when the error text is not empty
      */
-    public boolean isErrorMessageDisplayed() {
-        return !getErrorMessageText().isEmpty();
+    public boolean isErrorMessageDisplayed(String text) {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementTextVisible(errorMessage,text, "Checking if the error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
     }
 
     /**
