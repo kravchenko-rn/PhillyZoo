@@ -105,6 +105,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "div[ng-repeat$='lookupResults']")
     List<WebElement> lookupResults;
 
+    @FindBy(css = "[ng-click$='resetSearch()']")
+    WebElement changeSearchLink;
+
     @FindBy(css = "[ng-show='vm.showPurchaseSummary()']")
     WebElement purchaseSummary;
 
@@ -377,6 +380,19 @@ public class MembersPopup extends BaseFEPage {
         driver().switchTo().frame(contentIframe);
 
         click(searchButton, "Clicking search button.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
+     * Clicks change search link
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickChangeSearchLink() {
+        driver().switchTo().frame(contentIframe);
+
+        click(changeSearchLink, "Clicking change search link.");
 
         driver().switchTo().defaultContent();
         return this;
