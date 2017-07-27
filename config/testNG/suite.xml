@@ -3,6 +3,7 @@
 <suite name="Phillyzoo tests" verbose="4">
     <parameter name="customerLastName" value="solis"/>
     <parameter name="zipCode" value="19104"/>
+    <parameter name="email" value="solis.Ray@phillyzoo.org"/>
     <parameter name="incompletePhoneNumber" value="215-243"/>
     <parameter name="literalCharacters" value="abc"/>
     <parameter name="specialCharacters" value=": &quot; | \ @ # $ % ^ &amp; * +"/>
@@ -46,6 +47,13 @@
         <parameter name="phoneNumber" value="000-000-0000"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_020__025"/>
+        </classes>
+    </test>
+
+    <test name="WEMT-026..029 - Validate user search">
+        <parameter name="nonExistingLastName" value="lastName"/>
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_026__029"/>
         </classes>
     </test>
 </suite>
