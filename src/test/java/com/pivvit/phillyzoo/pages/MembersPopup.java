@@ -625,6 +625,20 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the customer email input field is displayed
+     * @return {@code true} in case when customer email input field is displayed
+     */
+    public boolean isEmailInputDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(customerEmailInput,
+                "Checking whether the customer email input field is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether zip code filter is displayed
      * @return {@code true} in case when zip code filter is displayed
      */
