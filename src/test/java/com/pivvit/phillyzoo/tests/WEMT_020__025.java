@@ -10,7 +10,11 @@ import org.testng.annotations.Test;
 import pivvit.base.BaseTest;
 import pivvit.utils.SoftAssert;
 
-public class WEMT_020__024 extends BaseTest {
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+public class WEMT_020__025 extends BaseTest {
     @BeforeTest
     public void init() {
         new HomePage().open();
@@ -79,7 +83,22 @@ public class WEMT_020__024 extends BaseTest {
         Assert.assertTrue(membersPopup.getPhoneUserForm().isEmpty(), "Phone input field accepts literal characters.");
     }
 
-    @Test(testName = "WEMT-020", dependsOnMethods = "checkUserFormPhoneLiteralCharacters", alwaysRun = true,
+    @Test(testName = "WEMT-025", dependsOnMethods = "checkUserFormPhoneLiteralCharacters", alwaysRun = true,
+            description = "Verify that user cannot enter special characters on the phone number text box  in 'Identity validation box'")
+    @Parameters("specialCharacters")
+    public void checkUserFormPhoneSpecialCharacters(String specialCharacters) {
+        SoftAssert softAssert = new SoftAssert();
+        MembersPopup membersPopup = new MembersPopup();
+        List<String> characters =  new LinkedList<>(Arrays.asList(specialCharacters.split(" ")));
+        characters.forEach(character -> {
+            membersPopup.inputUserFormPhone(character);
+            softAssert.assertTrue(membersPopup.getPhoneUserForm().isEmpty(),
+                    "Phone input field at the user form accepts '" + character + "' character.");
+        });
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "WEMT-020", dependsOnMethods = "checkUserFormPhoneSpecialCharacters", alwaysRun = true,
             description = "Verify that user is able to submit user information after clicking submit button with valid name, email address, password and phone number")
     @Parameters({"firstName", "lastName", "email", "password", "phoneNumber"})
     public void checkUserFormSubmit(String firstName, String lastName, String email, String password, String phone) {
