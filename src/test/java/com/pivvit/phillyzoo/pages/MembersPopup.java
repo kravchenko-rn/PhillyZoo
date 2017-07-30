@@ -114,6 +114,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "[ng-click$='resetSearch()']")
     WebElement changeSearchLink;
 
+    @FindBy(css = "[ng-click$='returnToResults()']")
+    WebElement returnToResultsLink;
+
     @FindBy(css = "[ng-show='vm.showPurchaseSummary()']")
     WebElement purchaseSummary;
 
