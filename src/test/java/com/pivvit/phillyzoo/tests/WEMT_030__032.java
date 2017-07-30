@@ -3,15 +3,11 @@ package com.pivvit.phillyzoo.tests;
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
 import com.pivvit.phillyzoo.pages.MembersPopup;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pivvit.utils.SoftAssert;
-
-import java.util.List;
 
 public class WEMT_030__032 {
     @BeforeTest
@@ -31,8 +27,8 @@ public class WEMT_030__032 {
                 .waitTillLoadingIndicatorDisappears();
         Assert.assertTrue(membersPopup.isOptionsResultListDisplayed(), "Search result list is not displayed or is empty.");
 
-        membersPopup.hoverSearchResultItem(0);
-        validateResultItemFont(softAssert, membersPopup.getLookupResultItemParts(0), resultItemColor, true);
+        membersPopup.hoverSearchResultItem(0)
+                .validateResultItemFont(softAssert, 0, resultItemColor, true);
         softAssert.assertAll();
     }
 
@@ -44,15 +40,14 @@ public class WEMT_030__032 {
         Assert.assertTrue(membersPopup.isEmailInputDisplayed(), "Did not get back to the previous step.");
     }
 
-    public void validateResultItemFont(SoftAssert softAssert, List<WebElement> itemParts, String color, boolean validateBold) {
-        itemParts.forEach(itemPart -> {
-            String itemPartColor = itemPart.getCssValue("color");
-            int weight = Integer.parseInt(itemPart.getCssValue("font-weight"));
-            softAssert.assertEquals(itemPartColor, color, "Hovered result item part '" + itemPart.getText() + "' is not blue.");
-            if (validateBold) {
-                softAssert.assertTrue(weight >= 700, "Hovered result item part '" + itemPart.getText() + "' is not bold."
-                        + "It's font-weight value is " + weight + ".");
-            }
-        });
+    @Test(testName = "WEMT-032", dependsOnMethods = "checkChangeSearchLink",
+            description = "Verify that user is redirected to 'Verify Yourself' form after clicking on a specific disguised information")
+    @Parameters("pageTitle")
+    public void checkRedirectToVerifyYourself(String pageTitle) {
+        MembersPopup membersPopup = new MembersPopup()
+                .clickSearchButton()
+                .waitTillLoadingIndicatorDisappears()
+                .clickLookupResultItem(0);
+        Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle, "'Verify Yourself' is not opened.");
     }
 }
