@@ -102,7 +102,7 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = ".submit-purchase-button")
     WebElement submitPurchaseButton;
 
-    @FindBy(css = "div[ng-repeat$='lookupResults']")
+    @FindBy(css = ".zoo-membership__lookup-result")
     List<WebElement> lookupResults;
 
     @FindBy(css = "[ng-click$='resetSearch()']")
