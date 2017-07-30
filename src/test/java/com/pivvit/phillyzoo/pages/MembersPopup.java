@@ -437,6 +437,24 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks the specified lookup result item.
+     * @param itemIndex index of the item to click
+     * @return  {@link MembersPopup} page
+     */
+    public MembersPopup clickLookupResultItem(int itemIndex) {
+        driver().switchTo().frame(contentIframe);
+
+        if (itemIndex >= lookupResults.size()) {
+            driver().switchTo().defaultContent();
+            throw new SkipException("Element index exceeds the number of found elements.");
+        }
+        click(lookupResults.get(itemIndex), "Clicking lookup result item #" + itemIndex);
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clicks alternate fields link. Works for both:
      * switch to search by name and zip code; switch back to search by id and email.
      * @return {@link MembersPopup} page
