@@ -64,4 +64,11 @@
             <class name="com.pivvit.phillyzoo.tests.WEMT_030__032"/>
         </classes>
     </test>
+
+    <test name="WEMT-033..035 - Validate 'Verify yourself' page">
+        <parameter name="pageTitle" value="Past Membership"/>
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_033__035"/>
+        </classes>
+    </test>
 </suite>
