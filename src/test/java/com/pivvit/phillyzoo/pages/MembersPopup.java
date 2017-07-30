@@ -1,5 +1,6 @@
 package com.pivvit.phillyzoo.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -532,6 +533,25 @@ public class MembersPopup extends BaseFEPage {
         driver().switchTo().frame(contentIframe);
 
         String result = phoneUserFormInput.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Retrieves parts (span elements) of a lookup result item
+     * @param index index of a lookup result item
+     * @return list of web elements
+     */
+    public List<WebElement> getLookupResultItemParts(int index) {
+        driver().switchTo().frame(contentIframe);
+
+        if (index >= lookupResults.size()) {
+            driver().switchTo().defaultContent();
+            throw new SkipException("Element index exceeds the number of found elements.");
+        }
+
+        List<WebElement> result = lookupResults.get(index).findElements(By.cssSelector("span"));
 
         driver().switchTo().defaultContent();
         return result;
