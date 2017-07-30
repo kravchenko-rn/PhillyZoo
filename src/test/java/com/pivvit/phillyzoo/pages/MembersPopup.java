@@ -14,6 +14,7 @@ import pivvit.base.BaseFEPage;
 import pivvit.properties.Properties;
 import pivvit.properties.PropertiesNames;
 import pivvit.utils.Reporter;
+import pivvit.utils.SoftAssert;
 import ru.yandex.qatools.htmlelements.element.Select;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementDecorator;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementLocatorFactory;
@@ -852,5 +853,29 @@ public class MembersPopup extends BaseFEPage {
 
         driver().switchTo().defaultContent();
         return result;
+    }
+
+    /**
+     * Validates the look of the lookup result item.
+     * @param softAssert {@link SoftAssert} assertion object
+     * @param index index of the element
+     * @param color expected color
+     * @param validateBold {@code true} in case when we need to check if the text is bold
+     */
+    public void validateResultItemFont(SoftAssert softAssert, int index, String color, boolean validateBold) {
+        List<WebElement> itemParts = getLookupResultItemParts(index);
+
+        driver().switchTo().frame(contentIframe);
+        itemParts.forEach(itemPart -> {
+            String itemPartColor = itemPart.getCssValue("color");
+            int weight = Integer.parseInt(itemPart.getCssValue("font-weight"));
+            softAssert.assertEquals(itemPartColor, color, "Hovered result item part '" + itemPart.getText() + "' is not blue.");
+            if (validateBold) {
+                softAssert.assertTrue(weight >= 700, "Hovered result item part '" + itemPart.getText() + "' is not bold."
+                        + "It's font-weight value is " + weight + ".");
+            }
+        });
+
+        driver().switchTo().defaultContent();
     }
 }
