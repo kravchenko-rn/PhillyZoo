@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.SkipException;
 import pivvit.base.BaseFEPage;
 import pivvit.properties.Properties;
 import pivvit.properties.PropertiesNames;
@@ -159,6 +160,26 @@ public class MembersPopup extends BaseFEPage {
             hover(questionMark, "Hovering question mark.");
         }
         waitForVisibilityNotStrict(tooltip, 5);
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
+     * Hovers a search result item by index.
+     * @param index index of a search result item
+     * @return @link MembersPopup} page
+     */
+    public MembersPopup hoverSearchResultItem(int index) {
+        driver().switchTo().frame(contentIframe);
+
+        if (index >= lookupResults.size()) {
+            driver().switchTo().defaultContent();
+            throw new SkipException("Element index exceeds the number of found elements.");
+        }
+
+        WebElement searchResultItem = lookupResults.get(index);
+        hover(searchResultItem, "Hovering search result item.");
 
         driver().switchTo().defaultContent();
         return this;
