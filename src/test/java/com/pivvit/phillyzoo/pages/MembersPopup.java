@@ -506,6 +506,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves page title text.
+     * @return string which contains page title text
+     */
+    public String getPageTitleText() {
+        driver().switchTo().frame(contentIframe);
+
+        String result = pageTitle.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Retrieves email validation error text in the top left corner of the email input field
      * at the user information form.
      * @return string which contains error text
