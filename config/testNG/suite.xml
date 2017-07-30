@@ -58,6 +58,7 @@
     </test>
 
     <test name="WEMT-030..032 - Validate search results and change search link">
+        <parameter name="resultItemHoveredColor" value="rgb(30, 121, 195)"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_030__032"/>
         </classes>
