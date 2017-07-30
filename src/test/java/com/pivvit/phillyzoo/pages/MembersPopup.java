@@ -428,6 +428,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks return to results link
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickReturnToResultsLink() {
+        driver().switchTo().frame(contentIframe);
+
+        click(returnToResultsLink, "Clicking return to results link.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clicks submit purchase button
      * @return {@link MembersPopup} page
      */
