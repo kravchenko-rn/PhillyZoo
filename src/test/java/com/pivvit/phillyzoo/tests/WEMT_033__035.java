@@ -47,4 +47,14 @@ public class WEMT_033__035 extends BaseTest {
                 "User verification error is not displayed or has incorrect text when input fields contain incorrect characters.");
         softAssert.assertAll();
     }
+
+    @Test(testName = "WEMT-034", dependsOnMethods = "checkInvalidMissingCharacters", alwaysRun = true,
+    description = "Verify that user is redirected to 'Winter Experience Tickets' form after entering valid missing characters and clicking submit button")
+    @Parameters({"verificationCharacters", "ticketsPageTitle"})
+    public void checkValidVerificationCharacters(String charactersSet, String expectedPageTitle) {
+        MembersPopup membersPopup = new MembersPopup()
+                .inputVerificationCharacters(charactersSet.split(" "));
+        Assert.assertEquals(membersPopup.getPageTitleText(), expectedPageTitle,
+                "User is not redirected to 'Winter Experience Tickets' form after entering valid missing characters.");
+    }
 }
