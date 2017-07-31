@@ -484,6 +484,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks submit verification button
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickSubmitVerificationButton() {
+        driver().switchTo().frame(contentIframe);
+
+        click(submitVerificationButton, "Clicking submit verification button.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clicks the specified lookup result item.
      * @param itemIndex index of the item to click
      * @return  {@link MembersPopup} page
