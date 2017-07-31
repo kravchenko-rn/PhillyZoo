@@ -693,6 +693,23 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the user verification error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @param text string which contains text to be visible
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isUserVerificationErrorDisplayed(String text) {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementTextVisible(userVerificationError, text, "Checking if the user verification error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the tooltip is displayed.
      * @return {@code true} in case when the tooltip is displayed
      */
