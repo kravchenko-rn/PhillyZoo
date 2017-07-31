@@ -74,4 +74,10 @@
             <class name="com.pivvit.phillyzoo.tests.WEMT_033__035"/>
         </classes>
     </test>
+
+    <test name="WEMT-037..039 - Validate purchase tickets page">
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_037__039"/>
+        </classes>
+    </test>
 </suite>
