@@ -67,6 +67,9 @@
 
     <test name="WEMT-033..035 - Validate 'Verify yourself' page">
         <parameter name="pageTitle" value="Past Membership"/>
+        <parameter name="verificationCharacters" value="s y 3 W G"/>
+        <parameter name="incorrectVerificationCharacters" value="a b c d e"/>
+        <parameter name="verificationError" value="correct the errors above"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_033__035"/>
         </classes>
