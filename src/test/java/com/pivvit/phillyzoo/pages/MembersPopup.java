@@ -411,7 +411,7 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
-     * Selects zip code from drop down filter.
+     * Selects zip code from dropdown filter.
      * @param zipCode string which contains zip code
      * @return {@link MembersPopup} page
      */
@@ -432,6 +432,20 @@ public class MembersPopup extends BaseFEPage {
         driver().switchTo().frame(contentIframe);
 
         new Select(zipCodeFilterSelect).selectByValue("");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
+     * Selects amount of tickets from dropdown list.
+     * @param amount string which contains desired amount of tickets
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup selectTicketsAmount(String amount) {
+        driver().switchTo().frame(contentIframe);
+
+        new Select(ticketsAmountSelect).selectByVisibleText(amount);
 
         driver().switchTo().defaultContent();
         return this;
