@@ -9,6 +9,7 @@
     <parameter name="specialCharacters" value=": &quot; | \ @ # $ % ^ &amp; * +"/>
     <parameter name="expectedErrorText"
                value="no memberships were found for the information above - please modify your search"/>
+    <parameter name="verificationCharacters" value="s y 3 W G"/>
 
     <test name="WEMT-001..009 - Verify Member Lookup popup behavior">
         <parameter name="invalidCustomerIds" value="123456 12345678 qwert"/>
@@ -67,7 +68,6 @@
 
     <test name="WEMT-033..035 - Validate 'Verify yourself' page">
         <parameter name="pageTitle" value="Past Membership"/>
-        <parameter name="verificationCharacters" value="s y 3 W G"/>
         <parameter name="incorrectVerificationCharacters" value="a b c d e"/>
         <parameter name="verificationError" value="correct the errors above"/>
         <classes>
