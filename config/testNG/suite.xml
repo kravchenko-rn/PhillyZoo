@@ -76,6 +76,7 @@
     </test>
 
     <test name="WEMT-037..039 - Validate purchase tickets page">
+        <parameter name="maximumAmount" value="13"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_037__039"/>
         </classes>
