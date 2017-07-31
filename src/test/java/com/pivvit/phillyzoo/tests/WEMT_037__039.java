@@ -42,4 +42,13 @@ public class WEMT_037__039 extends BaseTest {
         }
         softAssert.assertAll();
     }
+
+    @Test(testName = "WEMT-039", dependsOnMethods = "checkButtonIsEnabled", alwaysRun = true,
+            description = "Verify that max members counter value is 13")
+    @Parameters("maximumAmount")
+    public void checkMaximumAmountOfTicketsValue(String maximumAmount) {
+        MembersPopup membersPopup = new MembersPopup();
+        Assert.assertEquals(membersPopup.getMaximumAmountOfTicketsValue(), maximumAmount,
+                "The value of the maximum amount of tickets is incorrect.");
+    }
 }
