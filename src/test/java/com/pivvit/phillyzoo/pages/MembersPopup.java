@@ -666,6 +666,23 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves the value of the maximum amount of tickets,
+     * assuming that the maximum value is the last one in the dropdown list.
+     * @return string which contains the maximum value from the dropdown
+     */
+    public String getMaximumAmountOfTicketsValue() {
+        driver().switchTo().frame(contentIframe);
+
+        Select dropdown = new Select(ticketsAmountSelect);
+        int numberOfOptions = dropdown.getOptions().size();
+
+        String result = dropdown.getOptions().get(numberOfOptions - 1).getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Retrieves parts (span elements) of a lookup result item
      * @param index index of a lookup result item
      * @return list of web elements
