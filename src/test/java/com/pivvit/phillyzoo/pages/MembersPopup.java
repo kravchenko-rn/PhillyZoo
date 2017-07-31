@@ -368,6 +368,27 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Sets text into verification input fields.
+     * @param verificationCharacters array which contains verification characters
+     * @return  {@link MembersPopup} page
+     */
+    public MembersPopup inputVerificationCharacters(String[] verificationCharacters) {
+        driver().switchTo().frame(contentIframe);
+
+        if (verificationCharacters.length != verifyMemberInputs.size()) {
+            driver().switchTo().defaultContent();
+            throw new SkipException("Number of verification characters is incorrect.");
+        }
+
+        for (int i = 0; i < verifyMemberInputs.size(); i++) {
+            verifyMemberInputs.get(i).sendKeys(verificationCharacters[i]);
+        }
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Sets text into an input field
      * @param inputElement an element to set text to
      * @param text string with text to set
