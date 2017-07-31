@@ -129,6 +129,12 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "[ng-if$='selectedMembership'] .error")
     WebElement userVerificationError;
 
+    @FindBy(css = "button.purchase-step__continue")
+    WebElement continuePurchaseButton;
+
+    @FindBy(css = ".minus-select-plus select")
+    WebElement ticketsAmountSelect;
+
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
