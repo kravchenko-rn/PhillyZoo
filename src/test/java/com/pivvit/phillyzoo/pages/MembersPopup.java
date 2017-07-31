@@ -965,6 +965,20 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the purchase continue button enabled.
+     * @return {@code true} in case when continue button is enabled
+     */
+    public boolean isPurchaseContinueButtonEnabled() {
+        driver().switchTo().frame(contentIframe);
+
+        Reporter.log("Checking whether the purchase continue button is enabled.");
+        boolean result = continuePurchaseButton.isEnabled();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Validates the look of the lookup result item.
      * @param softAssert {@link SoftAssert} assertion object
      * @param index index of the element
