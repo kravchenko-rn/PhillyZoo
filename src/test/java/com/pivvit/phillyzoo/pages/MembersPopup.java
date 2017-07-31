@@ -132,7 +132,7 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "button.purchase-step__continue")
     WebElement continuePurchaseButton;
 
-    @FindBy(css = ".minus-select-plus select")
+    @FindBy(css = ".items-list tr:nth-of-type(1) .minus-select-plus select")
     WebElement ticketsAmountSelect;
 
     public MembersPopup() {
