@@ -49,7 +49,7 @@ public class WEMT_033__035 extends BaseTest {
     }
 
     @Test(testName = "WEMT-034", dependsOnMethods = "checkInvalidMissingCharacters", alwaysRun = true,
-    description = "Verify that user is redirected to 'Winter Experience Tickets' form after entering valid missing characters and clicking submit button")
+            description = "Verify that user is redirected to 'Winter Experience Tickets' form after entering valid missing characters and clicking submit button")
     @Parameters({"verificationCharacters", "ticketsPageTitle"})
     public void checkValidVerificationCharacters(String charactersSet, String expectedPageTitle) {
         MembersPopup membersPopup = new MembersPopup()
