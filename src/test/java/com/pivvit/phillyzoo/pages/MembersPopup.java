@@ -120,6 +120,15 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "[ng-show='vm.showPurchaseSummary()']")
     WebElement purchaseSummary;
 
+    @FindBy(css = ".zoo-membership__obscured-part input")
+    List<WebElement> verifyMemberInputs;
+
+    @FindBy(css = "button[ng-click$='verifyIdentity()']")
+    WebElement submitVerificationButton;
+
+    @FindBy(css = "[ng-if$='selectedMembership'] .error")
+    WebElement userVerificationError;
+
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
