@@ -653,6 +653,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves currently selected amount of tickets
+     * @return string which contains amount of tickets
+     */
+    public String getCurrentAmountOfTickets() {
+        driver().switchTo().frame(contentIframe);
+
+        String result = new Select(ticketsAmountSelect).getFirstSelectedOption().getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Retrieves parts (span elements) of a lookup result item
      * @param index index of a lookup result item
      * @return list of web elements
