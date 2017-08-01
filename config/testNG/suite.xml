@@ -87,4 +87,11 @@
             <class name="com.pivvit.phillyzoo.tests.WEMT_040_043"/>
         </classes>
     </test>
+
+    <test name="WEMT-044..047 - Validate redirect to 'Winter' Terms and Conditions and accept terms button">
+        <parameter name="pageTitle" value="&quot;Winter&quot; Terms and Conditions"/>
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_044__047"/>
+        </classes>
+    </test>
 </suite>
