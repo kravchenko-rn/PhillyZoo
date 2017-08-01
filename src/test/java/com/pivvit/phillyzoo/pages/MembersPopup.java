@@ -537,6 +537,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks continue purchase button
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickContinuePurchaseButton() {
+        driver().switchTo().frame(contentIframe);
+
+        click(continuePurchaseButton, "Clicking continue purchase button.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clicks 'Add non member tickets' link.
      * @return {@link MembersPopup} page
      */
