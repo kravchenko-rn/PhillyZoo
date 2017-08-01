@@ -28,4 +28,13 @@ public class WEMT_040_043 extends BaseTest {
                 .clickAddNonMemberTicketsLink();
         Assert.assertTrue(membersPopup.isNonMemberTicketsSelectVisible(), "Non member tickets select is not displayed.");
     }
+
+    @Test(testName = "WEMT-042", dependsOnMethods = "checkNonMembersCounter",
+            description = "Verify that Continue button is disabled when non-members counter is 0")
+    public void checkButtonIsDisabled() {
+        MembersPopup membersPopup = new MembersPopup();
+        Assert.assertEquals(membersPopup.getCurrentAmountOfNonMemberTickets(), "0",
+                "Amount of non member tickets is not set to 0 in the first place.");
+        Assert.assertFalse(membersPopup.isPurchaseContinueButtonEnabled(), "Continue button is enabled.");
+    }
 }
