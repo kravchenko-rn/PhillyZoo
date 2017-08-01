@@ -537,6 +537,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks 'Add non member tickets' link.
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickAddNonMemberTicketsLink() {
+        driver().switchTo().frame(contentIframe);
+
+        click(addNonMemberTicketsLink, "Clicking 'Add non member tickets' link.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clicks the specified lookup result item.
      * @param itemIndex index of the item to click
      * @return  {@link MembersPopup} page
