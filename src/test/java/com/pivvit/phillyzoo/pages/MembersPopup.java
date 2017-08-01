@@ -527,6 +527,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks back arrow button
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickBackArrowButton() {
+        driver().switchTo().frame(contentIframe);
+
+        click(backArrowButton, "Clicking back arrow button.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clicks submit verification button
      * @return {@link MembersPopup} page
      */
