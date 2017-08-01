@@ -699,6 +699,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves currently selected amount of non member tickets
+     * @return string which contains amount of tickets
+     */
+    public String getCurrentAmountOfNonMemberTickets() {
+        driver().switchTo().frame(contentIframe);
+
+        String result = new Select(nonMembersTicketsAmountSelect).getFirstSelectedOption().getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Retrieves the value of the maximum amount of tickets,
      * assuming that the maximum value is the last one in the dropdown list.
      * @return string which contains the maximum value from the dropdown
