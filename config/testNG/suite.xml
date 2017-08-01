@@ -84,7 +84,7 @@
 
     <test name="WEMT-040..043 - Validate members counter">
         <classes>
-            <class name="com.pivvit.phillyzoo.tests.WEMT_040_043"/>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_040__043"/>
         </classes>
     </test>
 
