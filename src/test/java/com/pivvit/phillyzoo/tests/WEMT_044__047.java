@@ -39,4 +39,16 @@ public class WEMT_044__047 extends BaseTest {
         Assert.assertEquals(membersPopup.getPageTitleText(), prevPageTitle,
                 "Was not redirected back to Winter Experience Tickets page.");
     }
+
+    @Test(testName = "WEMT-045", dependsOnMethods = "checkBackButton",
+            description = "Verify that user is redirected to 'Winter' Terms and Conditions after clicking Continue button with non-member ticket quantity greater than zero")
+    @Parameters("pageTitle")
+    public void checkRedirectForNonMemberTickets(String pageTitle) {
+        MembersPopup membersPopup = new MembersPopup()
+                .selectTicketsAmount("0")
+                .clickAddNonMemberTicketsLink()
+                .selectNonMemberTicketsAmount("1")
+                .clickContinuePurchaseButton();
+        Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle, "Was not redirected to 'Winter' Terms and Conditions page.");
+    }
 }
