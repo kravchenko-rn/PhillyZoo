@@ -890,6 +890,20 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the non member tickets select is displayed
+     * @return {@code true} in case when customer zip code input field is displayed
+     */
+    public boolean isNonMemberTicketsSelectVisible() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(nonMembersTicketsAmountSelect,
+                "Checking whether the non member tickets select is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the customer email input field is displayed
      * @return {@code true} in case when customer email input field is displayed
      */
