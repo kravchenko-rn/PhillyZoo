@@ -90,6 +90,7 @@
 
     <test name="WEMT-044..047 - Validate redirect to 'Winter' Terms and Conditions and accept terms button">
         <parameter name="pageTitle" value="&quot;Winter&quot; Terms and Conditions"/>
+        <parameter name="prevPageTitle" value="Winter Experience Tickets"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_044__047"/>
         </classes>
