@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pivvit.base.BaseTest;
+import pivvit.utils.SoftAssert;
 
 public class WEMT_040_043 extends BaseTest {
     @BeforeTest
@@ -36,5 +37,18 @@ public class WEMT_040_043 extends BaseTest {
         Assert.assertEquals(membersPopup.getCurrentAmountOfNonMemberTickets(), "0",
                 "Amount of non member tickets is not set to 0 in the first place.");
         Assert.assertFalse(membersPopup.isPurchaseContinueButtonEnabled(), "Continue button is enabled.");
+    }
+
+    @Test(testName = "WEMT-041", dependsOnMethods = "checkButtonIsDisabled",
+            description = "Verify that Continue button is enabled when members counter is between 1 to 14 interval")
+    public void checkButtonIsEnabled() {
+        SoftAssert softAssert = new SoftAssert();
+        MembersPopup membersPopup = new MembersPopup();
+        for (int amount = 1; amount <= 14; amount++) {
+            membersPopup.selectNonMemberTicketsAmount(Integer.toString(amount));
+            softAssert.assertTrue(membersPopup.isPurchaseContinueButtonEnabled(),
+                    "Continue button is disabled for non member tickets amount " + amount);
+        }
+        softAssert.assertAll();
     }
 }
