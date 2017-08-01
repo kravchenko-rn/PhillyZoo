@@ -26,8 +26,6 @@ public class WEMT_040_043 extends BaseTest {
                 .clickLookupResultItem(0)
                 .inputVerificationCharacters(charactersSet.split(" "))
                 .clickAddNonMemberTicketsLink();
-        Assert.assertEquals(membersPopup.getCurrentAmountOfNonMemberTickets(), "0",
-                "Amount of non member tickets is not set to 0 in the first place.");
-        Assert.assertFalse(membersPopup.isPurchaseContinueButtonEnabled(), "Continue button is enabled.");
+        Assert.assertTrue(membersPopup.isNonMemberTicketsSelectVisible(), "Non member tickets select is not displayed.");
     }
 }
