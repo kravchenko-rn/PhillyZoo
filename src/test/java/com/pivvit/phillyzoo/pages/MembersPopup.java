@@ -458,6 +458,20 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Selects amount of non member tickets from dropdown list.
+     * @param amount string which contains desired amount of tickets
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup selectNonMemberTicketsAmount(String amount) {
+        driver().switchTo().frame(contentIframe);
+
+        new Select(nonMembersTicketsAmountSelect).selectByVisibleText(amount);
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clicks search button
      * @return {@link MembersPopup} page
      */
