@@ -141,6 +141,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = ".items-list tr:nth-of-type(3) .minus-select-plus select")
     WebElement nonMembersTicketsAmountSelect;
 
+    @FindBy(css = "button[ng-click='previousPurchaseStep()']")
+    WebElement backArrowButton;
+
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
