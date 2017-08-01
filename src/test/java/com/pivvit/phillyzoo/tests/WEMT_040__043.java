@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import pivvit.base.BaseTest;
 import pivvit.utils.SoftAssert;
 
-public class WEMT_040_043 extends BaseTest {
+public class WEMT_040__043 extends BaseTest {
     @BeforeTest
     public void init() {
         new HomePage().open();
