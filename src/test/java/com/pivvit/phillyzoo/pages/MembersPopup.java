@@ -543,6 +543,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks accept terms button
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickAcceptTermsButton() {
+        driver().switchTo().frame(contentIframe);
+
+        click(acceptTermsButton, "Clicking accept terms button.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clicks submit verification button
      * @return {@link MembersPopup} page
      */
