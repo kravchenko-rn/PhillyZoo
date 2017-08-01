@@ -29,4 +29,14 @@ public class WEMT_044__047 extends BaseTest {
                 .clickContinuePurchaseButton();
         Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle, "Was not redirected to 'Winter' Terms and Conditions page.");
     }
+
+    @Test(testName = "WEMT-046", dependsOnMethods = "checkRedirectForMemberTickets",
+            description = "Verify that user is able get back on previous step by clicking on back arrow link")
+    @Parameters("prevPageTitle")
+    public void checkBackButton(String prevPageTitle) {
+        MembersPopup membersPopup = new MembersPopup()
+                .clickBackArrowButton();
+        Assert.assertEquals(membersPopup.getPageTitleText(), prevPageTitle,
+                "Was not redirected back to Winter Experience Tickets page.");
+    }
 }
