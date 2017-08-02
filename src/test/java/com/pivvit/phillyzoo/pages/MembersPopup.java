@@ -562,6 +562,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks next tickets dates link
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickNextTicketsDatesLink() {
+        driver().switchTo().frame(contentIframe);
+
+        click(ticketDatesPaginationRightLink, "Clicking next tickets dates link.");
+
+        driver().switchTo().defaultContent();
+        return new MembersPopup();
+    }
+
+    /**
      * Clicks submit verification button
      * @return {@link MembersPopup} page
      */
