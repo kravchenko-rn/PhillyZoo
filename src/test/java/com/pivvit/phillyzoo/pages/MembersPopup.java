@@ -1254,4 +1254,27 @@ public class MembersPopup extends BaseFEPage {
 
         driver().switchTo().defaultContent();
     }
+
+    /**
+     * Validates the look of the selected month.
+     * @param softAssert {@link SoftAssert} assertion object
+     * @param color expected color
+     * @param validateBold {@code true} in case when we need to check if the text is bold
+     */
+    public void validateMonthsFont(SoftAssert softAssert, String color, boolean validateBold) {
+        driver().switchTo().frame(contentIframe);
+
+        availableMonths.forEach(availableMonth -> {
+            click(availableMonth, "Clicking month " + availableMonth.getText() + ".");
+            String monthColor = availableMonth.getCssValue("color");
+            int weight = Integer.parseInt(availableMonth.getCssValue("font-weight"));
+            softAssert.assertEquals(monthColor, color, "Month " + availableMonth.getText() + " has incorrect color.");
+            if (validateBold) {
+                softAssert.assertTrue(weight >= 700, "Month '" + availableMonth.getText() + "' is not bold."
+                        + "It's font-weight value is " + weight + ".");
+            }
+        });
+
+        driver().switchTo().defaultContent();
+    }
 }
