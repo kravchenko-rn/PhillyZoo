@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pivvit.base.BaseTest;
+import pivvit.utils.SoftAssert;
 
 import java.util.Locale;
 
@@ -47,5 +48,14 @@ public class WEMT_048__055 extends BaseTest {
         long numberOfDays = new Duration(dateStart, dateLast).getStandardDays();
         Assert.assertTrue(numberOfDays >= 89 && numberOfDays <= 92,
                 "Dates are not available within 3 month. Number of available days is " + numberOfDays + ".");
+    }
+
+    @Test(testName = "WEMT-049", dependsOnMethods = "checkDatesAvailableFor3Month", alwaysRun = true,
+            description = "Verify that month font color and format should changed to blue and bold after clicking")
+    @Parameters("selectedMonthColor")
+    public void checkFontFormatForSelectedMonth(String monthColor) {
+        SoftAssert softAssert = new SoftAssert();
+        new MembersPopup().validateMonthsFont(softAssert, monthColor, true);
+        softAssert.assertAll();
     }
 }
