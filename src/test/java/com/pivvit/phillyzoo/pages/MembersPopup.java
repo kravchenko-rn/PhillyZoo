@@ -798,6 +798,38 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves the number of available months for purchasing tickets
+     * @return number of available months
+     */
+    public int getNumberOfAvailableMonths() {
+        driver().switchTo().frame(contentIframe);
+
+        int result = availableMonths.size();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Retrieves the text value of the specified month by index.
+     * @param index index of the month
+     * @return string which contains month text value
+     */
+    public String getMonthText(int index) {
+        driver().switchTo().frame(contentIframe);
+
+        if (index >= availableMonths.size()) {
+            driver().switchTo().defaultContent();
+            throw new SkipException("Unable to get the month text value, months index is greater than the number of months.");
+        }
+
+        String result = availableMonths.get(index).getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Retrieves the value of the maximum amount of tickets,
      * assuming that the maximum value is the last one in the dropdown list.
      * @return string which contains the maximum value from the dropdown
