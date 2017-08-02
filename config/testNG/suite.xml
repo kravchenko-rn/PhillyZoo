@@ -98,6 +98,7 @@
     </test>
 
     <test name="WEMT-048..055 - Validate date and time selecting page">
+        <parameter name="selectedMonthColor" value="rgb(30, 121, 195)"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_048__055"/>
         </classes>
