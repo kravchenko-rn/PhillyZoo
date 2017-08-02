@@ -147,6 +147,12 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "button[ng-click='purchaseStep.acceptTerms()']")
     WebElement acceptTermsButton;
 
+    @FindBy(css = ".ticket-selection__dates__date.ng-scope")
+    List<WebElement> ticketSelectionDates;
+
+    @FindBy(css = ".ticket-selection__dates__right-arrow")
+    WebElement ticketDatesPaginationRightLink;
+
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
