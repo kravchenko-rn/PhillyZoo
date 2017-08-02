@@ -591,6 +591,25 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks the month specified by it's index.
+     * @param index index of a month
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickMonth(int index) {
+        driver().switchTo().frame(contentIframe);
+
+        if (index >= availableMonths.size()) {
+            driver().switchTo().defaultContent();
+            throw new SkipException("Unable to click the month, months index is greater than the number of months.");
+        }
+
+        click(availableMonths.get(index), "Clicking a month by index.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clicks continue purchase button
      * @return {@link MembersPopup} page
      */
