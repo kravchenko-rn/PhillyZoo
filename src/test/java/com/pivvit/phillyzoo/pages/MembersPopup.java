@@ -153,6 +153,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = ".ticket-selection__dates__right-arrow")
     WebElement ticketDatesPaginationRightLink;
 
+    @FindBy(css = ".ticket-selection__months span")
+    List<WebElement> availableMonths;
+
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
