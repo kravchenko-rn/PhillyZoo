@@ -810,6 +810,47 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves date from the first displayed element
+     * @return string which contains date
+     */
+    public String getFirstDisplayedBookingDate() {
+        return getDisplayedBookingDate(0);
+    }
+
+    /**
+     * Retrieves date from the last displayed element
+     * @return string which contains date
+     */
+    public String getLastDisplayedBookingDate() {
+        driver().switchTo().frame(contentIframe);
+
+        int lastElementIndex = ticketSelectionDates.size() - 1;
+
+        driver().switchTo().defaultContent();
+
+        return getDisplayedBookingDate(lastElementIndex);
+    }
+
+    /**
+     * Retrieves date from the specified displayed element
+     * @param dateElemIndex index of the element to retrieve date from
+     * @return string which contains date
+     */
+    private String getDisplayedBookingDate(int dateElemIndex) {
+        driver().switchTo().frame(contentIframe);
+
+        WebElement dateElem = ticketSelectionDates.get(dateElemIndex);
+        String dayOfWeek = dateElem.findElement(By.cssSelector("strong:nth-of-type(1)")).getText();
+        String month = dateElem.findElement(By.tagName("div")).getText();
+        String dayOfMonth = dateElem.findElement(By.cssSelector("strong:nth-of-type(2)")).getText();
+
+        String result = dayOfWeek + ", " + dayOfMonth + " " + month;
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Retrieves parts (span elements) of a lookup result item
      * @param index index of a lookup result item
      * @return list of web elements
