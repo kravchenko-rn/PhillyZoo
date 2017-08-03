@@ -23,9 +23,9 @@ public class WEMT_048__055 extends BaseTest {
         Actions.navigationActions().openMembersPopup();
     }
 
-    @Test(testName = "WEMT-048", description = "Verify that user can select a date within 3 months")
+    @Test(testName = "WEMT-050", description = "Verify that user is able to paginate calendar by clicking on double arrows")
     @Parameters({"email", "verificationCharacters"})
-    public void checkDatesAvailableFor3Month(String customerEmail, String charactersSet) {
+    public void checkDatesPagination(String customerEmail, String charactersSet) {
         MembersPopup membersPopup = new MembersPopup()
                 .inputCustomerEmail(customerEmail)
                 .clickSearchButton()
@@ -35,19 +35,22 @@ public class WEMT_048__055 extends BaseTest {
                 .selectTicketsAmount("1")
                 .clickContinuePurchaseButton()
                 .clickAcceptTermsButton();
+        String firstDate = membersPopup.getFirstDisplayedBookingDate();
+        membersPopup.clickNextTicketsDatesLink();
+        Assert.assertNotEquals(firstDate, membersPopup.getFirstDisplayedBookingDate(),
+                "Right pagination arrows don't work.");
 
-        String startDate = membersPopup.getFirstDisplayedBookingDate();
-        String lastDate;
-        do {
-            lastDate = membersPopup.getLastDisplayedBookingDate();
-            membersPopup.clickNextTicketsDatesLink();
-        } while (!startDate.equals(membersPopup.getFirstDisplayedBookingDate()));
-        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("EEE, dd MMM").withLocale(Locale.ENGLISH);
-        DateTime dateStart = dateTimeFormatter.parseDateTime(startDate);
-        DateTime dateLast = dateTimeFormatter.parseDateTime(lastDate);
-        long numberOfDays = new Duration(dateStart, dateLast).getStandardDays();
-        Assert.assertTrue(numberOfDays >= 89 && numberOfDays <= 92,
-                "Dates are not available within 3 month. Number of available days is " + numberOfDays + ".");
+        membersPopup.clickPreviousTicketsDatesLink();
+        Assert.assertEquals(firstDate, membersPopup.getFirstDisplayedBookingDate(),
+                "Left pagination arrows don't work.");
+    }
+
+    @Test(testName = "WEMT-048",dependsOnMethods = "checkDatesPagination", alwaysRun = true,
+            description = "Verify that user can select a date within 3 months")
+    @Parameters("numberOfMonths")
+    public void checkDatesAvailableFor3Month(int numberOfMonths) {
+        Assert.assertEquals(new MembersPopup().getNumberOfAvailableMonths(), numberOfMonths,
+                "Number of available months is incorrect.");
     }
 
     @Test(testName = "WEMT-049", dependsOnMethods = "checkDatesAvailableFor3Month", alwaysRun = true,
