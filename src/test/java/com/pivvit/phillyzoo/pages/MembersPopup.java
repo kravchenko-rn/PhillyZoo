@@ -581,6 +581,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks previous(left) tickets dates link
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickPreviousTicketsDatesLink() {
+        driver().switchTo().frame(contentIframe);
+
+        click(ticketDatesPaginationLeftLink, "Clicking previous tickets dates link.");
+
+        driver().switchTo().defaultContent();
+        return new MembersPopup();
+    }
+
+    /**
      * Clicks submit verification button
      * @return {@link MembersPopup} page
      */
