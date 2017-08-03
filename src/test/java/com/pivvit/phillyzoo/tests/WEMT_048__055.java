@@ -87,4 +87,19 @@ public class WEMT_048__055 extends BaseTest {
         membersPopup.clickTicketTimeSelect();
         softAssert.assertAll();
     }
+
+    @Test(testName = "WEMT-053", dependsOnMethods = "checkBookingTimeBoundsAndInterval", alwaysRun = true,
+            description = "Verify that 'Continue' button becomes enabled after selecting the time from Book Нour Time dropdown")
+    public void checkContinueButton() {
+        SoftAssert softAssert = new SoftAssert();
+        MembersPopup membersPopup = new MembersPopup();
+
+        softAssert.assertFalse(membersPopup.isPurchaseContinueButtonEnabled(),
+                "Continue button is enabled with no booking time selected.");
+
+        String time = membersPopup.getStartBookingTime();
+        membersPopup.selectTimeForTheTicket(time);
+        softAssert.assertTrue(membersPopup.isPurchaseContinueButtonEnabled(),
+                "Continue button is not enabled after the booking time was selected.");
+    }
 }
