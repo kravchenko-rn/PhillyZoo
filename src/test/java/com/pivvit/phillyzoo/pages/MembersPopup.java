@@ -1,9 +1,6 @@
 package com.pivvit.phillyzoo.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -158,6 +155,12 @@ public class MembersPopup extends BaseFEPage {
 
     @FindBy(css = ".ticket-selection__months span")
     List<WebElement> availableMonths;
+
+    @FindBy(css = ".ticket-selection__times-container select")
+    WebElement ticketTimeSelect;
+
+    @FindBy(css = ".ticket-selection__times-container .text-red")
+    WebElement purchaseReminder;
 
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
