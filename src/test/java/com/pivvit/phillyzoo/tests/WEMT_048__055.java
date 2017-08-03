@@ -69,4 +69,21 @@ public class WEMT_048__055 extends BaseTest {
         softAssert.assertTrue(membersPopup.isPurchaseReminderDisplayed(), "Purchase reminder is not displayed.");
         softAssert.assertAll();
     }
+
+    @Test(testName = "WEMT-052", dependsOnMethods = "checkTimeDropdownAndReminder", alwaysRun = true,
+            description = "Verify that 'Book your time' dropdown consist values from working hours (weekdays, weekends, holidays) interval with 20 min. increment")
+    @Parameters({"startTime", "endTime", "interval"})
+    public void checkBookingTimeBoundsAndInterval(String startTime, String endTime, int interval) {
+        SoftAssert softAssert = new SoftAssert();
+        MembersPopup membersPopup = new MembersPopup();
+
+        String bookingStartTime = membersPopup.getStartBookingTime();
+        String bookingEndTime = membersPopup.getEndBookingTime();
+        membersPopup.clickTicketTimeSelect();
+
+        softAssert.assertEquals(bookingStartTime, startTime, "Booking start time is incorrect.");
+        softAssert.assertEquals(bookingEndTime, endTime, "Booking end time is incorrect");
+        membersPopup.validateBookingTimeInterval(softAssert, interval);
+        softAssert.assertAll();
+    }
 }
