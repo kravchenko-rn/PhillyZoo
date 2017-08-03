@@ -830,6 +830,33 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves the text of the first option in dropdown
+     * @return string which contains the text of the first option
+     */
+    public String getStartBookingTime() {
+        driver().switchTo().frame(contentIframe);
+
+        String result = new Select(ticketTimeSelect).getOptions().get(1).getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Retrieves the text of the last option in dropdown
+     * @return string which contains the text of the last option
+     */
+    public String getEndBookingTime() {
+        driver().switchTo().frame(contentIframe);
+
+        List<WebElement> options = new Select(ticketTimeSelect).getOptions();
+        String result = options.get(options.size() - 1).getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Retrieves the number of available months for purchasing tickets
      * @return number of available months
      */
