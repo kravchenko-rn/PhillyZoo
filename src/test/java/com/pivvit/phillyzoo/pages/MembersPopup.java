@@ -532,6 +532,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks ticket time select
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickTicketTimeSelect() {
+        driver().switchTo().frame(contentIframe);
+
+        click(ticketTimeSelect, "Clicking tickettime select.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clicks submit purchase button
      * @return {@link MembersPopup} page
      */
