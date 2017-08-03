@@ -1251,6 +1251,32 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the ticket time select is displayed.
+     * @return {@code true} in case when the ticket time select is displayed
+     */
+    public boolean isTicketTimeSelectDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(ticketTimeSelect, "Checking whether the ticket time select is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the purchase reminder is displayed
+     * @return {@code true} in case when the purchase reminder is displayed
+     */
+    public boolean isPurchaseReminderDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(purchaseReminder, "Checking whether the purchase reminder is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Validates the look of the lookup result item.
      * @param softAssert {@link SoftAssert} assertion object
      * @param index index of the element
