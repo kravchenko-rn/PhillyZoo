@@ -1322,4 +1322,42 @@ public class MembersPopup extends BaseFEPage {
 
         driver().switchTo().defaultContent();
     }
+
+    /**
+     * Selects first available date from the list.
+     * Throws skip exception in case when there are no available dates.
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup selectFirstAvailableDate() {
+        String startDate = getFirstDisplayedBookingDate();
+        String newFirstDate = getFirstDisplayedBookingDate();
+        driver().switchTo().frame(contentIframe);
+
+        boolean found = false;
+        do {
+            for (WebElement ticketSelectionDate : ticketSelectionDates) {
+                try {
+                    ticketSelectionDate.findElement(By.cssSelector(".sold-out-label"));
+                } catch (NoSuchElementException e) {
+                    click(ticketSelectionDate, "Clicking ticket selection date.");
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                driver().switchTo().defaultContent();
+                clickNextTicketsDatesLink();
+                newFirstDate = getFirstDisplayedBookingDate();
+                driver().switchTo().frame(contentIframe);
+            }
+        } while (!found && !startDate.equals(newFirstDate));
+
+        if (!found) {
+            driver().switchTo().defaultContent();
+            throw new SkipException("There are no available dates.");
+        }
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
 }
