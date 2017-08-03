@@ -1407,6 +1407,20 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Selects time from the dropdown by text
+     * @param time string which contains time to select
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup selectTimeForTheTicket(String time) {
+        driver().switchTo().frame(contentIframe);
+
+        new Select(ticketTimeSelect).selectByVisibleText(time);
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Validates time interval among each time value in the 'Book your time' dropdown
      * @param softAssert {@link SoftAssert} assertion object
      * @param interval interval in minutes
