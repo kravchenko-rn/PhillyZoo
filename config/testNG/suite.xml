@@ -100,6 +100,9 @@
     <test name="WEMT-048..055 - Validate date and time selecting page">
         <parameter name="selectedMonthColor" value="rgb(30, 121, 195)"/>
         <parameter name="numberOfMonths" value="3"/>
+        <parameter name="startTime" value="10:00am"/>
+        <parameter name="endTime" value="3:00pm"/>
+        <parameter name="interval" value="30"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_048__055"/>
         </classes>
