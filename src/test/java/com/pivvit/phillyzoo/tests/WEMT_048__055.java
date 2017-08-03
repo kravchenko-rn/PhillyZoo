@@ -84,6 +84,7 @@ public class WEMT_048__055 extends BaseTest {
         softAssert.assertEquals(bookingStartTime, startTime, "Booking start time is incorrect.");
         softAssert.assertEquals(bookingEndTime, endTime, "Booking end time is incorrect");
         membersPopup.validateBookingTimeInterval(softAssert, interval);
+        membersPopup.clickTicketTimeSelect();
         softAssert.assertAll();
     }
 }
