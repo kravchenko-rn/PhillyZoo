@@ -1,5 +1,9 @@
 package com.pivvit.phillyzoo.pages;
 
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.FindBy;
@@ -17,6 +21,7 @@ import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementDecorator;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementLocatorFactory;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 @FindBy(css = "#mainContainer>section")
@@ -1399,5 +1404,28 @@ public class MembersPopup extends BaseFEPage {
 
         driver().switchTo().defaultContent();
         return this;
+    }
+
+    /**
+     * Validates time interval among each time value in the 'Book your time' dropdown
+     * @param softAssert {@link SoftAssert} assertion object
+     * @param interval interval in minutes
+     */
+    public void validateBookingTimeInterval(SoftAssert softAssert, int interval) {
+        driver().switchTo().frame(contentIframe);
+
+        List<WebElement> options = new Select(ticketTimeSelect).getOptions();
+        options.remove(0);
+        for (int index = 0; index < options.size() - 1; index++) {
+            String option1 = options.get(index).getText();
+            String option2 = options.get(index + 1).getText();
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("hh:mmaa").withLocale(Locale.ENGLISH);
+            DateTime option1time = formatter.parseDateTime(option1);
+            DateTime option2time = formatter.parseDateTime(option2);
+            softAssert.assertEquals(new Duration(option1time, option2time).getStandardMinutes(), interval,
+                    "Incorrect interval between " + option1 + " and " + option2 + ".");
+        }
+
+        driver().switchTo().defaultContent();
     }
 }
