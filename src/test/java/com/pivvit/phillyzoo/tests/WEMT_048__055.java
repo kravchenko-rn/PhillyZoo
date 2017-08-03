@@ -3,18 +3,12 @@ package com.pivvit.phillyzoo.tests;
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
 import com.pivvit.phillyzoo.pages.MembersPopup;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pivvit.base.BaseTest;
 import pivvit.utils.SoftAssert;
-
-import java.util.Locale;
 
 public class WEMT_048__055 extends BaseTest {
     @BeforeTest
@@ -45,7 +39,7 @@ public class WEMT_048__055 extends BaseTest {
                 "Left pagination arrows don't work.");
     }
 
-    @Test(testName = "WEMT-048",dependsOnMethods = "checkDatesPagination", alwaysRun = true,
+    @Test(testName = "WEMT-048", dependsOnMethods = "checkDatesPagination", alwaysRun = true,
             description = "Verify that user can select a date within 3 months")
     @Parameters("numberOfMonths")
     public void checkDatesAvailableFor3Month(int numberOfMonths) {
@@ -59,6 +53,20 @@ public class WEMT_048__055 extends BaseTest {
     public void checkFontFormatForSelectedMonth(String monthColor) {
         SoftAssert softAssert = new SoftAssert();
         new MembersPopup().validateMonthsFont(softAssert, monthColor, true);
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "WEMT-051", dependsOnMethods = "checkFontFormatForSelectedMonth", alwaysRun = true,
+            description = "Verify that Book your time dropdown and a purchasing reminder appear after selecting a date")
+    public void checkTimeDropdownAndReminder() {
+        SoftAssert softAssert = new SoftAssert();
+        MembersPopup membersPopup = new MembersPopup();
+        softAssert.assertFalse(membersPopup.isTicketTimeSelectDisplayed(), "Ticket time is displayed before the date is selected.");
+        softAssert.assertFalse(membersPopup.isPurchaseReminderDisplayed(), "Purchase reminder is displayed before the date is selected.");
+
+        membersPopup.selectFirstAvailableDate();
+        softAssert.assertTrue(membersPopup.isTicketTimeSelectDisplayed(), "Ticket time select is not displayed.");
+        softAssert.assertTrue(membersPopup.isPurchaseReminderDisplayed(), "Purchase reminder is not displayed.");
         softAssert.assertAll();
     }
 }
