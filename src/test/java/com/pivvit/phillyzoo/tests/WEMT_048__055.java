@@ -101,5 +101,6 @@ public class WEMT_048__055 extends BaseTest {
         membersPopup.selectTimeForTheTicket(time);
         softAssert.assertTrue(membersPopup.isPurchaseContinueButtonEnabled(),
                 "Continue button is not enabled after the booking time was selected.");
+        softAssert.assertAll();
     }
 }
