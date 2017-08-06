@@ -38,6 +38,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "[ng-if='purchaseStep.title']")
     WebElement pageTitle;
 
+    @FindBy(css = ".offering-purchase h3")
+    WebElement checkoutTitle;
+
     @FindBy(css = "input[ng-model$='customerID']")
     WebElement customerIdInput;
 
