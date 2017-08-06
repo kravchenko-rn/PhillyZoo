@@ -1289,7 +1289,7 @@ public class MembersPopup extends BaseFEPage {
         driver().switchTo().frame(contentIframe);
 
         Reporter.log("Checking whether the purchase continue button is enabled.");
-        boolean result = continuePurchaseButton.isEnabled();
+        boolean result = continuePurchaseButton.isEnabled() && continuePurchaseButton.getAttribute("class").contains("button-orange");
 
         driver().switchTo().defaultContent();
         return result;
