@@ -1322,6 +1322,28 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether there is at least one sold out date present at the current view.
+     * @return {@code true} in case when there is at least one sold out date at the current view
+     */
+    public boolean isSoldOutDatePresent() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = false;
+        for (WebElement ticketSelectionDate: ticketSelectionDates) {
+            try {
+                ticketSelectionDate.findElement(By.cssSelector(".sold-out-label"));
+                result = true;
+                break;
+            } catch (NoSuchElementException e) {
+                // swallow
+            }
+        }
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Validates the look of the lookup result item.
      * @param softAssert {@link SoftAssert} assertion object
      * @param index index of the element
