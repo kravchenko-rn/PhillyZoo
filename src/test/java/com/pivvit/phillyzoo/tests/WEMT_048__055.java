@@ -56,7 +56,14 @@ public class WEMT_048__055 extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(testName = "WEMT-051", dependsOnMethods = "checkFontFormatForSelectedMonth", alwaysRun = true,
+    @Test(testName = "WEMT-054", dependsOnMethods = "checkFontFormatForSelectedMonth", alwaysRun = true,
+            description = "Verify that 'Sold out' text is displayed under a date when all tickets is sold.")
+    public void checkSoldOutDate() {
+        MembersPopup membersPopup = new MembersPopup();
+        Assert.assertTrue(membersPopup.isSoldOutDatePresent(), "There is no sold out date at the current view.");
+    }
+
+    @Test(testName = "WEMT-051", dependsOnMethods = "checkSoldOutDate", alwaysRun = true,
             description = "Verify that Book your time dropdown and a purchasing reminder appear after selecting a date")
     public void checkTimeDropdownAndReminder() {
         SoftAssert softAssert = new SoftAssert();
