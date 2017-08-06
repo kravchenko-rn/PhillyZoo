@@ -199,7 +199,7 @@ public class MembersPopup extends BaseFEPage {
         sleep(1);
 
         driver().switchTo().defaultContent();
-        return this;
+        return new MembersPopup();
     }
 
     /**
@@ -659,7 +659,7 @@ public class MembersPopup extends BaseFEPage {
         click(continuePurchaseButton, "Clicking continue purchase button.");
 
         driver().switchTo().defaultContent();
-        return this;
+        return new MembersPopup();
     }
 
     /**
