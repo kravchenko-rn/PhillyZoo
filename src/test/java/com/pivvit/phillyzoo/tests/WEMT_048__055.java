@@ -110,4 +110,13 @@ public class WEMT_048__055 extends BaseTest {
                 "Continue button is not enabled after the booking time was selected.");
         softAssert.assertAll();
     }
+
+    @Test(testName = "WEMT-055", dependsOnMethods = "checkContinueButton",
+            description = "Verify that 'Checkout' popup is displayed after clicking on red colored 'Continue' button")
+    public void checkRedirectToCheckoutPage() {
+        MembersPopup membersPopup = new MembersPopup()
+                .clickContinuePurchaseButton()
+                .waitTillLoadingIndicatorDisappears();
+        Assert.assertTrue(membersPopup.isCheckoutTitleDisplayed(), "Checkout popup is not displayed.");
+    }
 }
