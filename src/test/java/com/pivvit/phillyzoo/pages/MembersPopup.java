@@ -1299,6 +1299,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the checkout title is displayed.
+     * @return {@code true} in case when the checkout title is displayed
+     */
+    public boolean isCheckoutTitleDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(checkoutTitle, "Checking whether the checkout title is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the ticket time select is displayed.
      * @return {@code true} in case when the ticket time select is displayed
      */
