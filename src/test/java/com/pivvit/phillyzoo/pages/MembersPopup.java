@@ -170,6 +170,12 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = ".ticket-selection__times-container .text-red")
     WebElement purchaseReminder;
 
+    @FindBy(css = ".price-breakdown .purchase__remove-item")
+    List<WebElement> removeTicketButtons;
+
+    @FindBy(css = ".total>td:nth-of-type(2)")
+    WebElement totalPrice;
+
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
