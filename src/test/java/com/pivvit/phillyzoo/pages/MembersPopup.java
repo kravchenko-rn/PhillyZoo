@@ -1399,6 +1399,25 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the non member ticket is present.
+     * @return {@code true} in case when non member ticket is present
+     */
+    public boolean isNonMemberTicketPresent() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = false;
+        for (WebElement ticketDescription: ticketDescriptions) {
+            if (ticketDescription.getText().contains("Non-member")) {
+                result = true;
+                break;
+            }
+        }
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the ticket time select is displayed.
      * @return {@code true} in case when the ticket time select is displayed
      */
