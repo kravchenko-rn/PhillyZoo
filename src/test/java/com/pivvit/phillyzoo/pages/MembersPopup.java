@@ -877,6 +877,22 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves the quantity of the first ticket element.
+     * @return string which contains ticket quantity
+     */
+    public String getFirstTicketQuantity() {
+        driver().switchTo().frame(contentIframe);
+
+        if (ticketQuantities.size() == 0) {
+            throw new SkipException("There are no ticket quantities. Maybe there is only one ticket selected.");
+        }
+        String result = ticketQuantities.get(0).getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Retrieves the text of the first option in dropdown
      * @return string which contains the text of the first option
      */
