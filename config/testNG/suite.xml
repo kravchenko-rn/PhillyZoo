@@ -107,4 +107,11 @@
             <class name="com.pivvit.phillyzoo.tests.WEMT_048__055"/>
         </classes>
     </test>
+
+    <test name="WEMT-056..061 - Validate checkout area">
+        <parameter name="pageTitle" value="Winter Experience Tickets"/>
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_056__061"/>
+        </classes>
+    </test>
 </suite>
