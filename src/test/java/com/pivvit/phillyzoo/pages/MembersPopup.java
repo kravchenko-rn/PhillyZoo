@@ -209,6 +209,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Waits till checkout page is loaded.
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup waitForCheckoutLoad() {
+        driver().switchTo().frame(contentIframe);
+
+        waitForVisibility(checkoutTitle, "Waiting for checkout page to load.");
+
+        driver().switchTo().defaultContent();
+        return new MembersPopup();
+    }
+
+    /**
      * Hovers mouse over the question mark in the customer id input field.
      * WORKAROUND: In Firefox browser it performs click instead of hovering because geckodriver
      * is not capable of hovering yet.
