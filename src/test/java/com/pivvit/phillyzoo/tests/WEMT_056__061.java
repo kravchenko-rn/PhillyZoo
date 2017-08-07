@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pivvit.base.BaseTest;
+import pivvit.utils.SoftAssert;
 
 public class WEMT_056__061 extends BaseTest {
     @BeforeTest
@@ -38,9 +39,11 @@ public class WEMT_056__061 extends BaseTest {
 
     }
 
-    @Test(testName = "WEMT-057", description = "Verify that Total is recalculated after changing quantity tickets (add non-member)")
+    @Test(testName = "WEMT-057, WEMT-059",
+            description = "Verify that Total is recalculated after changing quantity tickets (add non-member)")
     @Parameters("pageTitle")
-    public void checkTotalRecalculatedOnAddingNonMember(String pageTitle) {
+    public void checkTotalRecalculatedOnTicketQuantityIncrease(String pageTitle) {
+        SoftAssert softAssert = new SoftAssert();
         MembersPopup membersPopup = new MembersPopup()
                 .waitForCheckoutLoad();
         String firstTotalPrice = membersPopup.getTotalPrice();
@@ -55,10 +58,13 @@ public class WEMT_056__061 extends BaseTest {
         membersPopup.selectTimeForTheTicket(time)
                 .clickContinuePurchaseButton()
                 .waitTillLoadingIndicatorDisappears();
-        Assert.assertNotEquals(membersPopup.getTotalPrice(), firstTotalPrice, "Total price was not recalculated.");
+        softAssert.assertNotEquals(membersPopup.getTotalPrice(), firstTotalPrice, "Total price was not recalculated.");
+        softAssert.assertTrue(membersPopup.getFirstTicketQuantity().equals("(2)"), "Ticket quantity was not increased.");
+
+        softAssert.assertAll();
     }
 
-    @Test(testName = "WEMT-058", dependsOnMethods = "checkTotalRecalculatedOnAddingNonMember",
+    @Test(testName = "WEMT-058", dependsOnMethods = "checkTotalRecalculatedOnTicketQuantityIncrease",
             description = "Verify that the total amount is recalculated after removing a member or a non-member")
     public void checkTotalRecalculatedOnRemovingATicket() {
         MembersPopup membersPopup = new MembersPopup()
