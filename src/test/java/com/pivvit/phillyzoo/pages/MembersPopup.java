@@ -598,6 +598,23 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks remove ticket button of the first ticket in the list.
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup removeFirstTicket() {
+        driver().switchTo().frame(contentIframe);
+
+        if (removeTicketButtons.size() == 0) {
+            throw new SkipException("There are no remove ticket buttons.");
+        }
+
+        click(removeTicketButtons.get(0), "Clicking remove ticket button of the first ticket.");
+
+        driver().switchTo().defaultContent();
+        return new MembersPopup();
+    }
+
+    /**
      * Clicks next tickets dates link
      * @return {@link MembersPopup} page
      */
