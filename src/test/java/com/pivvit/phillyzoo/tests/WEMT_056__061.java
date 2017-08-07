@@ -67,9 +67,11 @@ public class WEMT_056__061 extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(testName = "WEMT-058", dependsOnMethods = "checkTotalSumAndTicketQuantity",
-            description = "Verify that the total amount is recalculated after removing a member or a non-member")
-    public void checkTotalRecalculatedOnRemovingATicket() {
+    @Test(testName = "WEMT-058, WEMT-060", dependsOnMethods = "checkTotalSumAndTicketQuantity",
+            description = "Verify that the total amount is recalculated after removing a member or a non-member"
+                    + "Verify that Non-member is displayed on 'Checkout' pop-up")
+    public void checkNonMemberTicketAndTotalPrice() {
+        SoftAssert softAssert = new SoftAssert();
         MembersPopup membersPopup = new MembersPopup()
                 .waitForCheckoutLoad()
                 .removeFirstTicket()
@@ -84,8 +86,11 @@ public class WEMT_056__061 extends BaseTest {
                 .clickContinuePurchaseButton()
                 .waitTillLoadingIndicatorDisappears()
                 .waitForCheckoutLoad();
+        softAssert.assertTrue(membersPopup.isNonMemberTicketPresent(), "Non member ticket is not displayed.");
         String firstTotalPrice = membersPopup.getTotalPrice();
         membersPopup.removeFirstTicket();
-        Assert.assertNotEquals(membersPopup.getTotalPrice(), firstTotalPrice, "Total price was not recalculated.");
+        softAssert.assertNotEquals(membersPopup.getTotalPrice(), firstTotalPrice, "Total price was not recalculated.");
+
+        softAssert.assertAll();
     }
 }
