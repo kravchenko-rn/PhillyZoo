@@ -1038,6 +1038,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves total price text
+     * @return string which contains total price text
+     */
+    public String getTotalPrice() {
+        driver().switchTo().frame(contentIframe);
+
+        String result = totalPrice.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the error message is displayed.
      * The element is always present and visible on the page but
      * if there's no error, it just has no text.
