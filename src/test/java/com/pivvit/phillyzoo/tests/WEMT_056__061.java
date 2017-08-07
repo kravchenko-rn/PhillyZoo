@@ -39,10 +39,12 @@ public class WEMT_056__061 extends BaseTest {
 
     }
 
-    @Test(testName = "WEMT-057, WEMT-059",
-            description = "Verify that Total is recalculated after changing quantity tickets (add non-member)")
+    @Test(testName = "WEMT-057, WEMT-059, WEMT-061",
+            description = "Verify that Total is recalculated after changing quantity tickets (add non-member)"
+                    + "Verify that the user can re-select ticket quantity after removing all items on the checkout"
+                    + "Verify that Quantity is displayed on 'Checkout' pop-up near datetime.")
     @Parameters("pageTitle")
-    public void checkTotalRecalculatedOnTicketQuantityIncrease(String pageTitle) {
+    public void checkTotalSumAndTicketQuantity(String pageTitle) {
         SoftAssert softAssert = new SoftAssert();
         MembersPopup membersPopup = new MembersPopup()
                 .waitForCheckoutLoad();
@@ -59,12 +61,13 @@ public class WEMT_056__061 extends BaseTest {
                 .clickContinuePurchaseButton()
                 .waitTillLoadingIndicatorDisappears();
         softAssert.assertNotEquals(membersPopup.getTotalPrice(), firstTotalPrice, "Total price was not recalculated.");
+        softAssert.assertTrue(membersPopup.isFirstTicketQuantityDisplayed(), "Ticket quantity is no displayed.");
         softAssert.assertTrue(membersPopup.getFirstTicketQuantity().equals("(2)"), "Ticket quantity was not increased.");
 
         softAssert.assertAll();
     }
 
-    @Test(testName = "WEMT-058", dependsOnMethods = "checkTotalRecalculatedOnTicketQuantityIncrease",
+    @Test(testName = "WEMT-058", dependsOnMethods = "checkTotalSumAndTicketQuantity",
             description = "Verify that the total amount is recalculated after removing a member or a non-member")
     public void checkTotalRecalculatedOnRemovingATicket() {
         MembersPopup membersPopup = new MembersPopup()
