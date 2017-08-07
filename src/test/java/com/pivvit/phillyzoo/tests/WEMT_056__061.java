@@ -57,4 +57,26 @@ public class WEMT_056__061 extends BaseTest {
                 .waitTillLoadingIndicatorDisappears();
         Assert.assertNotEquals(membersPopup.getTotalPrice(), firstTotalPrice, "Total price was not recalculated.");
     }
+
+    @Test(testName = "WEMT-058", dependsOnMethods = "checkTotalRecalculatedOnAddingNonMember",
+            description = "Verify that the total amount is recalculated after removing a member or a non-member")
+    public void checkTotalRecalculatedOnRemovingATicket() {
+        MembersPopup membersPopup = new MembersPopup()
+                .waitForCheckoutLoad()
+                .removeFirstTicket()
+                .selectTicketsAmount("1")
+                .clickAddNonMemberTicketsLink()
+                .selectNonMemberTicketsAmount("1")
+                .clickContinuePurchaseButton()
+                .clickContinuePurchaseButton()
+                .selectFirstAvailableDate();
+        String time = membersPopup.getStartBookingTime();
+        membersPopup = membersPopup.selectTimeForTheTicket(time)
+                .clickContinuePurchaseButton()
+                .waitTillLoadingIndicatorDisappears()
+                .waitForCheckoutLoad();
+        String firstTotalPrice = membersPopup.getTotalPrice();
+        membersPopup.removeFirstTicket();
+        Assert.assertNotEquals(membersPopup.getTotalPrice(), firstTotalPrice, "Total price was not recalculated.");
+    }
 }
