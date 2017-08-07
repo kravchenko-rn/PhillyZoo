@@ -41,7 +41,8 @@ public class WEMT_056__061 extends BaseTest {
     @Test(testName = "WEMT-057", description = "Verify that Total is recalculated after changing quantity tickets (add non-member)")
     @Parameters("pageTitle")
     public void checkTotalRecalculatedOnAddingNonMember(String pageTitle) {
-        MembersPopup membersPopup = new MembersPopup();
+        MembersPopup membersPopup = new MembersPopup()
+                .waitForCheckoutLoad();
         String firstTotalPrice = membersPopup.getTotalPrice();
         membersPopup.removeFirstTicket();
         Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle, "Was not redirected to 'Winter Experience Tickets' page.");
