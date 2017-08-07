@@ -1380,6 +1380,22 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the ticket quantity of the first element is displayed.
+     * @return {@code true} in case when the ticket quantity is displayed
+     */
+    public boolean isFirstTicketQuantityDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        if (ticketQuantities.size() == 0) {
+            throw new SkipException("There are no ticket quantities. Maybe there is only one ticket selected.");
+        }
+        boolean result = isElementVisible(ticketQuantities.get(0), "Checking whether the ticket quantity is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the ticket time select is displayed.
      * @return {@code true} in case when the ticket time select is displayed
      */
