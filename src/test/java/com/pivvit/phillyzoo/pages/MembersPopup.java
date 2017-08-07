@@ -173,6 +173,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = ".price-breakdown .purchase__remove-item")
     List<WebElement> removeTicketButtons;
 
+    @FindBy(css = ".price-breakdown td:nth-of-type(1) span")
+    List<WebElement> ticketQuantities;
+
     @FindBy(css = ".total>td:nth-of-type(2)")
     WebElement totalPrice;
 
