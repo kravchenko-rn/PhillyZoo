@@ -179,6 +179,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = ".total>td:nth-of-type(2)")
     WebElement totalPrice;
 
+    @FindBy(css = ".purchase__item td:nth-of-type(1)")
+    List<WebElement> ticketDescriptions;
+
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
