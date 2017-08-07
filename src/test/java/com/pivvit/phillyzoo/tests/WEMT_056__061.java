@@ -52,7 +52,8 @@ public class WEMT_056__061 extends BaseTest {
                 .selectFirstAvailableDate();
         String time = membersPopup.getStartBookingTime();
         membersPopup.selectTimeForTheTicket(time)
-                .clickContinuePurchaseButton();
+                .clickContinuePurchaseButton()
+                .waitTillLoadingIndicatorDisappears();
         Assert.assertNotEquals(membersPopup.getTotalPrice(), firstTotalPrice, "Total price was not recalculated.");
     }
 }
