@@ -51,4 +51,16 @@ public class WEMT_062__067 extends BaseTest {
         Assert.assertTrue(membersPopup.isPaymentMethodErrorDisplayed(errorText),
                 "Validation error is not displayed.");
     }
+
+    @Test(testName = "WEMT-063", dependsOnMethods = "checkInvalidCardData", alwaysRun = true,
+            description = "Verify that error message appear when entering an invalid coupon code")
+    @Parameters({"invalidDiscount", "discountError"})
+    public void checkInvalidCouponError(String discount, String discountErrorText) {
+        MembersPopup membersPopup = new MembersPopup()
+                .clickApplyCodeLink()
+                .inputDiscount(discount)
+                .clickApplyDiscountButton();
+        Assert.assertTrue(membersPopup.isDiscountErrorDisplayed(discountErrorText),
+                "Discount error is not displayed.");
+    }
 }
