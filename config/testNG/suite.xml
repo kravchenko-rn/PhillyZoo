@@ -114,4 +114,16 @@
             <class name="com.pivvit.phillyzoo.tests.WEMT_056__061"/>
         </classes>
     </test>
+
+    <test name="WEMT-062..067 - Validate checkout page">
+        <parameter name="paymentSystem" value="visa"/>
+        <parameter name="invalidCardNumber" value="1111222233334444"/>
+        <parameter name="invalidCardCvv" value="123"/>
+        <parameter name="invalidPostalCode" value="11111"/>
+        <parameter name="invalidEmail" value="invalid@email.err"/>
+        <parameter name="errorText" value="Your card number is incorrect."/>
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_062__067"/>
+        </classes>
+    </test>
 </suite>
