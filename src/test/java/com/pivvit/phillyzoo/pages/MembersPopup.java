@@ -376,11 +376,61 @@ public class MembersPopup extends BaseFEPage {
 
     /**
      * Sets text into phone filter input field.
-     * @param phoneNumer string which contains phone number
+     * @param phoneNumber string which contains phone number
      * @return {@link MembersPopup} page
      */
-    public MembersPopup inputCustomerPhoneNumber(String phoneNumer) {
-        inputText(phoneFilterInput, phoneNumer);
+    public MembersPopup inputCustomerPhoneNumber(String phoneNumber) {
+        inputText(phoneFilterInput, phoneNumber);
+        return this;
+    }
+
+    /**
+     * Sets text into payment system input.
+     * @param paymentSystem string which contains payment system
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputPaymentSystem(String paymentSystem) {
+        inputText(paymentSystemInput, paymentSystem);
+        return this;
+    }
+
+    /**
+     * Sets text into card number input field.
+     * @param cardNumber string which contains card number
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputCardNumber(String cardNumber) {
+        inputText(cardNumberInput, cardNumber);
+        return this;
+    }
+
+    /**
+     * Sets text into card cvv input.
+     * @param cvv string which contains cvv
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputCardCvv(String cvv) {
+        inputText(cardCvvInput, cvv);
+        return this;
+    }
+
+    /**
+     * Sets text into account profile email input.
+     * @param email string which contains account profile email
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputAccountProfileEmail(String email) {
+        inputText(accountEmail, email);
+        return this;
+    }
+
+    /**
+     * Sets text into card postal code input.
+     * @param postalCode string which contains postal code
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputCardPostalCode(String postalCode) {
+        inputText(cardPostalCode, postalCode);
         return this;
     }
 
@@ -509,6 +559,34 @@ public class MembersPopup extends BaseFEPage {
 
         driver().switchTo().defaultContent();
         return this;
+    }
+
+    /**
+     * Selects first value from card expiration month dropdown.
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup selectCardExpirationMonthLastValue() {
+        selectDropDownLastValue(cardExpirationMonth);
+        return this;
+    }
+
+    /**
+     * Selects first value from card expiration year dropdown.
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup selectCardExpirationYearLastValue() {
+        selectDropDownLastValue(cardExpirationYear);
+        return this;
+    }
+
+    private void selectDropDownLastValue(WebElement dropdown) {
+        driver().switchTo().frame(contentIframe);
+
+        Select select = new Select(dropdown);
+        String numberOfValues = Integer.toString(select.getOptions().size() - 2);
+        select.selectByValue(numberOfValues);
+
+        driver().switchTo().defaultContent();
     }
 
     /**
