@@ -774,6 +774,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks apply code link
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickApplyCodeLink() {
+        driver().switchTo().frame(contentIframe);
+
+        click(applyCodeLink, "Clicking apply code link.");
+
+        driver().switchTo().defaultContent();
+        return new MembersPopup();
+    }
+
+    /**
      * Clicks previous(left) tickets dates link
      * @return {@link MembersPopup} page
      */
@@ -842,6 +855,19 @@ public class MembersPopup extends BaseFEPage {
 
         driver().switchTo().defaultContent();
         return this;
+    }
+
+    /**
+     * Clicks apply discount button
+     * @return  {@link MembersPopup} page
+     */
+    public MembersPopup clickApplyDiscountButton() {
+        driver().switchTo().frame(contentIframe);
+
+        click(applyDiscountButton, "Clicking apply discount button.");
+
+        driver().switchTo().defaultContent();
+        return new MembersPopup();
     }
 
     /**
