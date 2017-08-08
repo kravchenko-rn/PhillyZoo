@@ -692,7 +692,7 @@ public class MembersPopup extends BaseFEPage {
         click(submitPurchaseButton, "Clicking submit purchase button.");
 
         driver().switchTo().defaultContent();
-        return this;
+        return new MembersPopup();
     }
 
     /**
