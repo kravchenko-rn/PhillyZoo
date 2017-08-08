@@ -1592,6 +1592,22 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the discount error is displayed  (by error text),
+     * because the element itself is always visible but has no text.
+     * @param errorText text of the error
+     * @return {@code true} in case when discount error is displayed
+     */
+    public boolean isDiscountErrorDisplayed(String errorText) {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementTextVisible(discountError, errorText,
+                "Checking whether the discount error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the non member ticket is present.
      * @return {@code true} in case when non member ticket is present
      */
