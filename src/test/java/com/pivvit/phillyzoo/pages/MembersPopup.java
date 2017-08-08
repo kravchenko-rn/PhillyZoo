@@ -892,6 +892,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves card number validation error text in the top left corner of the input field
+     * @return string which contains error text
+     */
+    public String getCardNumberValidationErrorText() {
+        driver().switchTo().frame(contentIframe);
+
+        String result = cardNumberValidationError.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Retrieves page title text.
      * @return string which contains page title text
      */
