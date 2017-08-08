@@ -209,6 +209,18 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "[ng-if='paymentMethod.errors.error']")
     WebElement paymentMethodError;
 
+    @FindBy(css = "[ng-click='vm.enterCode()']")
+    WebElement applyCodeLink;
+
+    @FindBy(css = "[ng-model='vm.discount.code']")
+    WebElement discountInput;
+
+    @FindBy(css = ".enter-discount__apply > button")
+    WebElement applyDiscountButton;
+
+    @FindBy(css = ".error>small")
+    WebElement discountError;
+
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
