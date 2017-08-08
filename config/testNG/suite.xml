@@ -122,6 +122,8 @@
         <parameter name="invalidPostalCode" value="11111"/>
         <parameter name="invalidEmail" value="invalid@email.err"/>
         <parameter name="errorText" value="Your card number is incorrect."/>
+        <parameter name="invalidDiscount" value="qwert"/>
+        <parameter name="discountError" value="invalid code, please try again"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_062__067"/>
         </classes>
