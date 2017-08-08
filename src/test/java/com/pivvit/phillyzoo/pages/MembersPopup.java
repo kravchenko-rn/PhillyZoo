@@ -1178,6 +1178,17 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the card number validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isCardNumberValidationErrorMessageDisplayed() {
+        return !getCardNumberValidationErrorText().isEmpty();
+    }
+
+    /**
      * Retrieves error message text
      * @return string which contains error text
      */
@@ -1511,6 +1522,22 @@ public class MembersPopup extends BaseFEPage {
             throw new SkipException("There are no ticket quantities. Maybe there is only one ticket selected.");
         }
         boolean result = isElementVisible(ticketQuantities.get(0), "Checking whether the ticket quantity is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the payment method error is displayed  (by error text),
+     * because the element itself is always visible but has no text.
+     * @param errorText text of the error
+     * @return {@code true} in case when payment method error is displayed
+     */
+    public boolean isPaymentMethodErrorDisplayed(String errorText) {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementTextVisible(paymentMethodError, errorText,
+                "Checking whether the payment method error is displayed.");
 
         driver().switchTo().defaultContent();
         return result;
