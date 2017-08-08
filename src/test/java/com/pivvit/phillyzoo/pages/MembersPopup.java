@@ -417,6 +417,16 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Sets text into discount input field.
+     * @param discount string which contains discount
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputDiscount(String discount) {
+        inputText(discountInput, discount);
+        return this;
+    }
+
+    /**
      * Sets text into card cvv input.
      * @param cvv string which contains cvv
      * @return {@link MembersPopup} page
