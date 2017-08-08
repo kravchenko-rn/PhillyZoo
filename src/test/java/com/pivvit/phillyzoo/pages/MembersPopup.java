@@ -182,6 +182,33 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = ".purchase__item td:nth-of-type(1)")
     List<WebElement> ticketDescriptions;
 
+    @FindBy(css = ".purchase-register [ng-model='paymentMethod.name']")
+    WebElement paymentSystemInput;
+
+    @FindBy(css = ".purchase-register [ng-model='paymentMethod.cardNumber']")
+    WebElement cardNumberInput;
+
+    @FindBy(css = ".purchase-register [ng-model='paymentMethod.expirationMonth']")
+    WebElement cardExpirationMonth;
+
+    @FindBy(css = ".purchase-register [ng-model='paymentMethod.expirationYear']")
+    WebElement cardExpirationYear;
+
+    @FindBy(css = ".purchase-register [ng-model='paymentMethod.postalCode']")
+    WebElement cardPostalCode;
+
+    @FindBy(css = ".purchase-register [ng-model='paymentMethod.securityCode']")
+    WebElement cardCvvInput;
+
+    @FindBy(css = ".purchase-register [ng-model='accountProfile.email']")
+    WebElement accountEmail;
+
+    @FindBy(css = ".purchase-register .purchase__register__cardNumber span")
+    WebElement cardNumberValidationError;
+
+    @FindBy(css = "[ng-if='paymentMethod.errors.error']")
+    WebElement paymentMethodError;
+
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
