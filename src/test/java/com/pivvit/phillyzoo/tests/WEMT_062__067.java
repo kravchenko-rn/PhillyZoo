@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pivvit.base.BaseTest;
+import pivvit.utils.SoftAssert;
 
 @SuppressWarnings("all")
 public class WEMT_062__067 extends BaseTest {
@@ -33,7 +34,23 @@ public class WEMT_062__067 extends BaseTest {
                 .waitForCheckoutLoad();
     }
 
-    @Test(testName = "WEMT-062",
+    @Test(testName = "WEMT-065",
+            description = "Verify that error textbox validation appear on the payment information textboxes when clicking on Purchase button with blank payment information")
+    public void checkBlankFieldsValidationErrors() {
+        SoftAssert softAssert = new SoftAssert();
+        MembersPopup membersPopup = new MembersPopup()
+                .clickSubmitPurchaseButton();
+        softAssert.assertTrue(membersPopup.isCardNumberValidationErrorDisplayed(), "Card number validation error is not displayed.");
+        softAssert.assertTrue(membersPopup.isCardPaymentMethodValidationErrorDisplayed(), "Card payment method validation error is not displayed.");
+        softAssert.assertTrue(membersPopup.isCardExpirationMonthValidationErrorDisplayed(), "Card expiration month validation error is not displayed.");
+        softAssert.assertTrue(membersPopup.isCardExpirationYearValidationErrorDisplayed(), "Card expiration year validation error is not displayed.");
+        softAssert.assertTrue(membersPopup.isCardCvvValidationErrorDisplayed(), "Card cvv validation error is not displayed.");
+        softAssert.assertTrue(membersPopup.isCardPostalCodeValidationErrorDisplayed(), "Card postal code validation error is not displayed.");
+
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "WEMT-062", dependsOnMethods = "checkBlankFieldsValidationErrors", alwaysRun = true,
             description = "Verify that error textbox validation appear on the payment information textboxes when entering invalid payment details")
     @Parameters({"paymentSystem", "invalidCardNumber", "invalidCardCvv", "invalidPostalCode", "errorText", "invalidEmail"})
     public void checkInvalidCardData(String paymentSystem, String cardNumber, String cardCvv,
