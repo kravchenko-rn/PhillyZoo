@@ -1611,6 +1611,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks if the tickets timer message is displayed.
+     * @return {@code true} in case when the tickets timer message is displayed
+     */
+    public boolean isTicketsTimerDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(ticketsTimerMessage, "Checking whether the tickets timer message is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the purchase summary is displayed.
      * @return {@code true} in case when the purchase summary is displayed
      */
