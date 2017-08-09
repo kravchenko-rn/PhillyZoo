@@ -124,6 +124,7 @@
         <parameter name="errorText" value="Your card number is incorrect."/>
         <parameter name="invalidDiscount" value="qwert"/>
         <parameter name="discountError" value="invalid code, please try again"/>
+        <parameter name="pageTitle" value="&quot;Winter&quot; Experience Tickets"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_062__067"/>
         </classes>
