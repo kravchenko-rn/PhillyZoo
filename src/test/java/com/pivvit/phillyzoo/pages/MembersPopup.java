@@ -23,6 +23,8 @@ import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementLocatorFactory
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @FindBy(css = "#mainContainer>section")
 public class MembersPopup extends BaseFEPage {
@@ -1800,6 +1802,26 @@ public class MembersPopup extends BaseFEPage {
         });
 
         driver().switchTo().defaultContent();
+    }
+
+    /**
+     * Validates that ticket hold time is five minutes.
+     * @param softAssert {@link SoftAssert} assertion object
+     */
+    public void validateTicketHoldTimeFiveMin(SoftAssert softAssert) {
+        String holdMessage = getTicketHoldMessageText();
+        Pattern timePattern = Pattern.compile("\\d{1,2}:\\d{2}");
+        Matcher matcher = timePattern.matcher(holdMessage);
+        if (matcher.find()) {
+            String countdownValue = String.copyValueOf(holdMessage.toCharArray(), matcher.start(), matcher.end() - matcher.start());
+            DateTimeFormatter dtf = DateTimeFormat.forPattern("mm:ss");
+            DateTime time = dtf.parseDateTime(countdownValue);
+            DateTime zeroMinutes = dtf.parseDateTime("0:00");
+            Duration duration = new Duration(zeroMinutes, time);
+            softAssert.assertEquals(duration.getStandardMinutes(), 5, "Ticket hold time is incorrect.");
+        } else {
+            softAssert.fail("There is no time displayed in the message.");
+        }
     }
 
     /**
