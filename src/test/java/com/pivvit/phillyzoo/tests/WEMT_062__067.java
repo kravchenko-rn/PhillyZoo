@@ -66,6 +66,16 @@ public class WEMT_062__067 extends BaseTest {
         softAssert.assertAll();
     }
 
+    @Test(testName = "WEMT-066", dependsOnMethods = "checkBlankFieldsValidationErrors", alwaysRun = true,
+            description = "Verify that user returns to 'Winter' Experience Tickets pop-up when held time is finished")
+    @Parameters("pageTitle")
+    public void checkRedirectOnHoldTimeFinish(String pageTitle) {
+        MembersPopup membersPopup = new MembersPopup();
+        membersPopup.sleep(300);
+        Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle,
+                "Was not redirected to 'Winter' Experience Tickets pop-up when hold time was finished.");
+    }
+
     @Test(testName = "WEMT-062", dependsOnMethods = "checkBlankFieldsValidationErrors", alwaysRun = true,
             description = "Verify that error textbox validation appear on the payment information textboxes when entering invalid payment details")
     @Parameters({"paymentSystem", "invalidCardNumber", "invalidCardCvv", "invalidPostalCode", "errorText", "invalidEmail"})
