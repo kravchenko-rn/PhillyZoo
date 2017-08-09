@@ -203,9 +203,6 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = ".purchase-register [ng-model='accountProfile.email']")
     WebElement accountEmail;
 
-    @FindBy(css = ".purchase-register .purchase__register__cardNumber span")
-    WebElement cardNumberValidationError;
-
     @FindBy(css = "[ng-if='paymentMethod.errors.error']")
     WebElement paymentMethodError;
 
@@ -934,19 +931,6 @@ public class MembersPopup extends BaseFEPage {
         driver().switchTo().frame(contentIframe);
 
         String result = lastNameValidationError.getText();
-
-        driver().switchTo().defaultContent();
-        return result;
-    }
-
-    /**
-     * Retrieves card number validation error text in the top left corner of the input field
-     * @return string which contains error text
-     */
-    public String getCardNumberValidationErrorText() {
-        driver().switchTo().frame(contentIframe);
-
-        String result = cardNumberValidationError.getText();
 
         driver().switchTo().defaultContent();
         return result;
