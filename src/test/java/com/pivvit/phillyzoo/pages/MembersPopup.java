@@ -1210,14 +1210,105 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the card payment method validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isCardPaymentMethodValidationErrorDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        WebElement validationError = paymentSystemInput.findElement(By.xpath("following-sibling::span"));
+        boolean result = isElementTextVisible(validationError, "required", "Checking whether the card payment system validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the card expiration month validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isCardExpirationMonthValidationErrorDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        WebElement validationError = cardExpirationMonth.findElement(By.xpath("parent::*/following-sibling::span"));
+        boolean result = isElementTextVisible(validationError, "required", "Checking whether the card expiration month validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the card expiration year validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isCardExpirationYearValidationErrorDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        WebElement validationError = cardExpirationYear.findElement(By.xpath("parent::*/following-sibling::span"));
+        boolean result = isElementTextVisible(validationError, "required", "Checking whether the card expiration year validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the card cvv validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isCardCvvValidationErrorDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        WebElement validationError = cardCvvInput.findElement(By.xpath("following-sibling::span"));
+        boolean result = isElementTextVisible(validationError, "required", "Checking whether the card cvv validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the card postal code validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isCardPostalCodeValidationErrorDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        WebElement validationError = cardPostalCode.findElement(By.xpath("following-sibling::span"));
+        boolean result = isElementTextVisible(validationError, "required", "Checking whether the card postal code validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the card number validation error message is displayed.
      * The element is always present and visible on the page but
      * if there's no error, it just has no text.
      * So the check is performed by verifying if the error text is empty or not.
      * @return {@code true} in case when the error text is not empty
      */
-    public boolean isCardNumberValidationErrorMessageDisplayed() {
-        return !getCardNumberValidationErrorText().isEmpty();
+    public boolean isCardNumberValidationErrorDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        WebElement validationError = cardNumberInput.findElement(By.xpath("following-sibling::span"));
+        boolean result = isElementTextVisible(validationError, "required", "Checking whether the card validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
     }
 
     /**
