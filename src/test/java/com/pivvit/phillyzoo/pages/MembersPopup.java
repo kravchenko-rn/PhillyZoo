@@ -1341,6 +1341,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves ticket hold message.
+     * @return string which contains ticket hold message
+     */
+    public String getTicketHoldMessageText() {
+        driver().switchTo().frame(contentIframe);
+
+        String result = ticketsTimerMessage.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the error message is displayed.
      * The element is always present and visible on the page but
      * if there's no error, it just has no text.
