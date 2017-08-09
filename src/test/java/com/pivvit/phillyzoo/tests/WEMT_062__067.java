@@ -34,7 +34,17 @@ public class WEMT_062__067 extends BaseTest {
                 .waitForCheckoutLoad();
     }
 
-    @Test(testName = "WEMT-064",
+    @Test(testName = "WEMT-065",
+            description = "Verify that experience ticket on held 5 minutes")
+    public void checkTicketsHoldTime() {
+        SoftAssert softAssert = new SoftAssert();
+        MembersPopup membersPopup = new MembersPopup();
+        Assert.assertTrue(membersPopup.isTicketsTimerDisplayed(), "Ticket hold message is not displayed.");
+        membersPopup.validateTicketHoldTimeFiveMin(softAssert);
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "WEMT-064", dependsOnMethods = "checkTicketsHoldTime", alwaysRun = true,
             description = "Verify that error textbox validation appear on the payment information textboxes when clicking on Purchase button with blank payment information")
     public void checkBlankFieldsValidationErrors() {
         SoftAssert softAssert = new SoftAssert();
