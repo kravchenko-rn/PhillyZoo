@@ -50,12 +50,18 @@ public class WEMT_062__067 extends BaseTest {
         SoftAssert softAssert = new SoftAssert();
         MembersPopup membersPopup = new MembersPopup()
                 .clickSubmitPurchaseButton();
-        softAssert.assertTrue(membersPopup.isCardNumberValidationErrorDisplayed(), "Card number validation error is not displayed.");
-        softAssert.assertTrue(membersPopup.isCardPaymentMethodValidationErrorDisplayed(), "Card payment method validation error is not displayed.");
-        softAssert.assertTrue(membersPopup.isCardExpirationMonthValidationErrorDisplayed(), "Card expiration month validation error is not displayed.");
-        softAssert.assertTrue(membersPopup.isCardExpirationYearValidationErrorDisplayed(), "Card expiration year validation error is not displayed.");
-        softAssert.assertTrue(membersPopup.isCardCvvValidationErrorDisplayed(), "Card cvv validation error is not displayed.");
-        softAssert.assertTrue(membersPopup.isCardPostalCodeValidationErrorDisplayed(), "Card postal code validation error is not displayed.");
+        softAssert.assertTrue(membersPopup.isCardNumberValidationErrorDisplayed(),
+                "Card number validation error is not displayed.");
+        softAssert.assertTrue(membersPopup.isCardPaymentMethodValidationErrorDisplayed(),
+                "Card payment method validation error is not displayed.");
+        softAssert.assertTrue(membersPopup.isCardExpirationMonthValidationErrorDisplayed(),
+                "Card expiration month validation error is not displayed.");
+        softAssert.assertTrue(membersPopup.isCardExpirationYearValidationErrorDisplayed(),
+                "Card expiration year validation error is not displayed.");
+        softAssert.assertTrue(membersPopup.isCardCvvValidationErrorDisplayed(),
+                "Card cvv validation error is not displayed.");
+        softAssert.assertTrue(membersPopup.isCardPostalCodeValidationErrorDisplayed(),
+                "Card postal code validation error is not displayed.");
 
         softAssert.assertAll();
     }
