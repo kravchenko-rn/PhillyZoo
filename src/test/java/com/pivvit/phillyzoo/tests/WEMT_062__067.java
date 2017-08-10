@@ -44,11 +44,23 @@ public class WEMT_062__067 extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(testName = "WEMT-064", dependsOnMethods = "checkTicketsHoldTime", alwaysRun = true,
+    @Test(testName = "WEMT-067", dependsOnMethods = "checkTicketsHoldTime", alwaysRun = true,
+            description = "Verify that 'Edit purchase' link return user to 'Winter' Experience Tickets pop-up")
+    @Parameters("pageTitle")
+    public void checkEditPurchaseLink(String pageTitle) {
+        MembersPopup membersPopup = new MembersPopup()
+                .clickEditPurchaseLink();
+        Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle, "Was not redirected to 'Winter' Experience Tickets pop-up.");
+    }
+
+    @Test(testName = "WEMT-064", dependsOnMethods = "checkEditPurchaseLink", alwaysRun = true,
             description = "Verify that error textbox validation appear on the payment information textboxes when clicking on Purchase button with blank payment information")
     public void checkBlankFieldsValidationErrors() {
         SoftAssert softAssert = new SoftAssert();
         MembersPopup membersPopup = new MembersPopup()
+                .clickContinuePurchaseButton()
+                .waitTillLoadingIndicatorDisappears()
+                .waitForCheckoutLoad()
                 .clickSubmitPurchaseButton();
         softAssert.assertTrue(membersPopup.isCardNumberValidationErrorDisplayed(),
                 "Card number validation error is not displayed.");
@@ -76,12 +88,17 @@ public class WEMT_062__067 extends BaseTest {
                 "Was not redirected to 'Winter' Experience Tickets pop-up when hold time was finished.");
     }
 
-    @Test(testName = "WEMT-062", dependsOnMethods = "checkBlankFieldsValidationErrors", alwaysRun = true,
+    @Test(testName = "WEMT-062", dependsOnMethods = "checkRedirectOnHoldTimeFinish", alwaysRun = true,
             description = "Verify that error textbox validation appear on the payment information textboxes when entering invalid payment details")
     @Parameters({"paymentSystem", "invalidCardNumber", "invalidCardCvv", "invalidPostalCode", "errorText", "invalidEmail"})
     public void checkInvalidCardData(String paymentSystem, String cardNumber, String cardCvv,
                                      String postalCode, String errorText, String email) {
-        MembersPopup membersPopup = new MembersPopup()
+        MembersPopup membersPopup = new MembersPopup();
+        String time = membersPopup.getStartBookingTime();
+        membersPopup.selectTimeForTheTicket(time)
+                .clickContinuePurchaseButton()
+                .waitTillLoadingIndicatorDisappears()
+                .waitForCheckoutLoad()
                 .inputPaymentSystem(paymentSystem)
                 .inputCardNumber(cardNumber)
                 .selectCardExpirationMonthLastValue()
