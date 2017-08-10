@@ -1550,6 +1550,34 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the login link displayed
+     * @return {@code true} in case when login link is displayed
+     */
+    public boolean isLoginLinkDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(loginLink,
+                "Checking whether the login link is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the create new account link displayed
+     * @return {@code true} in case when create new account link is displayed
+     */
+    public boolean isCreateNewAccountLinkDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(createNewAccountLink,
+                "Checking whether the 'create new account' link is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether zip code filter is displayed
      * @return {@code true} in case when zip code filter is displayed
      */
