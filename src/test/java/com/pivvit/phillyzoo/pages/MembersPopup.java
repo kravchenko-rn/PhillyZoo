@@ -1038,6 +1038,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Retrieves number of ticket items
+     * @return number of ticket items
+     */
+    public int getNumberOfTicketItems() {
+        driver().switchTo().frame(contentIframe);
+
+        int result = driver().findElements(By.cssSelector(".purchase__item")).size();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Retrieves currently selected amount of non member tickets
      * @return string which contains amount of tickets
      */
