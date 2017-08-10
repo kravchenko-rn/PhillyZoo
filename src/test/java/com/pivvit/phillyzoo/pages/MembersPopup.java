@@ -716,6 +716,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks login link
+     * @return  {@link MembersPopup} page
+     */
+    public MembersPopup clickLoginLink() {
+        driver().switchTo().frame(contentIframe);
+
+        click(loginLink, "Clicking login link.");
+
+        driver().switchTo().defaultContent();
+        return new MembersPopup();
+    }
+
+    /**
      * Clicks ticket time select
      * @return {@link MembersPopup} page
      */
