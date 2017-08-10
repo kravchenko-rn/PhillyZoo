@@ -223,6 +223,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "[ng-if='winterTicketsTimer']")
     WebElement ticketsTimerMessage;
 
+    @FindBy(css = "a[ng-click^='goBack']")
+    WebElement editPurchaseLink;
+
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
