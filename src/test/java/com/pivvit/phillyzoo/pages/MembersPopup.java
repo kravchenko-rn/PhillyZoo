@@ -232,6 +232,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "a[ng-click^='UI.hide']")
     WebElement createNewAccountLink;
 
+    @FindBy(css = ".purchase-register")
+    WebElement newAccountForm;
+
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
