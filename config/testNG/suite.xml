@@ -136,4 +136,10 @@
             <class name="com.pivvit.phillyzoo.tests.WEMT_068__069"/>
         </classes>
     </test>
+
+    <test name="WEMT-070..072- Validate login actions">
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_070__072"/>
+        </classes>
+    </test>
 </suite>
