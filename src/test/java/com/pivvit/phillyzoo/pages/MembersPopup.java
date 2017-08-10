@@ -697,6 +697,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks edit purchase link
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickEditPurchaseLink() {
+        driver().switchTo().frame(contentIframe);
+
+        click(editPurchaseLink, "Clicking edit purchase link.");
+
+        driver().switchTo().defaultContent();
+        return new MembersPopup();
+    }
+
+    /**
      * Clicks ticket time select
      * @return {@link MembersPopup} page
      */
