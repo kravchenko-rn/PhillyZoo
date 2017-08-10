@@ -720,12 +720,25 @@ public class MembersPopup extends BaseFEPage {
 
     /**
      * Clicks login link
-     * @return  {@link MembersPopup} page
+     * @return {@link MembersPopup} page
      */
     public MembersPopup clickLoginLink() {
         driver().switchTo().frame(contentIframe);
 
         click(loginLink, "Clicking login link.");
+
+        driver().switchTo().defaultContent();
+        return new MembersPopup();
+    }
+
+    /**
+     * Clicks create new account link
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickCreateNewAccountLink() {
+        driver().switchTo().frame(contentIframe);
+
+        click(createNewAccountLink, "Clicking create new account link.");
 
         driver().switchTo().defaultContent();
         return new MembersPopup();
@@ -1575,6 +1588,20 @@ public class MembersPopup extends BaseFEPage {
 
         boolean result = isElementVisible(createNewAccountLink,
                 "Checking whether the 'create new account' link is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the new account form is displayed
+     * @return {@code true} in case when the new account form is displayed
+     */
+    public boolean isNewAccountFormDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(newAccountForm,
+                "Checking whether the 'create new account' form is displayed.");
 
         driver().switchTo().defaultContent();
         return result;
