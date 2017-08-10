@@ -43,4 +43,25 @@ public class WEMT_068__069 extends BaseTest {
         membersPopup.removeFirstTicket();
         Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle, "Was not redirected to 'Winter' Experience Tickets pop-up");
     }
+
+    @Test(testName = "WEMT-069", dependsOnMethods = "checkDeleteButtonOneMember",
+            description = "Verify that 'x' (near date and time) have an able to remove members.")
+    public void checkAbilityToRemoveMembers() {
+        MembersPopup membersPopup = new MembersPopup()
+                .selectTicketsAmount("1")
+                .clickAddNonMemberTicketsLink()
+                .selectNonMemberTicketsAmount("1")
+                .clickContinuePurchaseButton()
+                .clickContinuePurchaseButton()
+                .selectFirstAvailableDate();
+        String time = membersPopup.getStartBookingTime();
+        membersPopup.selectTimeForTheTicket(time)
+                .clickContinuePurchaseButton()
+                .waitTillLoadingIndicatorDisappears()
+                .waitForCheckoutLoad();
+        Assert.assertEquals(membersPopup.getNumberOfTicketItems(), 2, "Incorrect number of ticket items.");
+
+        membersPopup.removeSecondTicket();
+        Assert.assertEquals(membersPopup.getNumberOfTicketItems(), 1, "Non member ticket was not removed.");
+    }
 }
