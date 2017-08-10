@@ -129,4 +129,11 @@
             <class name="com.pivvit.phillyzoo.tests.WEMT_062__067"/>
         </classes>
     </test>
+
+    <test name="WEMT-068..069 - Validate delete button near ticket">
+        <parameter name="pageTitle" value="Winter Experience Tickets"/>
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_068__069"/>
+        </classes>
+    </test>
 </suite>
