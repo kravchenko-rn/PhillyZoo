@@ -42,4 +42,12 @@ public class WEMT_070__072 extends BaseTest {
         membersPopup.clickLoginLink();
         Assert.assertTrue(membersPopup.isCreateNewAccountLinkDisplayed(), "'create new account' link is not displayed.");
     }
+
+    @Test(testName = "WEMT-071", dependsOnMethods = "checkCreateNewAccountLink",
+            description = "Verify that user able to return back to Credit Card form after clicking on 'create new account' link")
+    public void checkRedirectToCreditCardForm() {
+        MembersPopup membersPopup = new MembersPopup()
+                .clickCreateNewAccountLink();
+        Assert.assertTrue(membersPopup.isNewAccountFormDisplayed(), "'Create new account' form is not displayed.");
+    }
 }
