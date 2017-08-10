@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Phillyzoo tests" verbose="4">
+    <parameter name="customerLastName" value="solis"/>
+    <parameter name="zipCode" value="19104"/>
+    <parameter name="email" value="solis.Ray@phillyzoo.org"/>
+    <parameter name="incompletePhoneNumber" value="215-243"/>
+    <parameter name="literalCharacters" value="abc"/>
+    <parameter name="specialCharacters" value=": &quot; | \ @ # $ % ^ &amp; * +"/>
+    <parameter name="expectedErrorText"
+               value="no memberships were found for the information above - please modify your search"/>
+    <parameter name="verificationCharacters" value="s y 3 W G"/>
+
+    <test name="WEMT-070..072- Validate login actions">
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_070__072"/>
+        </classes>
+    </test>
+</suite>

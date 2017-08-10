@@ -25,8 +25,12 @@
 
         <threads>1</threads>
         <suitethreads>1</suitethreads>
-        <browser>chrome</browser>
+        <browser>firefox</browser>
         <base.url>http://philadelphiazoo.org/winter</base.url>
+
+        <suite.file.debug>
+            ${suite.dir}${file.separator}debug.xml
+        </suite.file.debug>
 
         <suite.file.defaults>
             ${suite.dir}${file.separator}suite.xml
@@ -151,7 +155,7 @@
                     </properties>
                     <suiteXmlFiles>
                         <!-- Suite file injection parameter from command line -->
-                        <suiteXmlFile>${suite.file.defaults}</suiteXmlFile>
+                        <suiteXmlFile>${suite.file.debug}</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
 
