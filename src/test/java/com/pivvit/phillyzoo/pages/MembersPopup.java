@@ -701,6 +701,21 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks facebook login button
+     * @return {@link MembersPopup} page
+     */
+    public FacebookPage clickFacebookLoginButton() {
+        driver().switchTo().frame(contentIframe);
+        driver().switchTo().frame(fbButtonIFrame);
+
+        click(facebookLoginButton, "Clicking facebook login button.");
+
+        driver().switchTo().defaultContent();
+        driver().switchTo().defaultContent();
+        return new FacebookPage();
+    }
+
+    /**
      * Clicks return to results link
      * @return {@link MembersPopup} page
      */
