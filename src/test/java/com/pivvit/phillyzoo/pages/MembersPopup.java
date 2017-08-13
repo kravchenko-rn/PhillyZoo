@@ -31,6 +31,9 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(id = "pivvitContent")
     WebElement contentIframe;
 
+    @FindBy(css = "#facebook-btn iframe")
+    WebElement fbButtonIFrame;
+
     @FindBy(css = ".pv-loading")
     WebElement loadingIndicator;
 
@@ -234,6 +237,11 @@ public class MembersPopup extends BaseFEPage {
 
     @FindBy(css = ".purchase-register")
     WebElement newAccountForm;
+
+    @FindBy(css = "table._51mz tr:nth-of-type(1)")
+    WebElement facebookLoginButton;
+
+    private FacebookPage facebookPage;
 
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
