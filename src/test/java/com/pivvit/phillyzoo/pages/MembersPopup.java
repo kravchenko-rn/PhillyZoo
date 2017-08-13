@@ -1336,6 +1336,21 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the facebook login button is displayed.
+     * @return {@code true} in case when facebook login button is displayed
+     */
+    public boolean isFacebookLoginButtonDisplayed() {
+        driver().switchTo().frame(contentIframe);
+        driver().switchTo().frame(fbButtonIFrame);
+
+        boolean result = isElementVisible(facebookLoginButton, "Checking whether the facebook login button displayed.");
+
+        driver().switchTo().defaultContent();
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the card expiration month validation error message is displayed.
      * The element is always present and visible on the page but
      * if there's no error, it just has no text.
