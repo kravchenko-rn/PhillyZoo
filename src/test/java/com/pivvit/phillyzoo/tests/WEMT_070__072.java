@@ -50,4 +50,15 @@ public class WEMT_070__072 extends BaseTest {
                 .clickCreateNewAccountLink();
         Assert.assertTrue(membersPopup.isNewAccountFormDisplayed(), "'Create new account' form is not displayed.");
     }
+
+    @Test(testName = "WEMT-070", dependsOnMethods = "checkRedirectToCreditCardForm",
+            description = "Verify that user able to login to social network (Facebook)")
+    public void checkFacebookLogin() {
+        MembersPopup membersPopup = new MembersPopup()
+                .clickLoginLink();
+        Assert.assertTrue(membersPopup.isFacebookLoginButtonDisplayed(), "Fcebook login button is not displayed.");
+
+        membersPopup.clickFacebookLoginButton();
+        Assert.assertTrue(membersPopup.isFacebookLoginPageDisplayed(), "Facebook login page is not displayed.");
+    }
 }
