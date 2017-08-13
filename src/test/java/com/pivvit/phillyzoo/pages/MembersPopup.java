@@ -22,6 +22,7 @@ import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementLocatorFactory
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1398,6 +1399,23 @@ public class MembersPopup extends BaseFEPage {
         boolean result = isElementTextVisible(validationError, "required", "Checking whether the card cvv validation error is displayed.");
 
         driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the facebook login page is displayed.
+     * @return {@code true} in case when the facebook login page is displayed
+     */
+    public boolean isFacebookLoginPageDisplayed() {
+        String currentWindowHandle = driver().getWindowHandle();
+        Set<String> windowHandles = driver().getWindowHandles();
+        String facebookWindowHandle = null;
+        for (String handle: windowHandles) {
+            facebookWindowHandle = handle;
+        }
+        driver().switchTo().window(facebookWindowHandle);
+        boolean result = facebookPage.isLoginFormDisplayed();
+        driver().switchTo().window(currentWindowHandle);
         return result;
     }
 
