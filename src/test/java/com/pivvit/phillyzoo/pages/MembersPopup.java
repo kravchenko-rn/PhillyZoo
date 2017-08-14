@@ -253,6 +253,15 @@ public class MembersPopup extends BaseFEPage {
     @FindBy(css = "#loginForm button")
     WebElement continueLoginButton;
 
+    @FindBy(css = "#loginForm a")
+    WebElement forgotLink;
+
+    @FindBy(css = "#forgotPasswordContainer input[ng-model='account.email']")
+    WebElement forgotEmailInput;
+
+    @FindBy(css = "#forgotPasswordContainer input[type='submit']")
+    WebElement submitForgotEmailButton;
+
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
