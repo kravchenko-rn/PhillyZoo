@@ -142,4 +142,13 @@
             <class name="com.pivvit.phillyzoo.tests.WEMT_070__072"/>
         </classes>
     </test>
+
+    <test name="WEMT-075..079 - Validate login form and forgot password form">
+        <parameter name="invalidEmail" value="aaa@gmail.com"/>
+        <parameter name="password" value="abc123"/>
+        <parameter name="invalidLoginError" value="Invalid login information"/>
+        <classes>
+            <class name="com.pivvit.phillyzoo.tests.WEMT_075__079"/>
+        </classes>
+    </test>
 </suite>
