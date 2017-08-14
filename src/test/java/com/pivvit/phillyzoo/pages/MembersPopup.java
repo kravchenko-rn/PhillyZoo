@@ -1517,9 +1517,14 @@ public class MembersPopup extends BaseFEPage {
     public boolean isInvalidLoginPasswordErrorDisplayed(String errorText) {
         driver().switchTo().frame(contentIframe);
 
-        WebElement validationError = loginPasswordInput.findElement(By.xpath("following-sibling::span"));
-        boolean result = isElementTextVisible(validationError, errorText,
-                "Checking whether the login password validation error is displayed.");
+        boolean result;
+        try {
+            WebElement validationError = loginPasswordInput.findElement(By.xpath("following-sibling::span"));
+            result = isElementTextVisible(validationError, errorText,
+                    "Checking whether the login password validation error is displayed.");
+        } catch (NoSuchElementException e) {
+            result = false;
+        }
 
         driver().switchTo().defaultContent();
         return result;
