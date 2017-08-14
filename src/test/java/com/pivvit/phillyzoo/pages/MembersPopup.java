@@ -1508,6 +1508,31 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks if any login email validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isAnyInvalidLoginEmailErrorDisplayed() {
+        return !getInvalidLoginEmailErrorText().isEmpty();
+    }
+
+    /**
+     * Retrieves validation error text from login email input at the login form
+     * @return string which contains text
+     */
+    public String getInvalidLoginEmailErrorText() {
+        driver().switchTo().frame(contentIframe);
+
+        WebElement validationError = loginEmailInput.findElement(By.xpath("following-sibling::span"));
+        String result = validationError.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the login password validation error message is displayed.
      * The element is always present and visible on the page but
      * if there's no error, it just has no text.
