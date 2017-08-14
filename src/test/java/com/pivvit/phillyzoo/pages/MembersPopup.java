@@ -479,6 +479,26 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Sets text into login email input
+     * @param email string which contains email
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputLoginEmail(String email) {
+        inputText(loginEmailInput, email);
+        return this;
+    }
+
+    /**
+     * Sets text into login password input
+     * @param password string which contains password
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputLoginPassword(String password) {
+        inputText(loginPasswordInput, password);
+        return this;
+    }
+
+    /**
      * Sets text into card postal code input.
      * @param postalCode string which contains postal code
      * @return {@link MembersPopup} page
