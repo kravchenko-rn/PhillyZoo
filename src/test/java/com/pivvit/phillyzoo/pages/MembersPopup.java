@@ -1039,6 +1039,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks forgot link at the login form
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickForgotLink() {
+        driver().switchTo().frame(contentIframe);
+
+        click(forgotLink, "Clicking forgot link.");
+
+        driver().switchTo().defaultContent();
+        return new MembersPopup();
+    }
+
+    /**
      * Clicks the specified lookup result item.
      * @param itemIndex index of the item to click
      * @return  {@link MembersPopup} page
