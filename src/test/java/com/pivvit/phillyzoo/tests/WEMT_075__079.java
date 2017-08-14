@@ -83,4 +83,15 @@ public class WEMT_075__079 extends BaseTest {
         Assert.assertTrue(membersPopup.isForgotEmailErrorDisplayed(error),
                 "Validation error is not displayed.");
     }
+
+    // TODO: add assertion when have a valid active account  
+    @Test(testName = "WEMT-077", dependsOnMethods = "checkInvalidEmailFormatAtForgotForm", alwaysRun = true,
+            description = "Verify that email should sent to the user when entering a registered valid email address on the forgot your password form")
+    @Parameters("email")
+    public void checkRegisteredEmailAtForgotForm(String email) {
+        MembersPopup membersPopup = new MembersPopup()
+                .inputForgotEmail(email)
+                .clickSubmitForgotEmailButton();
+
+    }
 }
