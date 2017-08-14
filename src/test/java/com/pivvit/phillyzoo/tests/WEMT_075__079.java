@@ -35,15 +35,28 @@ public class WEMT_075__079 extends BaseTest {
     }
 
     @Test(testName = "WEMT-075",
-            description = "Verify that error text validation appear on the email and password textboxes when entering an invalid email")
+            description = "Verify that error text validation appear on the email and password text boxes when entering an invalid email")
     @Parameters({"invalidEmail", "password", "invalidLoginError"})
-    public void checkInvalidEmail(String email, String password, String loginError) {
+    public void checkInvalidEmail(String email, String password, String error) {
         MembersPopup membersPopup = new MembersPopup()
                 .clickLoginLink()
                 .inputLoginEmail(email)
                 .inputLoginPassword(password)
                 .clickContinueLoginButton();
-        Assert.assertTrue(membersPopup.isInvalidLoginEmailErrorDisplayed(loginError),
+        Assert.assertTrue(membersPopup.isInvalidLoginEmailErrorDisplayed(error),
+                "Login email validation error is not displayed.");
+    }
+
+    @Test(testName = "WEMT-076", dependsOnMethods = "checkInvalidEmail", alwaysRun = true,
+            description = "Verify that error text validation appear on the email and password text boxes when entering an invalid password")
+    @Parameters({"email", "invalidPassword", "invalidPasswordError"})
+    public void checkInvalidPassword(String email, String password, String error) {
+        MembersPopup membersPopup = new MembersPopup()
+                .clickLoginLink()
+                .inputLoginEmail(email)
+                .inputLoginPassword(password)
+                .clickContinueLoginButton();
+        Assert.assertTrue(membersPopup.isInvalidLoginPasswordErrorDisplayed(error),
                 "Login email validation error is not displayed.");
     }
 }
