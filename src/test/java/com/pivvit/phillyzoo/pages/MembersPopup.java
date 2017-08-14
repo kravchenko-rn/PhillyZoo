@@ -1973,6 +1973,38 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the forgot email input is displayed
+     * @return {@code true} in case when forgot email input is displayed
+     */
+    public boolean isForgotEmailInputDisplayed() {
+        driver().switchTo().frame(contentIframe);
+
+        boolean result = isElementVisible(forgotEmailInput, "Checking whether the forgot email input is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the email validation error message is displayed at the forgot form.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @param errorText string which contains the error text
+     * @return {@code true} in case when the error text is displayed
+     */
+    public boolean isForgotEmailErrorDisplayed(String errorText) {
+        driver().switchTo().frame(contentIframe);
+
+        WebElement validationError = forgotEmailInput.findElement(By.xpath("following-sibling::span"));
+        boolean result = isElementTextVisible(validationError, errorText,
+                "Checking whether the email validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the ticket quantity of the first element is displayed.
      * @return {@code true} in case when the ticket quantity is displayed
      */
