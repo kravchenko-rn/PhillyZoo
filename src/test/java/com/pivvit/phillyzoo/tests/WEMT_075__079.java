@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pivvit.base.BaseTest;
+import pivvit.utils.SoftAssert;
 
 
 public class WEMT_075__079 extends BaseTest {
@@ -50,13 +51,17 @@ public class WEMT_075__079 extends BaseTest {
     @Test(testName = "WEMT-076", dependsOnMethods = "checkInvalidEmail", alwaysRun = true,
             description = "Verify that error text validation appear on the email and password text boxes when entering an invalid password")
     @Parameters({"email", "invalidPassword", "invalidPasswordError"})
-    public void checkInvalidPassword(String email, String password, String error) {
+    public void checkInvalidPassword(String email, String password, String passwordError) {
+        SoftAssert softAssert = new SoftAssert();
         MembersPopup membersPopup = new MembersPopup()
                 .inputLoginEmail(email)
                 .inputLoginPassword(password)
                 .clickContinueLoginButton();
-        Assert.assertTrue(membersPopup.isInvalidLoginPasswordErrorDisplayed(error),
-                "Login email validation error is not displayed.");
+        softAssert.assertTrue(membersPopup.isAnyInvalidLoginEmailErrorDisplayed(),
+                "Login email validation error is displayed though the email is valid.");
+        softAssert.assertTrue(membersPopup.isInvalidLoginPasswordErrorDisplayed(passwordError),
+                "Login password validation error is not displayed.");
+        softAssert.assertAll();
     }
 
     @Test(testName = "WEMT-078", dependsOnMethods = "checkInvalidPassword", alwaysRun = true,
@@ -84,7 +89,7 @@ public class WEMT_075__079 extends BaseTest {
                 "Validation error is not displayed.");
     }
 
-    // TODO: add assertion when have a valid active account  
+    // TODO: add assertion when have a valid active account
     @Test(testName = "WEMT-077", dependsOnMethods = "checkInvalidEmailFormatAtForgotForm", alwaysRun = true,
             description = "Verify that email should sent to the user when entering a registered valid email address on the forgot your password form")
     @Parameters("email")
