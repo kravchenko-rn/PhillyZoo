@@ -52,11 +52,24 @@ public class WEMT_075__079 extends BaseTest {
     @Parameters({"email", "invalidPassword", "invalidPasswordError"})
     public void checkInvalidPassword(String email, String password, String error) {
         MembersPopup membersPopup = new MembersPopup()
-                .clickLoginLink()
                 .inputLoginEmail(email)
                 .inputLoginPassword(password)
                 .clickContinueLoginButton();
         Assert.assertTrue(membersPopup.isInvalidLoginPasswordErrorDisplayed(error),
                 "Login email validation error is not displayed.");
+    }
+
+    @Test(testName = "WEMT-078", dependsOnMethods = "checkInvalidPassword", alwaysRun = true,
+            description = "Verify that error text validation appear on the email text box when entering a non-registered valid email address on the forgot your password form")
+    @Parameters({"nonRegisteredEmail", "nonRegisteredEmailError"})
+    public void checkNonRegisteredEmailAtForgotFrom(String email, String error) {
+        MembersPopup membersPopup = new MembersPopup()
+                .clickForgotLink();
+        Assert.assertTrue(membersPopup.isForgotEmailInputDisplayed(), "Forgot email input is not displayed.");
+
+        membersPopup.inputForgotEmail(email)
+                .clickSubmitForgotEmailButton();
+        Assert.assertTrue(membersPopup.isForgotEmailErrorDisplayed(error),
+                "Validation error is not displayed.");
     }
 }
