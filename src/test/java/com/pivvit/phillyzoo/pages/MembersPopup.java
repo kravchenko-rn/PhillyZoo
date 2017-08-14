@@ -405,6 +405,16 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Sets text into forgot email input
+     * @param email string which contains email
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup inputForgotEmail(String email) {
+        inputText(forgotEmailInput, email);
+        return this;
+    }
+
+    /**
      * Sets text to customer zip code input field.
      * @param customerZipCode string with customer zip code
      * @return {@link MembersPopup} page
