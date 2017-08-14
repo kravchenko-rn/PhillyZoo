@@ -145,8 +145,14 @@
 
     <test name="WEMT-075..079 - Validate login form and forgot password form">
         <parameter name="invalidEmail" value="aaa@gmail.com"/>
-        <parameter name="password" value="abc123"/>
+        <parameter name="nonRegisteredEmail" value="solis.Ray123@phillyzoo.org"/>
+        <parameter name="invalidEmailFormat" value="abc.org"/>
+        <parameter name="password" value="validPassword"/>
+        <parameter name="invalidPassword" value="abc123"/>
         <parameter name="invalidLoginError" value="Invalid login information"/>
+        <parameter name="invalidPasswordError" value="Invalid password information"/>
+        <parameter name="nonRegisteredEmailError" value="email not found"/>
+        <parameter name="invalidEmailFormatError" value="invalid email address"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_075__079"/>
         </classes>
