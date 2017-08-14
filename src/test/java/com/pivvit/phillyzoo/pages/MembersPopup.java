@@ -968,6 +968,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks continue login button
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickContinueLoginButton() {
+        driver().switchTo().frame(contentIframe);
+
+        click(continueLoginButton, "Clicking continue login button.");
+
+        driver().switchTo().defaultContent();
+        return new MembersPopup();
+    }
+
+    /**
      * Clicks 'Add non member tickets' link.
      * @return {@link MembersPopup} page
      */
