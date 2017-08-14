@@ -244,6 +244,15 @@ public class MembersPopup extends BaseFEPage {
 
     private FacebookPage facebookPage;
 
+    @FindBy(css = "#loginForm [ng-model='login.email']")
+    WebElement loginEmailInput;
+
+    @FindBy(css = "#loginForm [ng-model='login.password']")
+    WebElement loginPasswordInput;
+
+    @FindBy(css = "#loginForm button")
+    WebElement continueLoginButton;
+
     public MembersPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
