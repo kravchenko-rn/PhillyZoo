@@ -856,6 +856,19 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Clicks submit button at the forgot form.
+     * @return {@link MembersPopup} page
+     */
+    public MembersPopup clickSubmitForgotEmailButton() {
+        driver().switchTo().frame(contentIframe);
+
+        click(submitForgotEmailButton, "Clicking submit forgot email button.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clicks accept terms button
      * @return {@link MembersPopup} page
      */
