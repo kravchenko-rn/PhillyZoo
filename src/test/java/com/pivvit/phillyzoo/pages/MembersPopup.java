@@ -1445,6 +1445,24 @@ public class MembersPopup extends BaseFEPage {
     }
 
     /**
+     * Checks whether the login email validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isInvalidLoginEmailErrorDisplayed(String errorText) {
+        driver().switchTo().frame(contentIframe);
+
+        WebElement validationError = loginEmailInput.findElement(By.xpath("following-sibling::span"));
+        boolean result = isElementTextVisible(validationError, errorText,
+                "Checking whether the login email validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the facebook login page is displayed.
      * @return {@code true} in case when the facebook login page is displayed
      */
