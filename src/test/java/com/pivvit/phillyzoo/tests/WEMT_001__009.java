@@ -2,7 +2,8 @@ package com.pivvit.phillyzoo.tests;
 
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
-import com.pivvit.phillyzoo.pages.MembersPopup;
+import com.pivvit.phillyzoo.pages.PastMembershipPopup;
+import com.pivvit.phillyzoo.pages.PurchaseTicketsPopup;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pivvit.base.BaseTest;
@@ -20,32 +21,31 @@ public class WEMT_001__009 extends BaseTest {
 
     @Test(testName = "WEMT-001", description = "Verify that Member Lookup popup appear when clicking on Member button")
     public void checkMembersPopupOpens() {
-        MembersPopup membersPopup = Actions.navigationActions()
-                .openMembersPopup();
-        Assert.assertTrue(membersPopup.isLoaded(), "Members popup is not opened.");
+        PurchaseTicketsPopup purchaseTicketsPopup = Actions.navigationActions()
+                .openPurchaseTicketsPopup();
+        Assert.assertTrue(purchaseTicketsPopup.isLoaded(), "Purchase tickets popup is not opened.");
     }
 
     @Test(testName = "WEMT-006", dependsOnMethods = "checkMembersPopupOpens",
             description = "Verify that the help popup appear when hovering over question (?) icon on the right side of Member Number textbox\t")
     public void checkTooltipOpens() {
-        MembersPopup membersPopup = new MembersPopup()
+        PurchaseTicketsPopup purchaseTicketsPopup = new PurchaseTicketsPopup()
                 .hoverQuestionMark();
-        Assert.assertTrue(membersPopup.isTooltipVisible(), "Tooltip is not displayed.");
+        Assert.assertTrue(purchaseTicketsPopup.isTooltipVisible(), "Tooltip is not displayed.");
     }
 
     @Test(testName = "WEMT-003, WEMT-004, WEMT-005, WEMT-009", dependsOnMethods = "checkTooltipOpens", alwaysRun = true,
             description = "Verify that error message appears when incorrect customer id is entered")
-    @Parameters({"invalidCustomerIds", "expectedErrorText"})
-    public void checkIncorrectCustomerId(String invalidCustomerIds, String errorText) {
+    @Parameters("invalidCustomerIds")
+    public void checkIncorrectCustomerId(String invalidCustomerIds) {
         SoftAssert softAssert = new SoftAssert();
-        MembersPopup membersPopup = new MembersPopup();
+        PurchaseTicketsPopup purchaseTicketsPopup = new PurchaseTicketsPopup();
         List<String> params = new LinkedList<>(Arrays.asList(invalidCustomerIds.split(" ")));
         params.add("");
         params.forEach(param -> {
-
-            membersPopup.inputCustomerId(param)
+            purchaseTicketsPopup.inputCustomerId(param)
                     .clickSearchButton();
-            softAssert.assertTrue(membersPopup.isErrorMessageDisplayed(errorText), "Error message is not displayed.");
+            softAssert.assertTrue(purchaseTicketsPopup.isErrorMessageDisplayed(), "Error message is not displayed.");
         });
         softAssert.assertAll();
     }
@@ -55,13 +55,13 @@ public class WEMT_001__009 extends BaseTest {
     @Parameters({"nonExistingCustomerId", "expectedErrorText"})
     public void checkNonExistingCustomerId(String nonExistingCustomerId, String expectedErrorText) {
         SoftAssert softAssert = new SoftAssert();
-        MembersPopup membersPopup = new MembersPopup()
+        PurchaseTicketsPopup purchaseTicketsPopup = new PurchaseTicketsPopup()
                 .inputCustomerId(nonExistingCustomerId)
                 .clickSearchButton()
                 .waitTillLoadingIndicatorDisappears();
-        softAssert.assertTrue(membersPopup.isErrorMessageDisplayed(expectedErrorText),
+        softAssert.assertTrue(purchaseTicketsPopup.isErrorMessageDisplayed(),
                 "Error message is not displayed for non existing member.");
-        softAssert.assertEquals(membersPopup.getErrorMessageText(), expectedErrorText,
+        softAssert.assertEquals(purchaseTicketsPopup.getErrorMessageText(), expectedErrorText,
                 "Error text is incorrect for non existing member.");
         softAssert.assertAll();
     }
@@ -70,11 +70,11 @@ public class WEMT_001__009 extends BaseTest {
             description = "Verify that error textbox validation appear on email address textbox when clicking on search button with a wrong email address format")
     @Parameters("incorrectEmail")
     public void checkIncorrectEmail(String incorrectEmail) {
-        MembersPopup membersPopup = new MembersPopup()
+        PurchaseTicketsPopup purchaseTicketsPopup = new PurchaseTicketsPopup()
                 .clearCustomerId()
                 .inputCustomerEmail(incorrectEmail)
                 .clickSearchButton();
-        Assert.assertTrue(membersPopup.isEmailValidationErrorMessageDisplayed(),
+        Assert.assertTrue(purchaseTicketsPopup.isEmailValidationErrorMessageDisplayed(),
                 "Email validation error is not displayed.");
     }
 
@@ -82,12 +82,11 @@ public class WEMT_001__009 extends BaseTest {
             description = "Verify that options for disguised information is returned when searching with valid member number")
     @Parameters("existingCustomerId")
     public void checkExistingCustomerId(String existingCustomerId) {
-        checkMembersPopupOpens();
-        MembersPopup membersPopup = new MembersPopup()
+        new PurchaseTicketsPopup()
                 .clearCustomerEmail()
                 .inputCustomerId(existingCustomerId)
                 .clickSearchButton()
                 .waitTillLoadingIndicatorDisappears();
-        Assert.assertTrue(membersPopup.isOptionsResultListDisplayed(), "Options for disguised information are not returned.");
+        Assert.assertTrue(new PastMembershipPopup().isOptionsResultListDisplayed(), "Options for disguised information are not returned.");
     }
 }
