@@ -13,7 +13,7 @@ public class WEMT_044__047 extends BaseTest {
     @BeforeTest
     public void init() {
         new HomePage().open();
-        Actions.navigationActions().openMembersPopup();
+        Actions.navigationActions().openPurchaseTicketsPopup();
     }
 
     @Test(testName = "WEMT-044", description = "Verify that user is redirected to 'Winter' Terms and Conditions after clicking Continue button with member  ticket quantity greater than zero")

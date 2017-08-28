@@ -17,7 +17,7 @@ public class WEMT_075__079 extends BaseTest {
     @SuppressWarnings("all")
     public void init(String customerEmail, String charactersSet) {
         new HomePage().open();
-        Actions.navigationActions().openMembersPopup();
+        Actions.navigationActions().openPurchaseTicketsPopup();
         MembersPopup membersPopup = new MembersPopup()
                 .inputCustomerEmail(customerEmail)
                 .clickSearchButton()

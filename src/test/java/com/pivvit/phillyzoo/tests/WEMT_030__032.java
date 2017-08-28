@@ -13,7 +13,7 @@ public class WEMT_030__032 {
     @BeforeTest
     public void init() {
         new HomePage().open();
-        Actions.navigationActions().openMembersPopup();
+        Actions.navigationActions().openPurchaseTicketsPopup();
     }
 
     @Test(testName = "WEMT-031",

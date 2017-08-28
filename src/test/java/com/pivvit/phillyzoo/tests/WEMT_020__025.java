@@ -18,7 +18,7 @@ public class WEMT_020__025 extends BaseTest {
     @BeforeTest
     public void init() {
         new HomePage().open();
-        Actions.navigationActions().openMembersPopup();
+        Actions.navigationActions().openPurchaseTicketsPopup();
     }
 
     @Test(testName = "WEMT-023", description = "Verify that error text validation appear on the required text boxes when clicking submit button with all text boxes left blank")

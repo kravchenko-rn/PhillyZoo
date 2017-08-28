@@ -14,7 +14,7 @@ public class WEMT_033__035 extends BaseTest {
     @BeforeTest
     public void init() {
         new HomePage().open();
-        Actions.navigationActions().openMembersPopup();
+        Actions.navigationActions().openPurchaseTicketsPopup();
     }
 
     @Test(testName = "WEMT-033", description = "Verify that user is able get back on previous step by clicking on 'return to results' link")

@@ -14,7 +14,7 @@ public class WEMT_048__055 extends BaseTest {
     @BeforeTest
     public void init() {
         new HomePage().open();
-        Actions.navigationActions().openMembersPopup();
+        Actions.navigationActions().openPurchaseTicketsPopup();
     }
 
     @Test(testName = "WEMT-050", description = "Verify that user is able to paginate calendar by clicking on double arrows")

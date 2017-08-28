@@ -15,7 +15,7 @@ public class WEMT_068__069 extends BaseTest {
     @Parameters({"email", "verificationCharacters"})
     public void init(String customerEmail, String charactersSet) {
         new HomePage().open();
-        Actions.navigationActions().openMembersPopup();
+        Actions.navigationActions().openPurchaseTicketsPopup();
         MembersPopup membersPopup = new MembersPopup()
                 .inputCustomerEmail(customerEmail)
                 .clickSearchButton()

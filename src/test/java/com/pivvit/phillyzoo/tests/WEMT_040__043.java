@@ -14,7 +14,7 @@ public class WEMT_040__043 extends BaseTest {
     @BeforeTest
     public void init() {
         new HomePage().open();
-        Actions.navigationActions().openMembersPopup();
+        Actions.navigationActions().openPurchaseTicketsPopup();
     }
 
     @Test(testName = "WEMT-040", description = "Verify that non-members counter is  displayed when clicking on 'Add non-member tickets'")

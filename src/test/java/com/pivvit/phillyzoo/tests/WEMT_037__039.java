@@ -14,7 +14,7 @@ public class WEMT_037__039 extends BaseTest {
     @BeforeTest
     public void init() {
         new HomePage().open();
-        Actions.navigationActions().openMembersPopup();
+        Actions.navigationActions().openPurchaseTicketsPopup();
     }
 
     @Test(testName = "WEMT-038", description = "Verify that Continue button is disabled when members counter is 0")

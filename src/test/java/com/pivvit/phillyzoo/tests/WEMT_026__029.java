@@ -14,7 +14,7 @@ public class WEMT_026__029 extends BaseTest {
     @BeforeTest
     public void init() {
         new HomePage().open();
-        Actions.navigationActions().openMembersPopup();
+        Actions.navigationActions().openPurchaseTicketsPopup();
     }
 
     @Test(testName = "WEMT-026", description = "Verify that error message appear when no results were returned that match the entered last name")
