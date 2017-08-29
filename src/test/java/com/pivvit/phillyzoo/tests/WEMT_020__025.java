@@ -2,7 +2,10 @@ package com.pivvit.phillyzoo.tests;
 
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
-import com.pivvit.phillyzoo.pages.MembersPopup;
+import com.pivvit.phillyzoo.pages.popup.PastMembershipPopup;
+import com.pivvit.phillyzoo.pages.popup.PurchaseSummaryPopup;
+import com.pivvit.phillyzoo.pages.popup.PurchaseTicketsPopup;
+import com.pivvit.phillyzoo.pages.popup.UserInformationPopup;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -25,21 +28,23 @@ public class WEMT_020__025 extends BaseTest {
     @Parameters({"incompletePhoneNumber", "customerLastName", "blankFieldErrorText"})
     public void checkUserInformationBlank(String incompletePhoneNumber, String customerLastName, String expectedErrorText) {
         SoftAssert softAssert = new SoftAssert();
-        MembersPopup membersPopup = new MembersPopup()
+        new PurchaseTicketsPopup()
                 .clickAlternateFieldsLink()
                 .inputCustomerLastName(customerLastName)
                 .clickSearchButton()
-                .waitTillLoadingIndicatorDisappears()
+                .waitTillLoadingIndicatorDisappears();
+        new PastMembershipPopup()
                 .inputCustomerPhoneNumber(incompletePhoneNumber)
-                .submitPhoneNumber()
-                .clickSubmitPurchaseButton();
+                .submitPhoneNumber();
+        UserInformationPopup userInformationPopup = new UserInformationPopup()
+                .clickSubmitButton();
 
-        softAssert.assertTrue(membersPopup.isUserFormFirstNameErrorDisplayed(expectedErrorText),
-                "User form first name validation error is not displayed.");
-        softAssert.assertTrue(membersPopup.isUserFormLastNameErrorDisplayed(expectedErrorText),
-                "User form last name validation error is not displayed.");
-        softAssert.assertTrue(membersPopup.isUserFormEmailErrorDisplayed(expectedErrorText),
-                "User form email validation error is not displayed.");
+        softAssert.assertTrue(userInformationPopup.isFirstNameValidationErrorDisplayed(expectedErrorText),
+                "First name validation error is not displayed.");
+        softAssert.assertTrue(userInformationPopup.isLastNameValidationErrorDisplayed(expectedErrorText),
+                "Last name validation error is not displayed.");
+        softAssert.assertTrue(userInformationPopup.isEmailValidationErrorDisplayed(expectedErrorText),
+                "Email validation error is not displayed.");
         softAssert.assertAll();
     }
 
@@ -47,40 +52,32 @@ public class WEMT_020__025 extends BaseTest {
             description = "Verify that error text validation appear on email text box when entering invalid email format")
     @Parameters({"invalidEmail", "invalidFieldErrorText"})
     public void checkUserFormInvalidEmail(String invalidEmail, String expectedErrorText) {
-        SoftAssert softAssert = new SoftAssert();
-        MembersPopup membersPopup = new MembersPopup()
-                .inputUserFormEmail(invalidEmail)
-                .clickSubmitPurchaseButton();
+        UserInformationPopup userInformationPopup = new UserInformationPopup()
+                .inputEmail(invalidEmail)
+                .clickSubmitButton();
 
-        softAssert.assertTrue(membersPopup.isUserFormEmailErrorDisplayed(expectedErrorText),
-                "User form email validation error is not displayed.");
-        softAssert.assertEquals(membersPopup.getEmailUserFormValidationErrorText(), expectedErrorText,
-                "Email validation error text is invalid.");
-        softAssert.assertAll();
+        Assert.assertTrue(userInformationPopup.isEmailValidationErrorDisplayed(expectedErrorText),
+                "Email validation error is not displayed.");
     }
 
     @Test(testName = "WEMT-022", dependsOnMethods = "checkUserFormInvalidEmail", alwaysRun = true,
             description = "Verify that error text validation appear on password text box when entering invalid password format")
     @Parameters({"invalidPassword", "invalidFieldErrorText"})
     public void checkUserFormInvalidPassword(String invalidPassword, String expectedErrorText) {
-        SoftAssert softAssert = new SoftAssert();
-        MembersPopup membersPopup = new MembersPopup()
-                .inputUserFormPassword(invalidPassword);
+        UserInformationPopup userInformationPopup = new UserInformationPopup()
+                .inputPassword(invalidPassword);
 
-        softAssert.assertTrue(membersPopup.isUserFormPasswordErrorDisplayed(expectedErrorText),
-                "User form password validation error is not displayed.");
-        softAssert.assertEquals(membersPopup.getPasswordUserFormValidationErrorText(), expectedErrorText,
-                "Password validation error text is invalid.");
-        softAssert.assertAll();
+        Assert.assertTrue(userInformationPopup.isPasswordValidationErrorDisplayed(expectedErrorText),
+                "Password validation error is not displayed.");
     }
 
     @Test(testName = "WEMT-024", dependsOnMethods = "checkUserFormInvalidPassword", alwaysRun = true,
             description = "Verify that user cannot enter letters on the phone number text box in 'Identity validation box'")
     @Parameters("literalCharacters")
     public void checkUserFormPhoneLiteralCharacters(String invalidPhone) {
-        MembersPopup membersPopup = new MembersPopup()
-                .inputUserFormPhone(invalidPhone);
-        Assert.assertTrue(membersPopup.getPhoneUserForm().isEmpty(), "Phone input field accepts literal characters.");
+        UserInformationPopup userInformationPopup = new UserInformationPopup()
+                .inputPhone(invalidPhone);
+        Assert.assertTrue(userInformationPopup.getPhoneInputText().isEmpty(), "Phone input field accepts literal characters.");
     }
 
     @Test(testName = "WEMT-025", dependsOnMethods = "checkUserFormPhoneLiteralCharacters", alwaysRun = true,
@@ -88,12 +85,12 @@ public class WEMT_020__025 extends BaseTest {
     @Parameters("specialCharacters")
     public void checkUserFormPhoneSpecialCharacters(String specialCharacters) {
         SoftAssert softAssert = new SoftAssert();
-        MembersPopup membersPopup = new MembersPopup();
+        UserInformationPopup userInformationPopup = new UserInformationPopup();
         List<String> characters =  new LinkedList<>(Arrays.asList(specialCharacters.split(" ")));
         characters.forEach(character -> {
-            membersPopup.inputUserFormPhone(character);
-            softAssert.assertTrue(membersPopup.getPhoneUserForm().isEmpty(),
-                    "Phone input field at the user form accepts '" + character + "' character.");
+            userInformationPopup.inputPhone(character);
+            softAssert.assertTrue(userInformationPopup.getPhoneInputText().isEmpty(),
+                    "Phone input field accepts '" + character + "' character.");
         });
         softAssert.assertAll();
     }
@@ -102,15 +99,16 @@ public class WEMT_020__025 extends BaseTest {
             description = "Verify that user is able to submit user information after clicking submit button with valid name, email address, password and phone number")
     @Parameters({"firstName", "lastName", "email", "password", "phoneNumber"})
     public void checkUserFormSubmit(String firstName, String lastName, String email, String password, String phone) {
-        MembersPopup membersPopup = new MembersPopup()
-                .inputUserFormFirstName(firstName)
-                .inputUserFormLastName(lastName)
-                .inputUserFormEmail(email)
-                .inputUserFormPassword(password)
-                .inputUserFormPhone(phone)
-                .clickSubmitPurchaseButton()
+        new UserInformationPopup()
+                .inputFirstName(firstName)
+                .inputLastName(lastName)
+                .inputEmail(email)
+                .inputPassword(password)
+                .inputPhone(phone)
+                .clickSubmitButton()
                 .waitTillLoadingIndicatorDisappears();
 
-        Assert.assertTrue(membersPopup.isPurchaseSummaryDisplayed(), "User form is not submitted.");
+        Assert.assertTrue(new PurchaseSummaryPopup().isPurchaseSummaryDisplayed(),
+                "User form is not submitted - purchase summary page is not displayed.");
     }
 }

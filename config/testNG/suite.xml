@@ -36,7 +36,7 @@
         </classes>
     </test>
     
-    <test name="WEMT-020..024 - Validate user information form">
+    <test name="WEMT-020..025 - Validate user information form">
         <parameter name="invalidEmail" value="abc.ua"/>
         <parameter name="blankFieldErrorText" value="required"/>
         <parameter name="invalidFieldErrorText" value="invalid"/>
