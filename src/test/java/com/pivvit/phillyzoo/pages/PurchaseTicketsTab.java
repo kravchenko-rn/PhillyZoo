@@ -1,5 +1,6 @@
 package com.pivvit.phillyzoo.pages;
 
+import com.pivvit.phillyzoo.pages.popup.PurchaseTicketsPopup;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;

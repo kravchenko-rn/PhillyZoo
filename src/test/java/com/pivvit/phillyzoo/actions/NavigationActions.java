@@ -1,7 +1,7 @@
 package com.pivvit.phillyzoo.actions;
 
 import com.pivvit.phillyzoo.pages.MembersPopup;
-import com.pivvit.phillyzoo.pages.PurchaseTicketsPopup;
+import com.pivvit.phillyzoo.pages.popup.PurchaseTicketsPopup;
 import com.pivvit.phillyzoo.pages.PurchaseTicketsTab;
 
 public class NavigationActions {

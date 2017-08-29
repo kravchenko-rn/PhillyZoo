@@ -1,4 +1,4 @@
-package com.pivvit.phillyzoo.pages;
+package com.pivvit.phillyzoo.pages.popup;
 
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
