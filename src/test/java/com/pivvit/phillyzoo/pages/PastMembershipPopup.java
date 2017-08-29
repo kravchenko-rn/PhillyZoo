@@ -13,6 +13,12 @@ public class PastMembershipPopup extends BasePopup {
     @FindBy(css = ".zoo-membership__lookup-result")
     List<WebElement> lookupResults;
 
+    @FindBy(css = "[ng-model$='zipFilter']")
+    WebElement zipCodeFilterSelect;
+
+    @FindBy(css = "[ng-model$='phoneFilter']")
+    WebElement phoneFilterInput;
+
     public PastMembershipPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
@@ -25,6 +31,34 @@ public class PastMembershipPopup extends BasePopup {
         driver().switchTo().frame(contentIFrame);
 
         boolean result = !lookupResults.isEmpty();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether zip code filter is displayed
+     * @return {@code true} in case when zip code filter is displayed
+     */
+    public boolean isZipCodeFilterDisplayed() {
+        driver().switchTo().frame(contentIFrame);
+
+        boolean result = isElementVisible(zipCodeFilterSelect,
+                "Checking whether the zip code filter is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether phone filter is displayed
+     * @return {@code true} in case when phone filter is displayed
+     */
+    public boolean isPhoneFilterDisplayed() {
+        driver().switchTo().frame(contentIFrame);
+
+        boolean result = isElementVisible(phoneFilterInput,
+                "Checking whether the phone filter is displayed.");
 
         driver().switchTo().defaultContent();
         return result;

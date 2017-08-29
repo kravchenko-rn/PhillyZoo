@@ -1,12 +1,14 @@
 package com.pivvit.phillyzoo.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import pivvit.properties.Properties;
 import pivvit.properties.PropertiesNames;
+import pivvit.utils.Reporter;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementDecorator;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementLocatorFactory;
 
@@ -29,6 +31,15 @@ public class PurchaseTicketsPopup extends BasePopup {
 
     @FindBy(css = "button[ng-click='purchaseStep.search()']")
     WebElement searchButton;
+
+    @FindBy(css = "[ng-if$='showAlternateFields'] > a")
+    WebElement alternateFieldsLink;
+
+    @FindBy(css = "input[ng-model='purchaseStep.data.lastName']")
+    WebElement customerLastNameInput;
+
+    @FindBy(css = "input[ng-model$='zip']")
+    WebElement customerZipCodeInput;
 
     public PurchaseTicketsPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
@@ -75,19 +86,6 @@ public class PurchaseTicketsPopup extends BasePopup {
     }
 
     /**
-     * Checks whether the tooltip is displayed.
-     * @return {@code true} in case when the tooltip is displayed
-     */
-    public boolean isTooltipVisible() {
-        driver().switchTo().frame(contentIFrame);
-
-        boolean result =  isElementVisible(tooltip, "Checking whether the tooltip is displayed.");
-
-        driver().switchTo().defaultContent();
-        return result;
-    }
-
-    /**
      * Sets text to customer id input field.
      * @param customerId string with customer id
      * @return {@link PurchaseTicketsPopup} page
@@ -108,6 +106,92 @@ public class PurchaseTicketsPopup extends BasePopup {
     }
 
     /**
+     * Sets text to customer zip code input field.
+     * @param customerZipCode string with customer zip code
+     * @return {@link PurchaseTicketsPopup} page
+     */
+    public PurchaseTicketsPopup inputCustomerZipCode(String customerZipCode) {
+        inputText(customerZipCodeInput, customerZipCode);
+        return this;
+    }
+
+    /**
+     * Sets text to customer last name input field.
+     * @param customerLastName string with customer last name
+     * @return  {@link PurchaseTicketsPopup} page
+     */
+    public PurchaseTicketsPopup inputCustomerLastName(String customerLastName) {
+        inputText(customerLastNameInput, customerLastName);
+        return this;
+    }
+
+    /**
+     * Clicks search button
+     * @return {@link PurchaseTicketsPopup} page
+     */
+    public PurchaseTicketsPopup clickSearchButton() {
+        driver().switchTo().frame(contentIFrame);
+
+        click(searchButton, "Clicking search button.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
+     * Clicks alternate fields link. Works for both:
+     * switch to search by name and zip code; switch back to search by id and email.
+     * @return {@link PurchaseTicketsPopup} page
+     */
+    public PurchaseTicketsPopup clickAlternateFieldsLink() {
+        driver().switchTo().frame(contentIFrame);
+
+        click(alternateFieldsLink, "Clicking alternate fields link.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
+     * Retrieves error message text
+     * @return string which contains error text
+     */
+    public String getErrorMessageText() {
+        driver().switchTo().frame(contentIFrame);
+
+        String result = errorMessage.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Retrieves last name validation error text in the top left corner of the last name input field
+     * @return string which contains error text
+     */
+    public String getLastNameValidationErrorText() {
+        driver().switchTo().frame(contentIFrame);
+
+        String result = customerLastNameInput.findElement(By.xpath("following-sibling::span")).getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Clears customer id input field
+     * @return {@link PurchaseTicketsPopup} page
+     */
+    public PurchaseTicketsPopup clearCustomerId() {
+        driver().switchTo().frame(contentIFrame);
+
+        customerIdInput.clear();
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
      * Clears customer email input field
      * @return {@link PurchaseTicketsPopup} page
      */
@@ -121,19 +205,16 @@ public class PurchaseTicketsPopup extends BasePopup {
     }
 
     /**
-     * Checks whether the error message is displayed.
-     * The element is always present and visible on the page but
-     * if there's no error, it just has no text.
-     * So the check is performed by verifying if the error text is empty or not.
-     * @return {@code true} in case when the error text is not empty
+     * Clears customer zip code input field
+     * @return {@link PurchaseTicketsPopup} page
      */
-    public boolean isErrorMessageDisplayed() {
+    public PurchaseTicketsPopup clearCustomerZipCode() {
         driver().switchTo().frame(contentIFrame);
 
-        boolean result = !errorMessage.getText().isEmpty();
+        customerZipCodeInput.clear();
 
         driver().switchTo().defaultContent();
-        return result;
+        return this;
     }
 
     /**
@@ -154,41 +235,81 @@ public class PurchaseTicketsPopup extends BasePopup {
     }
 
     /**
-     * Clicks search button
-     * @return {@link PurchaseTicketsPopup} page
+     * Checks whether the last name validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
      */
-    public PurchaseTicketsPopup clickSearchButton() {
+    public boolean isLastNameValidationErrorMessageDisplayed() {
         driver().switchTo().frame(contentIFrame);
 
-        click(searchButton, "Clicking search button.");
-
-        driver().switchTo().defaultContent();
-        return this;
-    }
-
-    /**
-     * Retrieves error message text
-     * @return string which contains error text
-     */
-    public String getErrorMessageText() {
-        driver().switchTo().frame(contentIFrame);
-
-        String result = errorMessage.getText();
+        boolean result = false;
+        try {
+            WebElement validationError = customerLastNameInput.findElement(By.xpath("following-sibling::span"));
+            result = !validationError.getText().isEmpty();
+        } catch (NoSuchElementException e) {
+            Reporter.log(e);
+        }
 
         driver().switchTo().defaultContent();
         return result;
     }
 
     /**
-     * Clears customer id input field
-     * @return {@link PurchaseTicketsPopup} page
+     * Checks whether the error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
      */
-    public PurchaseTicketsPopup clearCustomerId() {
+    public boolean isErrorMessageDisplayed() {
         driver().switchTo().frame(contentIFrame);
 
-        customerIdInput.clear();
+        boolean result = !errorMessage.getText().isEmpty();
 
         driver().switchTo().defaultContent();
-        return this;
+        return result;
+    }
+
+    /**
+     * Checks whether the tooltip is displayed.
+     * @return {@code true} in case when the tooltip is displayed
+     */
+    public boolean isTooltipVisible() {
+        driver().switchTo().frame(contentIFrame);
+
+        boolean result =  isElementVisible(tooltip, "Checking whether the tooltip is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the customer last name input field is displayed
+     * @return {@code true} in case when customer last name input field is displayed
+     */
+    public boolean isLastNameInputDisplayed() {
+        driver().switchTo().frame(contentIFrame);
+
+        boolean result = isElementVisible(customerLastNameInput,
+                "Checking whether the customer last name input field is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the customer zip code input field is displayed
+     * @return {@code true} in case when customer zip code input field is displayed
+     */
+    public boolean isZipCodeInputDisplayed() {
+        driver().switchTo().frame(contentIFrame);
+
+        boolean result = isElementVisible(customerZipCodeInput,
+                "Checking whether the customer zip code input field is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
     }
 }
