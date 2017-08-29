@@ -225,13 +225,7 @@ public class PurchaseTicketsPopup extends BasePopup {
      * @return {@code true} in case when the error text is not empty
      */
     public boolean isEmailValidationErrorMessageDisplayed() {
-        driver().switchTo().frame(contentIFrame);
-
-        WebElement validationError = customerEmailInput.findElement(By.xpath("following-sibling::span"));
-        boolean result = isElementTextVisible(validationError, "invalid", "Checking whether the email validation error is displayed.");
-
-        driver().switchTo().defaultContent();
-        return result;
+        return isValidationErrorDisplayed(customerEmailInput, "invalid");
     }
 
     /**

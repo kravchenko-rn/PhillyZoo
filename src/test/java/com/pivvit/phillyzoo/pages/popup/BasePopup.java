@@ -1,5 +1,6 @@
 package com.pivvit.phillyzoo.pages.popup;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -68,6 +69,22 @@ public class BasePopup extends BaseFEPage {
         inputElement.sendKeys(text);
 
         driver().switchTo().defaultContent();
+    }
+
+    /**
+     * Checks whether the validation error is displayed by text presence,
+     * because the element itself is always visible but has no text.
+     * @param element for which the validation error should be displayed
+     * @return {@code true} in case when the validation error is displayed
+     */
+    protected boolean isValidationErrorDisplayed(WebElement element, String errorText) {
+        driver().switchTo().frame(contentIFrame);
+
+        WebElement validationError = element.findElement(By.xpath("following-sibling::span"));
+        boolean result = isElementTextVisible(validationError, errorText, "Checking whether the first name validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
     }
 
     /**
