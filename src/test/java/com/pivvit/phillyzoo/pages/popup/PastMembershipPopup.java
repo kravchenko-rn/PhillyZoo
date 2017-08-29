@@ -1,8 +1,10 @@
 package com.pivvit.phillyzoo.pages.popup;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import ru.yandex.qatools.htmlelements.element.Select;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementDecorator;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementLocatorFactory;
 
@@ -21,6 +23,82 @@ public class PastMembershipPopup extends BasePopup {
 
     public PastMembershipPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
+    }
+
+    /**
+     * Retrieves phone filter input text.
+     * @return string which contains phone filter input text
+     */
+    public String getPhoneFilterInputText() {
+        driver().switchTo().frame(contentIFrame);
+
+        String result = phoneFilterInput.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Selects zip code from dropdown filter.
+     * @param zipCode string which contains zip code
+     * @return {@link PastMembershipPopup} page
+     */
+    public PastMembershipPopup selectZipCodeFromFilter(String zipCode) {
+        driver().switchTo().frame(contentIFrame);
+
+        new Select(zipCodeFilterSelect).selectByVisibleText(zipCode);
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
+     * Deselects filter by zip code value.
+     * @return {@link PastMembershipPopup} page
+     */
+    public PastMembershipPopup deselectZipCodeFilter() {
+        driver().switchTo().frame(contentIFrame);
+
+        new Select(zipCodeFilterSelect).selectByValue("");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
+     * Sets text into phone filter input field.
+     * @param phoneNumber string which contains phone number
+     * @return {@link PastMembershipPopup} page
+     */
+    public PastMembershipPopup inputCustomerPhoneNumber(String phoneNumber) {
+        inputText(phoneFilterInput, phoneNumber);
+        return this;
+    }
+
+    /**
+     * Submits phone number entered into the phone filter input field by pressing ENTER key
+     * @return {@link PastMembershipPopup} page
+     */
+    public PastMembershipPopup submitPhoneNumber() {
+        driver().switchTo().frame(contentIFrame);
+
+        phoneFilterInput.sendKeys(Keys.ENTER);
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
+     * Clears customer phone filter input field
+     * @return {@link PastMembershipPopup} page
+     */
+    public PastMembershipPopup clearPhoneFilterInput() {
+        driver().switchTo().frame(contentIFrame);
+
+        phoneFilterInput.clear();
+
+        driver().switchTo().defaultContent();
+        return this;
     }
 
     /**

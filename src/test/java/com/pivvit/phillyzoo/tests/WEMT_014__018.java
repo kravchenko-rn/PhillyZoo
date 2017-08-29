@@ -3,6 +3,9 @@ package com.pivvit.phillyzoo.tests;
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
 import com.pivvit.phillyzoo.pages.MembersPopup;
+import com.pivvit.phillyzoo.pages.popup.PastMembershipPopup;
+import com.pivvit.phillyzoo.pages.popup.PurchaseTicketsPopup;
+import com.pivvit.phillyzoo.pages.popup.UserInformationPopup;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -24,13 +27,14 @@ public class WEMT_014__018 extends BaseTest {
     @Test(testName = "WEMT-014", description = "Verify that disguised information is displayed after choosing a zip code on the dropdown list")
     @Parameters({"customerLastName", "zipCode"})
     public void checkDisguisedInformationOnZipCodeSelect(String customerLastName, String zipCode) {
-        MembersPopup membersPopup = new MembersPopup()
+        new PurchaseTicketsPopup()
                 .clickAlternateFieldsLink()
                 .inputCustomerLastName(customerLastName)
                 .clickSearchButton()
-                .waitTillLoadingIndicatorDisappears()
+                .waitTillLoadingIndicatorDisappears();
+        PastMembershipPopup pastMembershipPopup = new PastMembershipPopup()
                 .selectZipCodeFromFilter(zipCode);
-        Assert.assertTrue(membersPopup.isOptionsResultListDisplayed(),
+        Assert.assertTrue(pastMembershipPopup.isOptionsResultListDisplayed(),
                 "Disguised information is not displayed after choosing a zip code from dropdown filter.");
     }
 
@@ -39,23 +43,23 @@ public class WEMT_014__018 extends BaseTest {
             description = "Verify that disguised information is displayed after entering a valid phone number")
     @Parameters("customerPhoneNumber")
     public void checkDisguisedInformationOnPhoneEnter(String customerPhoneNumber) {
-        MembersPopup membersPopup = new MembersPopup()
+        PastMembershipPopup pastMembershipPopup = new PastMembershipPopup()
                 .deselectZipCodeFilter()
                 .inputCustomerPhoneNumber(customerPhoneNumber)
                 .submitPhoneNumber();
-        Assert.assertTrue(membersPopup.isOptionsResultListDisplayed(),
+        Assert.assertTrue(pastMembershipPopup.isOptionsResultListDisplayed(),
                 "Disguised information is not displayed after inputting phone number into phone filter.");
     }
 
     // TODO: dependsOnMethod parameter should be updated when the valid phone number is set for WEMT-015
     @Test(testName = "WEMT-016", dependsOnMethods = "checkDisguisedInformationOnZipCodeSelect",
-            description = "Verify that user cannot enter letters on the phone number textbox")
+            description = "Verify that user cannot enter letters on the phone number text box")
     @Parameters("literalCharacters")
     public void checkPhoneFilterLiteralCharacters(String literalCharacters) {
-        MembersPopup membersPopup = new MembersPopup()
+        PastMembershipPopup pastMembershipPopup = new PastMembershipPopup()
                 .clearPhoneFilterInput()
                 .inputCustomerPhoneNumber(literalCharacters);
-        Assert.assertTrue(membersPopup.getPhoneFilterInputText().isEmpty(), "Phone filter accepts literal symbols.");
+        Assert.assertTrue(pastMembershipPopup.getPhoneFilterInputText().isEmpty(), "Phone filter accepts literal symbols.");
     }
 
     @Test(testName = "WEMT-017", dependsOnMethods = "checkPhoneFilterLiteralCharacters",
@@ -63,12 +67,12 @@ public class WEMT_014__018 extends BaseTest {
     @Parameters("specialCharacters")
     public void checkPhoneFilterSpecialCharacters(String specialCharacters) {
         SoftAssert softAssert = new SoftAssert();
-        MembersPopup membersPopup = new MembersPopup();
+        PastMembershipPopup pastMembershipPopup = new PastMembershipPopup();
         List<String> characters = new LinkedList<>(Arrays.asList(specialCharacters.split(" ")));
         characters.forEach(character -> {
-            membersPopup.clearPhoneFilterInput()
+            pastMembershipPopup.clearPhoneFilterInput()
                     .inputCustomerPhoneNumber(character);
-            softAssert.assertTrue(membersPopup.getPhoneFilterInputText().isEmpty(),
+            softAssert.assertTrue(pastMembershipPopup.getPhoneFilterInputText().isEmpty(),
                     "Phone filter accepts '" + character + "' character.");
         });
         softAssert.assertAll();
@@ -78,10 +82,10 @@ public class WEMT_014__018 extends BaseTest {
     description = "Verify that user is redirected to 'user information' form when entering an incomplete phone number")
     @Parameters("incompletePhoneNumber")
     public void checkIncompletePhoneNumber(String incompletePhoneNumber) {
-        MembersPopup membersPopup = new MembersPopup()
+        new PastMembershipPopup()
                 .inputCustomerPhoneNumber(incompletePhoneNumber)
                 .submitPhoneNumber();
-        Assert.assertTrue(membersPopup.isUserInformationFormDisplayed(),
+        Assert.assertTrue(new UserInformationPopup().isUserInformationFormDisplayed(),
                 "User information form is not displayed after inputting partial phone number into phone filter.");
     }
 }
