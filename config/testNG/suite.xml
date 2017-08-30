@@ -84,6 +84,7 @@
     </test>
 
     <test name="WEMT-040..043 - Validate members counter">
+        <parameter name="maximumAmount" value="14"/>
         <classes>
             <class name="com.pivvit.phillyzoo.tests.WEMT_040__043"/>
         </classes>
