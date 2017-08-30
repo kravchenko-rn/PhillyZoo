@@ -40,7 +40,7 @@ public class WEMT_037__039 extends BaseTest {
         SoftAssert softAssert = new SoftAssert();
         WinterExperienceTicketsPopup winterExperienceTicketsPopup = new WinterExperienceTicketsPopup();
         for (int amount = 1; amount <= 13; amount++) {
-            winterExperienceTicketsPopup.selectTicketsAmount(Integer.toString(amount));
+            winterExperienceTicketsPopup.selectMemberTicketsAmount(Integer.toString(amount));
             softAssert.assertTrue(winterExperienceTicketsPopup.isContinueButtonEnabled(),
                     "Continue button is disabled for tickets amount " + amount);
         }
@@ -51,8 +51,7 @@ public class WEMT_037__039 extends BaseTest {
             description = "Verify that max members counter value is 13")
     @Parameters("maximumAmount")
     public void checkMaximumAmountOfTicketsValue(String maximumAmount) {
-        WinterExperienceTicketsPopup winterExperienceTicketsPopup = new WinterExperienceTicketsPopup();
-        Assert.assertEquals(winterExperienceTicketsPopup.getMaximumAmountOfMemberTicketsValue(), maximumAmount,
+        Assert.assertEquals(new WinterExperienceTicketsPopup().getMaximumAmountOfMemberTicketsValue(), maximumAmount,
                 "The value of the maximum amount of tickets is incorrect.");
     }
 }
