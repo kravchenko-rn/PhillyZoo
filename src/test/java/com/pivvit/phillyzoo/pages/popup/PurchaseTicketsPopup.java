@@ -255,12 +255,13 @@ public class PurchaseTicketsPopup extends BasePopup {
      * The element is always present and visible on the page but
      * if there's no error, it just has no text.
      * So the check is performed by verifying if the error text is empty or not.
+     * @param errorText string which contains error message which should be displayed
      * @return {@code true} in case when the error text is not empty
      */
-    public boolean isErrorMessageDisplayed() {
+    public boolean isErrorMessageDisplayed(String errorText) {
         driver().switchTo().frame(contentIFrame);
 
-        boolean result = !errorMessage.getText().isEmpty();
+        boolean result = isElementTextVisible(errorMessage, errorText, "Checking whether error message is displayed.");
 
         driver().switchTo().defaultContent();
         return result;
