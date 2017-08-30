@@ -36,17 +36,19 @@ public class WEMT_001__009 extends BaseTest {
 
     @Test(testName = "WEMT-003, WEMT-004, WEMT-005, WEMT-009", dependsOnMethods = "checkTooltipOpens", alwaysRun = true,
             description = "Verify that error message appears when incorrect customer id is entered")
-    @Parameters("invalidCustomerIds")
-    public void checkIncorrectCustomerId(String invalidCustomerIds) {
+    @Parameters({"invalidCustomerIds", "invalidIdError", "emptyIdError"})
+    public void checkIncorrectCustomerId(String invalidCustomerIds, String invalidIdError, String emptyIdError) {
         SoftAssert softAssert = new SoftAssert();
         PurchaseTicketsPopup purchaseTicketsPopup = new PurchaseTicketsPopup();
         List<String> params = new LinkedList<>(Arrays.asList(invalidCustomerIds.split(" ")));
-        params.add("");
         params.forEach(param -> {
             purchaseTicketsPopup.inputCustomerId(param)
                     .clickSearchButton();
-            softAssert.assertTrue(purchaseTicketsPopup.isErrorMessageDisplayed(), "Error message is not displayed.");
+            softAssert.assertTrue(purchaseTicketsPopup.isErrorMessageDisplayed(invalidIdError),
+                    "Error message is not displayed or is incorrect.");
         });
+        softAssert.assertTrue(purchaseTicketsPopup.isErrorMessageDisplayed(emptyIdError),
+                "Error message is not displayed or is incorrect.");
         softAssert.assertAll();
     }
 
@@ -54,16 +56,12 @@ public class WEMT_001__009 extends BaseTest {
             description = "Verify that message appears when there should no results matching with Member Number")
     @Parameters({"nonExistingCustomerId", "expectedErrorText"})
     public void checkNonExistingCustomerId(String nonExistingCustomerId, String expectedErrorText) {
-        SoftAssert softAssert = new SoftAssert();
         PurchaseTicketsPopup purchaseTicketsPopup = new PurchaseTicketsPopup()
                 .inputCustomerId(nonExistingCustomerId)
                 .clickSearchButton()
                 .waitTillLoadingIndicatorDisappears();
-        softAssert.assertTrue(purchaseTicketsPopup.isErrorMessageDisplayed(),
-                "Error message is not displayed for non existing member.");
-        softAssert.assertEquals(purchaseTicketsPopup.getErrorMessageText(), expectedErrorText,
-                "Error text is incorrect for non existing member.");
-        softAssert.assertAll();
+        Assert.assertTrue(purchaseTicketsPopup.isErrorMessageDisplayed(expectedErrorText),
+                "Error message is not displayed or is incorrect for non existing member.");
     }
 
     @Test(testName = "WEMT-008", dependsOnMethods = "checkNonExistingCustomerId", alwaysRun = true,
