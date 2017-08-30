@@ -16,6 +16,12 @@ public class WinterExperienceTicketsPopup extends BasePopup {
     @FindBy(css = "button.purchase-step__continue")
     WebElement continueButton;
 
+    @FindBy(css = "a[ng-click='addNonMemberTickets()']")
+    WebElement addNonMemberTicketsLink;
+
+    @FindBy(css = ".items-list tr:nth-of-type(3) .minus-select-plus select")
+    WebElement nonMembersTicketsAmountSelect;
+
     public WinterExperienceTicketsPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
@@ -34,12 +40,34 @@ public class WinterExperienceTicketsPopup extends BasePopup {
     }
 
     /**
+     * Retrieves currently selected amount of non member tickets
+     * @return string which contains amount of tickets
+     */
+    public String getCurrentAmountOfNonMemberTickets() {
+        driver().switchTo().frame(contentIFrame);
+
+        String result = new Select(nonMembersTicketsAmountSelect).getFirstSelectedOption().getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Retrieves the value of the maximum amount of member tickets,
      * assuming that the maximum value is the last one in the dropdown list.
      * @return string which contains the maximum value from the dropdown
      */
     public String getMaximumAmountOfMemberTicketsValue() {
         return getMaxAmountOfTickets(new Select(memberTicketsAmountSelect));
+    }
+
+    /**
+     * Retrieves the value of the maximum amount of tickets,
+     * assuming that the maximum value is the last one in the dropdown list.
+     * @return string which contains the maximum value from the dropdown
+     */
+    public String getMaximumAmountOfNonMemberTicketsValue() {
+        return getMaxAmountOfTickets(new Select(nonMembersTicketsAmountSelect));
     }
 
     /**
@@ -63,13 +91,40 @@ public class WinterExperienceTicketsPopup extends BasePopup {
      * @param amount string which contains desired amount of tickets
      * @return {@link WinterExperienceTicketsPopup} page
      */
-    public WinterExperienceTicketsPopup selectTicketsAmount(String amount) {
+    public WinterExperienceTicketsPopup selectMemberTicketsAmount(String amount) {
         driver().switchTo().frame(contentIFrame);
 
         new Select(memberTicketsAmountSelect).selectByVisibleText(amount);
 
         driver().switchTo().defaultContent();
         return new WinterExperienceTicketsPopup();
+    }
+
+    /**
+     * Selects amount of non member tickets from dropdown list.
+     * @param amount string which contains desired amount of tickets
+     * @return {@link WinterExperienceTicketsPopup} page
+     */
+    public WinterExperienceTicketsPopup selectNonMemberTicketsAmount(String amount) {
+        driver().switchTo().frame(contentIFrame);
+
+        new Select(nonMembersTicketsAmountSelect).selectByVisibleText(amount);
+
+        driver().switchTo().defaultContent();
+        return new WinterExperienceTicketsPopup();
+    }
+
+    /**
+     * Clicks 'Add non member tickets' link.
+     * @return {@link WinterExperienceTicketsPopup} page
+     */
+    public WinterExperienceTicketsPopup clickAddNonMemberTicketsLink() {
+        driver().switchTo().frame(contentIFrame);
+
+        click(addNonMemberTicketsLink, "Clicking 'Add non member tickets' link.");
+
+        driver().switchTo().defaultContent();
+        return this;
     }
 
     /**
@@ -81,6 +136,20 @@ public class WinterExperienceTicketsPopup extends BasePopup {
 
         Reporter.log("Checking whether the purchase continue button is enabled.");
         boolean result = continueButton.isEnabled() && continueButton.getAttribute("class").contains("button-orange");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the non member tickets select is displayed
+     * @return {@code true} in case when customer zip code input field is displayed
+     */
+    public boolean isNonMemberTicketsSelectVisible() {
+        driver().switchTo().frame(contentIFrame);
+
+        boolean result = isElementVisible(nonMembersTicketsAmountSelect,
+                "Checking whether the non member tickets select is displayed.");
 
         driver().switchTo().defaultContent();
         return result;
