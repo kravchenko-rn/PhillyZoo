@@ -25,6 +25,9 @@ public class BasePopup extends BaseFEPage {
     @FindBy(css = ".pv-loading")
     WebElement loadingIndicator;
 
+    @FindBy(css = "[ng-if='purchaseStep.title']")
+    WebElement pageTitle;
+
     public BasePopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
@@ -50,6 +53,19 @@ public class BasePopup extends BaseFEPage {
         driver().switchTo().frame(contentIFrame);
 
         boolean result = isElementPresent(container);
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Retrieves page title text.
+     * @return string which contains page title text
+     */
+    public String getPageTitleText() {
+        driver().switchTo().frame(contentIFrame);
+
+        String result = pageTitle.getText();
 
         driver().switchTo().defaultContent();
         return result;

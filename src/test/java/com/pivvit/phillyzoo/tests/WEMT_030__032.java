@@ -3,6 +3,9 @@ package com.pivvit.phillyzoo.tests;
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
 import com.pivvit.phillyzoo.pages.MembersPopup;
+import com.pivvit.phillyzoo.pages.popup.PastMembershipPopup;
+import com.pivvit.phillyzoo.pages.popup.PurchaseTicketsPopup;
+import com.pivvit.phillyzoo.pages.popup.VerifyYourselfPopup;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -21,13 +24,14 @@ public class WEMT_030__032 {
     @Parameters({"email", "resultItemHoveredColor"})
     public void checkResultItemFontChange(String customerEmail, String resultItemColor) {
         SoftAssert softAssert = new SoftAssert();
-        MembersPopup membersPopup = new MembersPopup()
+        new PurchaseTicketsPopup()
                 .inputCustomerEmail(customerEmail)
                 .clickSearchButton()
                 .waitTillLoadingIndicatorDisappears();
-        Assert.assertTrue(membersPopup.isOptionsResultListDisplayed(), "Search result list is not displayed or is empty.");
+        PastMembershipPopup pastMembershipPopup = new PastMembershipPopup();
+        Assert.assertTrue(pastMembershipPopup.isOptionsResultListDisplayed(), "Search result list is not displayed or is empty.");
 
-        membersPopup.hoverSearchResultItem(0)
+        pastMembershipPopup.hoverSearchResultItem(0)
                 .validateResultItemFont(softAssert, 0, resultItemColor, true);
         softAssert.assertAll();
     }
@@ -35,19 +39,20 @@ public class WEMT_030__032 {
     @Test(testName = "WEMT-030", dependsOnMethods = "checkResultItemFontChange", alwaysRun = true,
             description = "Verify that user is able get back on previous step by clicking on 'change your search' link")
     public void checkChangeSearchLink() {
-        MembersPopup membersPopup = new MembersPopup()
+        PurchaseTicketsPopup purchaseTicketsPopup = new PastMembershipPopup()
                 .clickChangeSearchLink();
-        Assert.assertTrue(membersPopup.isEmailInputDisplayed(), "Did not get back to the previous step.");
+        Assert.assertTrue(purchaseTicketsPopup.isEmailInputDisplayed(), "Did not get back to the previous step.");
     }
 
     @Test(testName = "WEMT-032", dependsOnMethods = "checkChangeSearchLink",
             description = "Verify that user is redirected to 'Verify Yourself' form after clicking on a specific disguised information")
     @Parameters("pageTitle")
     public void checkRedirectToVerifyYourself(String pageTitle) {
-        MembersPopup membersPopup = new MembersPopup()
+        new PurchaseTicketsPopup()
                 .clickSearchButton()
-                .waitTillLoadingIndicatorDisappears()
+                .waitTillLoadingIndicatorDisappears();
+        VerifyYourselfPopup verifyYourselfPopup = new PastMembershipPopup()
                 .clickLookupResultItem(0);
-        Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle, "'Verify Yourself' is not opened.");
+        Assert.assertEquals(verifyYourselfPopup.getPageTitleText(), pageTitle, "'Verify Yourself' is not opened.");
     }
 }

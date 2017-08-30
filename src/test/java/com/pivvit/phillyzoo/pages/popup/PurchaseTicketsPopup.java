@@ -268,6 +268,20 @@ public class PurchaseTicketsPopup extends BasePopup {
     }
 
     /**
+     * Checks whether the customer email input field is displayed
+     * @return {@code true} in case when customer email input field is displayed
+     */
+    public boolean isEmailInputDisplayed() {
+        driver().switchTo().frame(contentIFrame);
+
+        boolean result = isElementVisible(customerEmailInput,
+                "Checking whether the customer email input field is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Checks whether the tooltip is displayed.
      * @return {@code true} in case when the tooltip is displayed
      */
