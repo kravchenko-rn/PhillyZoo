@@ -2,7 +2,9 @@ package com.pivvit.phillyzoo.tests;
 
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
-import com.pivvit.phillyzoo.pages.MembersPopup;
+import com.pivvit.phillyzoo.pages.popup.PastMembershipPopup;
+import com.pivvit.phillyzoo.pages.popup.PurchaseTicketsPopup;
+import com.pivvit.phillyzoo.pages.popup.WinterExperienceTicketsPopup;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -20,24 +22,26 @@ public class WEMT_037__039 extends BaseTest {
     @Test(testName = "WEMT-038", description = "Verify that Continue button is disabled when members counter is 0")
     @Parameters({"email", "verificationCharacters"})
     public void checkButtonIsDisabled(String customerEmail, String charactersSet) {
-        MembersPopup membersPopup = new MembersPopup()
+        new PurchaseTicketsPopup()
                 .inputCustomerEmail(customerEmail)
                 .clickSearchButton()
-                .waitTillLoadingIndicatorDisappears()
+                .waitTillLoadingIndicatorDisappears();
+        new PastMembershipPopup()
                 .clickLookupResultItem(0)
                 .inputVerificationCharacters(charactersSet.split(" "));
-        Assert.assertEquals(membersPopup.getCurrentAmountOfTickets(), "0", "Amount of tickets is not set to 0 in the first place.");
-        Assert.assertFalse(membersPopup.isPurchaseContinueButtonEnabled(), "Continue button is enabled.");
+        WinterExperienceTicketsPopup winterExperienceTicketsPopup = new WinterExperienceTicketsPopup();
+        Assert.assertEquals(winterExperienceTicketsPopup.getCurrentAmountOfTickets(), "0", "Amount of tickets is not set to 0 in the first place.");
+        Assert.assertFalse(winterExperienceTicketsPopup.isContinueButtonEnabled(), "Continue button is enabled.");
     }
 
     @Test(testName = "WEMT-037", dependsOnMethods = "checkButtonIsDisabled", alwaysRun = true,
-            description = "Verify that Continue is should enabled when members counter is between 1 to 13 interval")
+            description = "Verify that Continue button should be enabled when members counter is between 1 to 13 interval")
     public void checkButtonIsEnabled() {
         SoftAssert softAssert = new SoftAssert();
-        MembersPopup membersPopup = new MembersPopup();
+        WinterExperienceTicketsPopup winterExperienceTicketsPopup = new WinterExperienceTicketsPopup();
         for (int amount = 1; amount <= 13; amount++) {
-            membersPopup.selectTicketsAmount(Integer.toString(amount));
-            softAssert.assertTrue(membersPopup.isPurchaseContinueButtonEnabled(),
+            winterExperienceTicketsPopup.selectTicketsAmount(Integer.toString(amount));
+            softAssert.assertTrue(winterExperienceTicketsPopup.isContinueButtonEnabled(),
                     "Continue button is disabled for tickets amount " + amount);
         }
         softAssert.assertAll();
@@ -47,8 +51,8 @@ public class WEMT_037__039 extends BaseTest {
             description = "Verify that max members counter value is 13")
     @Parameters("maximumAmount")
     public void checkMaximumAmountOfTicketsValue(String maximumAmount) {
-        MembersPopup membersPopup = new MembersPopup();
-        Assert.assertEquals(membersPopup.getMaximumAmountOfTicketsValue(), maximumAmount,
+        WinterExperienceTicketsPopup winterExperienceTicketsPopup = new WinterExperienceTicketsPopup();
+        Assert.assertEquals(winterExperienceTicketsPopup.getMaximumAmountOfMemberTicketsValue(), maximumAmount,
                 "The value of the maximum amount of tickets is incorrect.");
     }
 }
