@@ -3,6 +3,10 @@ package com.pivvit.phillyzoo.tests;
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
 import com.pivvit.phillyzoo.pages.MembersPopup;
+import com.pivvit.phillyzoo.pages.popup.PastMembershipPopup;
+import com.pivvit.phillyzoo.pages.popup.PurchaseTicketsPopup;
+import com.pivvit.phillyzoo.pages.popup.VerifyYourselfPopup;
+import com.pivvit.phillyzoo.pages.popup.WinterExperienceTicketsPopup;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -20,13 +24,14 @@ public class WEMT_033__035 extends BaseTest {
     @Test(testName = "WEMT-033", description = "Verify that user is able get back on previous step by clicking on 'return to results' link")
     @Parameters({"email", "pageTitle"})
     public void CheckReturnToResultsLink(String customerEmail, String pageTitle) {
-        MembersPopup membersPopup = new MembersPopup()
+        new PurchaseTicketsPopup()
                 .inputCustomerEmail(customerEmail)
                 .clickSearchButton()
-                .waitTillLoadingIndicatorDisappears()
+                .waitTillLoadingIndicatorDisappears();
+        PastMembershipPopup pastMembershipPopup = new PastMembershipPopup()
                 .clickLookupResultItem(0)
                 .clickReturnToResultsLink();
-        Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle, "Did not get back to the previous step.");
+        Assert.assertEquals(pastMembershipPopup.getPageTitleText(), pageTitle, "Did not get back to the previous step.");
     }
 
     @Test(testName = "WEMT-035", dependsOnMethods = "CheckReturnToResultsLink",
@@ -34,16 +39,16 @@ public class WEMT_033__035 extends BaseTest {
     @Parameters({"incorrectVerificationCharacters", "verificationError"})
     public void checkInvalidMissingCharacters(String charactersSet, String verificationError) {
         SoftAssert softAssert = new SoftAssert();
-        MembersPopup membersPopup = new MembersPopup()
+        VerifyYourselfPopup verifyYourselfPopup = new PastMembershipPopup()
                 .clickLookupResultItem(0)
-                .clickSubmitVerificationButton();
-        softAssert.assertTrue(membersPopup.isUserVerificationErrorDisplayed(verificationError),
+                .clickSubmitButton();
+        softAssert.assertTrue(verifyYourselfPopup.isVerificationErrorDisplayed(verificationError),
                 "User verification error is not displayed or has incorrect text when input fields left blank.");
 
-        membersPopup
+        verifyYourselfPopup
                 .inputVerificationCharacters(charactersSet.split(" "))
-                .clickSubmitVerificationButton();
-        softAssert.assertTrue(membersPopup.isUserVerificationErrorDisplayed(verificationError),
+                .clickSubmitButton();
+        softAssert.assertTrue(verifyYourselfPopup.isVerificationErrorDisplayed(verificationError),
                 "User verification error is not displayed or has incorrect text when input fields contain incorrect characters.");
         softAssert.assertAll();
     }
@@ -52,9 +57,9 @@ public class WEMT_033__035 extends BaseTest {
             description = "Verify that user is redirected to 'Winter Experience Tickets' form after entering valid missing characters and clicking submit button")
     @Parameters({"verificationCharacters", "ticketsPageTitle"})
     public void checkValidVerificationCharacters(String charactersSet, String expectedPageTitle) {
-        MembersPopup membersPopup = new MembersPopup()
+        new VerifyYourselfPopup()
                 .inputVerificationCharacters(charactersSet.split(" "));
-        Assert.assertEquals(membersPopup.getPageTitleText(), expectedPageTitle,
+        Assert.assertEquals(new WinterExperienceTicketsPopup().getPageTitleText(), expectedPageTitle,
                 "User is not redirected to 'Winter Experience Tickets' form after entering valid missing characters.");
     }
 }
