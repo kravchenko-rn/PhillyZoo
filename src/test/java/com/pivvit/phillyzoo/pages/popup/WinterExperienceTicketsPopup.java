@@ -128,6 +128,19 @@ public class WinterExperienceTicketsPopup extends BasePopup {
     }
 
     /**
+     * Clicks continue button
+     * @return {@link WinterExperienceTicketsPopup} page
+     */
+    public WinterExperienceTicketsPopup clickContinueButton() {
+        driver().switchTo().frame(contentIFrame);
+
+        click(continueButton, "Clicking continue button.");
+
+        driver().switchTo().defaultContent();
+        return new WinterExperienceTicketsPopup();
+    }
+
+    /**
      * Checks whether the continue button enabled.
      * @return {@code true} in case when continue button is enabled
      */

@@ -2,7 +2,7 @@ package com.pivvit.phillyzoo.tests;
 
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
-import com.pivvit.phillyzoo.pages.MembersPopup;
+import com.pivvit.phillyzoo.pages.popup.*;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -19,24 +19,27 @@ public class WEMT_044__047 extends BaseTest {
     @Test(testName = "WEMT-044", description = "Verify that user is redirected to 'Winter' Terms and Conditions after clicking Continue button with member  ticket quantity greater than zero")
     @Parameters({"email", "verificationCharacters", "pageTitle"})
     public void checkRedirectForMemberTickets(String customerEmail, String charactersSet, String pageTitle) {
-        MembersPopup membersPopup = new MembersPopup()
+        new PurchaseTicketsPopup()
                 .inputCustomerEmail(customerEmail)
                 .clickSearchButton()
-                .waitTillLoadingIndicatorDisappears()
+                .waitTillLoadingIndicatorDisappears();
+        new PastMembershipPopup()
                 .clickLookupResultItem(0)
-                .inputVerificationCharacters(charactersSet.split(" "))
-                .selectTicketsAmount("1")
-                .clickContinuePurchaseButton();
-        Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle, "Was not redirected to 'Winter' Terms and Conditions page.");
+                .inputVerificationCharacters(charactersSet.split(" "));
+        new WinterExperienceTicketsPopup()
+                .selectMemberTicketsAmount("1")
+                .clickContinueButton();
+        Assert.assertEquals(new TermsAndConditionsPopup().getPageTitleText(), pageTitle,
+                "Was not redirected to 'Winter' Terms and Conditions page.");
     }
 
     @Test(testName = "WEMT-046", dependsOnMethods = "checkRedirectForMemberTickets",
             description = "Verify that user is able get back on previous step by clicking on back arrow link")
     @Parameters("prevPageTitle")
     public void checkBackButton(String prevPageTitle) {
-        MembersPopup membersPopup = new MembersPopup()
+        new TermsAndConditionsPopup()
                 .clickBackArrowButton();
-        Assert.assertEquals(membersPopup.getPageTitleText(), prevPageTitle,
+        Assert.assertEquals(new BasePopup().getPageTitleText(), prevPageTitle,
                 "Was not redirected back to Winter Experience Tickets page.");
     }
 
@@ -44,21 +47,22 @@ public class WEMT_044__047 extends BaseTest {
             description = "Verify that user is redirected to 'Winter' Terms and Conditions after clicking Continue button with non-member ticket quantity greater than zero")
     @Parameters("pageTitle")
     public void checkRedirectForNonMemberTickets(String pageTitle) {
-        MembersPopup membersPopup = new MembersPopup()
-                .selectTicketsAmount("0")
+        new WinterExperienceTicketsPopup()
+                .selectMemberTicketsAmount("0")
                 .clickAddNonMemberTicketsLink()
                 .selectNonMemberTicketsAmount("1")
-                .clickContinuePurchaseButton();
-        Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle, "Was not redirected to 'Winter' Terms and Conditions page.");
+                .clickContinueButton();
+        Assert.assertEquals(new BasePopup().getPageTitleText(), pageTitle,
+                "Was not redirected to 'Winter' Terms and Conditions page.");
     }
 
     @Test(testName = "WEMT-047", dependsOnMethods = "checkRedirectForNonMemberTickets",
             description = "Verify that 'Winter' Experience Tickets popup appear after clicking 'Accept Terms' button")
     @Parameters("nextPageTitle")
     public void checkAcceptTermsButton(String pageTitle) {
-        MembersPopup membersPopup = new MembersPopup()
+        new TermsAndConditionsPopup()
                 .clickAcceptTermsButton();
-        Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle,
+        Assert.assertEquals(new BasePopup().getPageTitleText(), pageTitle,
                 "Was not redirected to 'Winter' Experience Tickets page.");
     }
 }
