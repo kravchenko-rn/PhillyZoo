@@ -2,7 +2,7 @@ package com.pivvit.phillyzoo.tests;
 
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
-import com.pivvit.phillyzoo.pages.MembersPopup;
+import com.pivvit.phillyzoo.pages.popup.*;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -16,19 +16,22 @@ public class WEMT_056__061 extends BaseTest {
     public void init(String customerEmail, String charactersSet) {
         new HomePage().open();
         Actions.navigationActions().openPurchaseTicketsPopup();
-        MembersPopup membersPopup = new MembersPopup()
+        new PurchaseTicketsPopup()
                 .inputCustomerEmail(customerEmail)
                 .clickSearchButton()
-                .waitTillLoadingIndicatorDisappears()
+                .waitTillLoadingIndicatorDisappears();
+        new PastMembershipPopup()
                 .clickLookupResultItem(0)
-                .inputVerificationCharacters(charactersSet.split(" "))
-                .selectTicketsAmount("1")
-                .clickContinuePurchaseButton()
+                .inputVerificationCharacters(charactersSet.split(" "));
+        new WinterExperienceTicketsPopup()
+                .selectMemberTicketsAmount("1")
+                .clickContinueButton();
+        WinterExperienceTickets2Popup wet2Popup = new TermsAndConditionsPopup()
                 .clickAcceptTermsButton()
                 .selectFirstAvailableDate();
-        String time = membersPopup.getStartBookingTime();
-        membersPopup.selectTimeForTheTicket(time)
-                .clickContinuePurchaseButton()
+        String time = wet2Popup.getStartBookingTime();
+        wet2Popup.selectTimeForTheTicket(time)
+                .clickContinueButton()
                 .waitTillLoadingIndicatorDisappears();
     }
 
@@ -46,23 +49,26 @@ public class WEMT_056__061 extends BaseTest {
     @Parameters("pageTitle")
     public void checkTotalSumAndTicketQuantity(String pageTitle) {
         SoftAssert softAssert = new SoftAssert();
-        MembersPopup membersPopup = new MembersPopup()
-                .waitForCheckoutLoad();
-        String firstTotalPrice = membersPopup.getTotalPrice();
-        membersPopup.removeFirstTicket();
-        Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle, "Was not redirected to 'Winter Experience Tickets' page.");
+        CheckoutPopup checkoutPopup = new CheckoutPopup()
+                .waitForLoad();
+        String firstTotalPrice = checkoutPopup.getTotalPrice();
+        checkoutPopup.removeFirstTicket();
+        Assert.assertEquals(new BasePopup().getPageTitleText(), pageTitle,
+                "Was not redirected to 'Winter Experience Tickets' page.");
 
-        membersPopup.selectTicketsAmount("2")
-                .clickContinuePurchaseButton()
-                .clickContinuePurchaseButton()
+        new WinterExperienceTicketsPopup()
+                .selectMemberTicketsAmount("2")
+                .clickContinueButton();
+        WinterExperienceTickets2Popup wet2Popup = new TermsAndConditionsPopup()
+                .clickContinueButton()
                 .selectFirstAvailableDate();
-        String time = membersPopup.getStartBookingTime();
-        membersPopup.selectTimeForTheTicket(time)
-                .clickContinuePurchaseButton()
+        String time = wet2Popup.getStartBookingTime();
+        checkoutPopup = wet2Popup.selectTimeForTheTicket(time)
+                .clickContinueButton()
                 .waitTillLoadingIndicatorDisappears();
-        softAssert.assertNotEquals(membersPopup.getTotalPrice(), firstTotalPrice, "Total price was not recalculated.");
-        softAssert.assertTrue(membersPopup.isFirstTicketQuantityDisplayed(), "Ticket quantity is no displayed.");
-        softAssert.assertTrue(membersPopup.getFirstTicketQuantity().equals("(2)"), "Ticket quantity was not increased.");
+        softAssert.assertNotEquals(checkoutPopup.getTotalPrice(), firstTotalPrice, "Total price was not recalculated.");
+        softAssert.assertTrue(checkoutPopup.isFirstTicketQuantityDisplayed(), "Ticket quantity is no displayed.");
+        softAssert.assertTrue(checkoutPopup.getFirstTicketQuantity().equals("(2)"), "Ticket quantity was not increased.");
 
         softAssert.assertAll();
     }
@@ -72,24 +78,26 @@ public class WEMT_056__061 extends BaseTest {
                     + "Verify that Non-member is displayed on 'Checkout' pop-up")
     public void checkNonMemberTicketAndTotalPrice() {
         SoftAssert softAssert = new SoftAssert();
-        MembersPopup membersPopup = new MembersPopup()
-                .waitForCheckoutLoad()
-                .removeFirstTicket()
-                .selectTicketsAmount("1")
+        new CheckoutPopup()
+                .waitForLoad()
+                .removeFirstTicket();
+        new WinterExperienceTicketsPopup()
+                .selectMemberTicketsAmount("1")
                 .clickAddNonMemberTicketsLink()
                 .selectNonMemberTicketsAmount("1")
-                .clickContinuePurchaseButton()
-                .clickContinuePurchaseButton()
+                .clickContinueButton();
+        WinterExperienceTickets2Popup wet2Popup = new TermsAndConditionsPopup()
+                .clickContinueButton()
                 .selectFirstAvailableDate();
-        String time = membersPopup.getStartBookingTime();
-        membersPopup = membersPopup.selectTimeForTheTicket(time)
-                .clickContinuePurchaseButton()
+        String time = wet2Popup.getStartBookingTime();
+        CheckoutPopup checkoutPopup = wet2Popup.selectTimeForTheTicket(time)
+                .clickContinueButton()
                 .waitTillLoadingIndicatorDisappears()
-                .waitForCheckoutLoad();
-        softAssert.assertTrue(membersPopup.isNonMemberTicketPresent(), "Non member ticket is not displayed.");
-        String firstTotalPrice = membersPopup.getTotalPrice();
-        membersPopup.removeFirstTicket();
-        softAssert.assertNotEquals(membersPopup.getTotalPrice(), firstTotalPrice, "Total price was not recalculated.");
+                .waitForLoad();
+        softAssert.assertTrue(checkoutPopup.isNonMemberTicketPresent(), "Non member ticket is not displayed.");
+        String firstTotalPrice = checkoutPopup.getTotalPrice();
+        checkoutPopup.removeFirstTicket();
+        softAssert.assertNotEquals(checkoutPopup.getTotalPrice(), firstTotalPrice, "Total price was not recalculated.");
 
         softAssert.assertAll();
     }

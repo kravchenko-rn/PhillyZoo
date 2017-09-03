@@ -14,6 +14,9 @@ public class TermsAndConditionsPopup extends BasePopup {
     @FindBy(css = "button[ng-click='purchaseStep.acceptTerms()']")
     WebElement acceptTermsButton;
 
+    @FindBy(css = "button.purchase-step__continue")
+    WebElement continueButton;
+
     public TermsAndConditionsPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
@@ -39,6 +42,19 @@ public class TermsAndConditionsPopup extends BasePopup {
         driver().switchTo().frame(contentIFrame);
 
         click(acceptTermsButton, "Clicking accept terms button.");
+
+        driver().switchTo().defaultContent();
+        return new WinterExperienceTickets2Popup();
+    }
+
+    /**
+     * Clicks continue button
+     * @return {@link WinterExperienceTickets2Popup} page
+     */
+    public WinterExperienceTickets2Popup clickContinueButton() {
+        driver().switchTo().frame(contentIFrame);
+
+        click(continueButton, "Clicking continue button.");
 
         driver().switchTo().defaultContent();
         return new WinterExperienceTickets2Popup();
