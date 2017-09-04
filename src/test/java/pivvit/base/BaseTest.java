@@ -16,6 +16,7 @@ import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.xml.XmlSuite;
@@ -176,7 +177,7 @@ public class BaseTest {
         return platform;
     }
 
-    @AfterClass
+    @AfterSuite
     public static void tearDown() {
         Actions.clear();
         stopDriver();
