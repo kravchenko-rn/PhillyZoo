@@ -47,6 +47,8 @@ public class WEMT_001__009 extends BaseTest {
             softAssert.assertTrue(purchaseTicketsPopup.isErrorMessageDisplayed(invalidIdError),
                     "Error message is not displayed or is incorrect.");
         });
+        purchaseTicketsPopup.inputCustomerId("")
+                .clickSearchButton();
         softAssert.assertTrue(purchaseTicketsPopup.isErrorMessageDisplayed(emptyIdError),
                 "Error message is not displayed or is incorrect.");
         softAssert.assertAll();
