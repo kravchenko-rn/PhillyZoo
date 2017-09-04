@@ -6,6 +6,7 @@ import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -98,6 +99,24 @@ public class CheckoutPopup extends BasePopup {
 
     private FacebookPage facebookPage;
 
+    @FindBy(css = "#loginForm [ng-model='login.email']")
+    WebElement loginEmailInput;
+
+    @FindBy(css = "#loginForm [ng-model='login.password']")
+    WebElement loginPasswordInput;
+
+    @FindBy(css = "#loginForm button")
+    WebElement continueLoginButton;
+
+    @FindBy(css = "#loginForm a")
+    WebElement forgotLink;
+
+    @FindBy(css = "#forgotPasswordContainer input[ng-model='account.email']")
+    WebElement forgotEmailInput;
+
+    @FindBy(css = "#forgotPasswordContainer input[type='submit']")
+    WebElement submitForgotEmailButton;
+
     public CheckoutPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
     }
@@ -128,6 +147,20 @@ public class CheckoutPopup extends BasePopup {
         driver().switchTo().frame(contentIFrame);
 
         String result = totalPrice.getText();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Retrieves validation error text from login email input at the login form
+     * @return string which contains text
+     */
+    public String getInvalidLoginEmailErrorText() {
+        driver().switchTo().frame(contentIFrame);
+
+        WebElement validationError = loginEmailInput.findElement(By.xpath("following-sibling::span"));
+        String result = validationError.getText();
 
         driver().switchTo().defaultContent();
         return result;
@@ -210,6 +243,16 @@ public class CheckoutPopup extends BasePopup {
     }
 
     /**
+     * Sets text into forgot email input
+     * @param email string which contains email
+     * @return {@link CheckoutPopup} page
+     */
+    public CheckoutPopup inputForgotEmail(String email) {
+        inputText(forgotEmailInput, email);
+        return this;
+    }
+
+    /**
      * Sets text into payment system input.
      * @param paymentSystem string which contains payment system
      * @return {@link CheckoutPopup} page
@@ -270,6 +313,28 @@ public class CheckoutPopup extends BasePopup {
     }
 
     /**
+     * Sets text into login email input
+     * @param email string which contains email
+     * @return {@link CheckoutPopup} page
+     */
+    public CheckoutPopup inputLoginEmail(String email) {
+        inputText(loginEmailInput, email);
+        return this;
+    }
+
+    /**
+     * Sets text into login password input
+     * @param password string which contains password
+     * @return {@link CheckoutPopup} page
+     */
+    public CheckoutPopup inputLoginPassword(String password) {
+        inputText(loginPasswordInput, password);
+        return this;
+    }
+
+
+
+    /**
      * Selects first value from card expiration month dropdown.
      * @return {@link CheckoutPopup} page
      */
@@ -318,6 +383,45 @@ public class CheckoutPopup extends BasePopup {
         driver().switchTo().frame(contentIFrame);
 
         click(purchaseButton, "Clicking submit purchase button.");
+
+        driver().switchTo().defaultContent();
+        return new CheckoutPopup();
+    }
+
+    /**
+     * Clicks submit button at the forgot form.
+     * @return {@link CheckoutPopup} page
+     */
+    public CheckoutPopup clickSubmitForgotEmailButton() {
+        driver().switchTo().frame(contentIFrame);
+
+        click(submitForgotEmailButton, "Clicking submit forgot email button.");
+
+        driver().switchTo().defaultContent();
+        return this;
+    }
+
+    /**
+     * Clicks forgot link at the login form
+     * @return {@link CheckoutPopup} page
+     */
+    public CheckoutPopup clickForgotLink() {
+        driver().switchTo().frame(contentIFrame);
+
+        click(forgotLink, "Clicking forgot link.");
+
+        driver().switchTo().defaultContent();
+        return new CheckoutPopup();
+    }
+
+    /**
+     * Clicks continue login button
+     * @return {@link CheckoutPopup} page
+     */
+    public CheckoutPopup clickContinueLoginButton() {
+        driver().switchTo().frame(contentIFrame);
+
+        click(continueLoginButton, "Clicking continue login button.");
 
         driver().switchTo().defaultContent();
         return new CheckoutPopup();
@@ -656,6 +760,90 @@ public class CheckoutPopup extends BasePopup {
         driver().switchTo().window(facebookWindowHandle);
         boolean result = facebookPage.isLoginFormDisplayed();
         driver().switchTo().window(currentWindowHandle);
+        return result;
+    }
+
+    /**
+     * Checks whether the login email validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isInvalidLoginEmailErrorDisplayed(String errorText) {
+        driver().switchTo().frame(contentIFrame);
+
+        WebElement validationError = loginEmailInput.findElement(By.xpath("following-sibling::span"));
+        boolean result = isElementTextVisible(validationError, errorText,
+                "Checking whether the login email validation error is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the login password validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isInvalidLoginPasswordErrorDisplayed(String errorText) {
+        driver().switchTo().frame(contentIFrame);
+
+        boolean result;
+        try {
+            WebElement validationError = loginPasswordInput.findElement(By.xpath("following-sibling::span"));
+            result = isElementTextVisible(validationError, errorText,
+                    "Checking whether the login password validation error is displayed.");
+        } catch (NoSuchElementException e) {
+            result = false;
+        }
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks if any login email validation error message is displayed.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @return {@code true} in case when the error text is not empty
+     */
+    public boolean isAnyInvalidLoginEmailErrorDisplayed() {
+        return !getInvalidLoginEmailErrorText().isEmpty();
+    }
+
+    /**
+     * Checks whether the forgot email input is displayed
+     * @return {@code true} in case when forgot email input is displayed
+     */
+    public boolean isForgotEmailInputDisplayed() {
+        driver().switchTo().frame(contentIFrame);
+
+        boolean result = isElementVisible(forgotEmailInput, "Checking whether the forgot email input is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the email validation error message is displayed at the forgot form.
+     * The element is always present and visible on the page but
+     * if there's no error, it just has no text.
+     * So the check is performed by verifying if the error text is empty or not.
+     * @param errorText string which contains the error text
+     * @return {@code true} in case when the error text is displayed
+     */
+    public boolean isForgotEmailErrorDisplayed(String errorText) {
+        driver().switchTo().frame(contentIFrame);
+
+        WebElement validationError = forgotEmailInput.findElement(By.xpath("following-sibling::span"));
+        boolean result = isElementTextVisible(validationError, errorText,
+                "Checking whether the email validation error is displayed.");
+
+        driver().switchTo().defaultContent();
         return result;
     }
 
