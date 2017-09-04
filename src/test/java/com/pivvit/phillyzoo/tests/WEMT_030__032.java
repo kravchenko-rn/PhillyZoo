@@ -2,7 +2,6 @@ package com.pivvit.phillyzoo.tests;
 
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
-import com.pivvit.phillyzoo.pages.MembersPopup;
 import com.pivvit.phillyzoo.pages.popup.PastMembershipPopup;
 import com.pivvit.phillyzoo.pages.popup.PurchaseTicketsPopup;
 import com.pivvit.phillyzoo.pages.popup.VerifyYourselfPopup;

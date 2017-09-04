@@ -18,7 +18,7 @@ public class PurchaseTicketsTab extends BaseFEPage {
 
     /**
      * Opens members popup by clicking members button
-     * @return {@link MembersPopup} page
+     * @return {@link PurchaseTicketsPopup} page
      */
     public PurchaseTicketsPopup openPurchaseTicketsPopup() {
         click(membersButton, "Opening Purchase Tickets popup");
