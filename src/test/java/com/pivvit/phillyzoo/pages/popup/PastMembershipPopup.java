@@ -3,9 +3,12 @@ package com.pivvit.phillyzoo.pages.popup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.SkipException;
+import pivvit.properties.Properties;
+import pivvit.properties.PropertiesNames;
 import pivvit.utils.SoftAssert;
 import ru.yandex.qatools.htmlelements.element.Select;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementDecorator;
@@ -212,15 +215,40 @@ public class PastMembershipPopup extends BasePopup {
         driver().switchTo().frame(contentIFrame);
         itemParts.forEach(itemPart -> {
             String itemPartColor = itemPart.getCssValue("color");
-            int weight = Integer.parseInt(itemPart.getCssValue("font-weight"));
-            softAssert.assertEquals(itemPartColor, color, "Hovered result item part '" + itemPart.getText() + "' is not blue.");
-            if (validateBold) {
-                softAssert.assertTrue(weight >= 700, "Hovered result item part '" + itemPart.getText() + "' is not bold."
-                        + "It's font-weight value is " + weight + ".");
+            String[] itemPartColorValues = getColorValues(itemPartColor);
+            String[] expectedColorValues = getColorValues(color);
+
+            if (Properties.getBrowser(PropertiesNames.BROWSER).equals(BrowserType.FIREFOX)) {
+                int weight = Integer.parseInt(itemPart.getCssValue("font-weight"));
+                if (validateBold) {
+                    softAssert.assertTrue(weight >= 700, "Hovered result item part '" + itemPart.getText() + "' is not bold."
+                            + "It's font-weight value is " + weight + ".");
+                }
             }
+
+            if (Properties.getBrowser(PropertiesNames.BROWSER).equals(BrowserType.CHROME)) {
+                String weight = itemPart.getCssValue("font-weight");
+                if (validateBold) {
+                    softAssert.assertEquals(weight, "bold",
+                            "Hovered result item part '" + itemPart.getText() + "' is not bold.");
+                }
+            }
+            softAssert.assertTrue(itemPartColorValues[0].equals(expectedColorValues[0])
+                    && itemPartColorValues[1].equals(expectedColorValues[1])
+                    && itemPartColorValues[2].equals(expectedColorValues[2]),
+                    "Hovered result item part '" + itemPart.getText() + "' is not blue."
+            + "Expected " + color + ", but found " + itemPartColor + ".");
+
         });
 
         driver().switchTo().defaultContent();
+    }
+
+    private String[] getColorValues(String colorDescription) {
+        int startIndex = colorDescription.indexOf("(") + 1;
+        String colorValuesString = String.copyValueOf(colorDescription.toCharArray(), startIndex,
+                colorDescription.length() - startIndex - 1);
+        return colorValuesString.split(",");
     }
 
     /**
