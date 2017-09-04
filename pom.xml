@@ -155,7 +155,7 @@
                     </properties>
                     <suiteXmlFiles>
                         <!-- Suite file injection parameter from command line -->
-                        <suiteXmlFile>${suite.file.debug}</suiteXmlFile>
+                        <suiteXmlFile>${suite.file.defaults}</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
 
