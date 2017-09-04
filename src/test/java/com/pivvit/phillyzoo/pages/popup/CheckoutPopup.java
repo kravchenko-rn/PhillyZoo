@@ -1,5 +1,6 @@
 package com.pivvit.phillyzoo.pages.popup;
 
+import com.pivvit.phillyzoo.pages.FacebookPage;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
@@ -15,10 +16,14 @@ import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementDecorator;
 import ru.yandex.qatools.htmlelements.loader.decorator.HtmlElementLocatorFactory;
 
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CheckoutPopup extends BasePopup {
+    @FindBy(css = "#facebook-btn iframe")
+    WebElement fbButtonIFrame;
+
     @FindBy(css = ".offering-purchase h3")
     WebElement title;
 
@@ -78,6 +83,20 @@ public class CheckoutPopup extends BasePopup {
 
     @FindBy(css = "[ng-click='vm.enterCode()']")
     WebElement applyCodeLink;
+
+    @FindBy(css = ".purchase-register small > a")
+    WebElement loginLink;
+
+    @FindBy(css = "a[ng-click^='UI.hide']")
+    WebElement createNewAccountLink;
+
+    @FindBy(css = ".purchase-register")
+    WebElement newAccountForm;
+
+    @FindBy(css = "table._51mz tr:nth-of-type(1)")
+    WebElement facebookLoginButton;
+
+    private FacebookPage facebookPage;
 
     public CheckoutPopup() {
         PageFactory.initElements(new HtmlElementDecorator(new HtmlElementLocatorFactory(driver())), this);
@@ -305,6 +324,47 @@ public class CheckoutPopup extends BasePopup {
     }
 
     /**
+     * Clicks facebook login button
+     * @return {@link CheckoutPopup} page
+     */
+    public FacebookPage clickFacebookLoginButton() {
+        driver().switchTo().frame(contentIFrame);
+        driver().switchTo().frame(fbButtonIFrame);
+
+        click(facebookLoginButton, "Clicking facebook login button.");
+
+        driver().switchTo().defaultContent();
+        driver().switchTo().defaultContent();
+        return new FacebookPage();
+    }
+
+    /**
+     * Clicks create new account link
+     * @return {@link CheckoutPopup} page
+     */
+    public CheckoutPopup clickCreateNewAccountLink() {
+        driver().switchTo().frame(contentIFrame);
+
+        click(createNewAccountLink, "Clicking create new account link.");
+
+        driver().switchTo().defaultContent();
+        return new CheckoutPopup();
+    }
+
+    /**
+     * Clicks login link
+     * @return {@link CheckoutPopup} page
+     */
+    public CheckoutPopup clickLoginLink() {
+        driver().switchTo().frame(contentIFrame);
+
+        click(loginLink, "Clicking login link.");
+
+        driver().switchTo().defaultContent();
+        return new CheckoutPopup();
+    }
+
+    /**
      * Clicks apply code link
      * @return {@link CheckoutPopup} page
      */
@@ -522,6 +582,80 @@ public class CheckoutPopup extends BasePopup {
                 "Checking whether the discount error is displayed.");
 
         driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the login link displayed
+     * @return {@code true} in case when login link is displayed
+     */
+    public boolean isLoginLinkDisplayed() {
+        driver().switchTo().frame(contentIFrame);
+
+        boolean result = isElementVisible(loginLink,
+                "Checking whether the login link is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the create new account link displayed
+     * @return {@code true} in case when create new account link is displayed
+     */
+    public boolean isCreateNewAccountLinkDisplayed() {
+        driver().switchTo().frame(contentIFrame);
+
+        boolean result = isElementVisible(createNewAccountLink,
+                "Checking whether the 'create new account' link is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the new account form is displayed
+     * @return {@code true} in case when the new account form is displayed
+     */
+    public boolean isNewAccountFormDisplayed() {
+        driver().switchTo().frame(contentIFrame);
+
+        boolean result = isElementVisible(newAccountForm,
+                "Checking whether the 'create new account' form is displayed.");
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the facebook login button is displayed.
+     * @return {@code true} in case when facebook login button is displayed
+     */
+    public boolean isFacebookLoginButtonDisplayed() {
+        driver().switchTo().frame(contentIFrame);
+        driver().switchTo().frame(fbButtonIFrame);
+
+        boolean result = isElementVisible(facebookLoginButton, "Checking whether the facebook login button displayed.");
+
+        driver().switchTo().defaultContent();
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
+     * Checks whether the facebook login page is displayed.
+     * @return {@code true} in case when the facebook login page is displayed
+     */
+    public boolean isFacebookLoginPageDisplayed() {
+        String currentWindowHandle = driver().getWindowHandle();
+        Set<String> windowHandles = driver().getWindowHandles();
+        String facebookWindowHandle = null;
+        for (String handle: windowHandles) {
+            facebookWindowHandle = handle;
+        }
+        driver().switchTo().window(facebookWindowHandle);
+        boolean result = facebookPage.isLoginFormDisplayed();
+        driver().switchTo().window(currentWindowHandle);
         return result;
     }
 
