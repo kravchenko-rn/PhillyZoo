@@ -2,66 +2,71 @@ package com.pivvit.phillyzoo.tests;
 
 import com.pivvit.phillyzoo.actions.Actions;
 import com.pivvit.phillyzoo.pages.HomePage;
-import com.pivvit.phillyzoo.pages.MembersPopup;
+import com.pivvit.phillyzoo.pages.popup.*;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pivvit.base.BaseTest;
 
-@SuppressWarnings("all")
 public class WEMT_068__069 extends BaseTest {
     @BeforeTest
     @Parameters({"email", "verificationCharacters"})
+    @SuppressWarnings("all")
     public void init(String customerEmail, String charactersSet) {
         new HomePage().open();
         Actions.navigationActions().openPurchaseTicketsPopup();
-        MembersPopup membersPopup = new MembersPopup()
+        new PurchaseTicketsPopup()
                 .inputCustomerEmail(customerEmail)
                 .clickSearchButton()
-                .waitTillLoadingIndicatorDisappears()
+                .waitTillLoadingIndicatorDisappears();
+        new PastMembershipPopup()
                 .clickLookupResultItem(0)
-                .inputVerificationCharacters(charactersSet.split(" "))
-                .selectTicketsAmount("1")
-                .clickContinuePurchaseButton()
+                .inputVerificationCharacters(charactersSet.split(" "));
+        new WinterExperienceTicketsPopup()
+                .selectMemberTicketsAmount("1")
+                .clickContinueButton();
+        WinterExperienceTickets2Popup wet2Popup = new TermsAndConditionsPopup()
                 .clickAcceptTermsButton()
                 .selectFirstAvailableDate();
-        String time = membersPopup.getStartBookingTime();
-        membersPopup.selectTimeForTheTicket(time)
-                .clickContinuePurchaseButton()
-                .waitTillLoadingIndicatorDisappears()
-                .waitForCheckoutLoad();
+        String time = wet2Popup.getStartBookingTime();
+        wet2Popup.selectTimeForTheTicket(time)
+                .clickContinueButton()
+                .waitTillLoadingIndicatorDisappears();
     }
 
     @Test(testName = "WEMT-068",
             description = "Verify that 'x' (near date and time) return user to Winter Experience Tickets pop-up (when only one member should chosen)")
     @Parameters("pageTitle")
     public void checkDeleteButtonOneMember(String pageTitle) {
-        MembersPopup membersPopup = new MembersPopup();
-        Assert.assertEquals(membersPopup.getNumberOfTicketItems(), 1, "There are more thn one ticket item.");
+        CheckoutPopup checkoutPopup = new CheckoutPopup();
+        Assert.assertEquals(checkoutPopup.getNumberOfTicketItems(), 1, "There are more then one ticket item.");
 
-        membersPopup.removeFirstTicket();
-        Assert.assertEquals(membersPopup.getPageTitleText(), pageTitle, "Was not redirected to 'Winter' Experience Tickets pop-up");
+        checkoutPopup.removeFirstTicket();
+        Assert.assertEquals(new BasePopup().getPageTitleText(), pageTitle,
+                "Was not redirected to 'Winter' Experience Tickets pop-up");
     }
 
     @Test(testName = "WEMT-069", dependsOnMethods = "checkDeleteButtonOneMember",
             description = "Verify that 'x' (near date and time) have an able to remove members.")
     public void checkAbilityToRemoveMembers() {
-        MembersPopup membersPopup = new MembersPopup()
-                .selectTicketsAmount("1")
+        new WinterExperienceTicketsPopup()
+                .selectMemberTicketsAmount("1")
+                .selectMemberTicketsAmount("1")
                 .clickAddNonMemberTicketsLink()
                 .selectNonMemberTicketsAmount("1")
-                .clickContinuePurchaseButton()
-                .clickContinuePurchaseButton()
+                .clickContinueButton();
+        WinterExperienceTickets2Popup wet2Popup = new TermsAndConditionsPopup()
+                .clickContinueButton()
                 .selectFirstAvailableDate();
-        String time = membersPopup.getStartBookingTime();
-        membersPopup.selectTimeForTheTicket(time)
-                .clickContinuePurchaseButton()
+        String time = wet2Popup.getStartBookingTime();
+        CheckoutPopup checkoutPopup = wet2Popup.selectTimeForTheTicket(time)
+                .clickContinueButton()
                 .waitTillLoadingIndicatorDisappears()
-                .waitForCheckoutLoad();
-        Assert.assertEquals(membersPopup.getNumberOfTicketItems(), 2, "Incorrect number of ticket items.");
+                .waitForLoad();
+        Assert.assertEquals(checkoutPopup.getNumberOfTicketItems(), 2, "Incorrect number of ticket items.");
 
-        membersPopup.removeSecondTicket();
-        Assert.assertEquals(membersPopup.getNumberOfTicketItems(), 1, "Non member ticket was not removed.");
+        checkoutPopup.removeSecondTicket();
+        Assert.assertEquals(checkoutPopup.getNumberOfTicketItems(), 1, "Non member ticket was not removed.");
     }
 }

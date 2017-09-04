@@ -144,6 +144,19 @@ public class CheckoutPopup extends BasePopup {
     }
 
     /**
+     * Retrieves number of ticket items
+     * @return number of ticket items
+     */
+    public int getNumberOfTicketItems() {
+        driver().switchTo().frame(contentIFrame);
+
+        int result = driver().findElements(By.cssSelector(".purchase__item")).size();
+
+        driver().switchTo().defaultContent();
+        return result;
+    }
+
+    /**
      * Clicks remove ticket button of the first ticket in the list.
      * @return {@link CheckoutPopup} page
      */
@@ -155,6 +168,23 @@ public class CheckoutPopup extends BasePopup {
         }
 
         click(removeTicketButtons.get(0), "Clicking remove ticket button of the first ticket.");
+
+        driver().switchTo().defaultContent();
+        return new CheckoutPopup();
+    }
+
+    /**
+     * Clicks remove ticket button of the second ticket in the list.
+     * @return {@link CheckoutPopup} page
+     */
+    public CheckoutPopup removeSecondTicket() {
+        driver().switchTo().frame(contentIFrame);
+
+        if (removeTicketButtons.size() == 0) {
+            throw new SkipException("There are no remove ticket buttons.");
+        }
+
+        click(removeTicketButtons.get(1), "Clicking remove ticket button of the second ticket.");
 
         driver().switchTo().defaultContent();
         return new CheckoutPopup();
