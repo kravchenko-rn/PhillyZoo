@@ -80,6 +80,7 @@ public class PurchaseTicketsPopup extends BasePopup {
         } else {
             hover(questionMark, "Hovering question mark.");
         }
+        waitForVisibilityNotStrict(tooltip, 5);
 
         driver().switchTo().defaultContent();
         return this;
